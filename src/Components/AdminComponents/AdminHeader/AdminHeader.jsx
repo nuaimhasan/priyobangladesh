@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { useSelector } from "react-redux";
 import BreadCrumb from "../../UI/BreadCrumb";
 
 export default function AdminHeader({ setSidebar }) {
+  const { loggedUser } = useSelector((state) => state.user);
 
   return (
     <header className="py-3 px-6 bg-base-100 text-neutral shadow">
@@ -21,11 +23,15 @@ export default function AdminHeader({ setSidebar }) {
 
         <div className="flex items-center gap-2">
           <div className="text-right">
-            <p className="">Khalid</p>
+            <p className="">{loggedUser?.data?.name}</p>
           </div>
 
           <img
-            src={"/images/profile.png"}
+            src={
+              loggedUser?.data?.image
+                ? `${import.meta.env.VITE_BACKEND_URL}/user/${loggedUser?.data?.image}`
+                : "/images/profile.png"
+            }
             alt="user"
             className="w-8 h-8 rounded-full"
           />

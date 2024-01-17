@@ -1,10 +1,48 @@
-import { useState } from "react";
-import BreadCrumb from "../../../Components/UI/BreadCrumb";
-import ImageUploading from "react-images-uploading";
+import { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
+import ImageUploading from "react-images-uploading";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import BreadCrumb from "../../../Components/UI/BreadCrumb";
+import { useUpdateUserMutation } from "../../../redux/user/userApi";
 
 export default function UpdateWriterProfile() {
   const [logos, setLogos] = useState([]);
+  const navigate = useNavigate();
+
+  const { loggedUser } = useSelector((state) => state.user);
+  const profile = loggedUser?.data;
+  const id = profile?._id;
+
+  const [updateProfile, { isLoading, isSuccess, isError }] =
+    useUpdateUserMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      Swal.fire("", "Profile info updated Successfully", "success");
+      navigate("/writer/profile");
+      window.location.reload();
+    }
+    if (isError) {
+      Swal.fire("", "An error occured when adding this admin", "error");
+    }
+  }, [isSuccess, isError, navigate]);
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const phone = e.target.phone.value;
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("phone", phone);
+    if (logos[0]) {
+      formData.append("image", logos[0].file);
+    }
+
+    await updateProfile({ id, formData }).unwrap();
+  };
 
   return (
     <div>
@@ -14,10 +52,20 @@ export default function UpdateWriterProfile() {
 
       <div className="bg-white rounded-md shadow-lg min-h-[80vh]">
         <div className="p-5">
-          <h1 className="text-xl font-semibold">Update Profile</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="md:text-xl text-base font-semibold">
+              Update Profile Info
+            </h1>
+            <Link
+              to="/writer/profile/update-password"
+              className="bg-secondary text-white md:px-3 px-2 py-1 rounded-md hover:bg-primary transition hover:scale-105 duration-300 text-xs md:text-sm"
+            >
+              Update Password
+            </Link>
+          </div>
 
           <div className="py-10 md:w-3/4 mx-auto">
-            <form>
+            <form onSubmit={handleUpdateProfile}>
               <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
                 <div className="flex flex-col gap-1">
                   <label htmlFor="name">Name</label>
@@ -25,6 +73,7 @@ export default function UpdateWriterProfile() {
                     type="text"
                     id="name"
                     name="name"
+                    defaultValue={profile?.name}
                     placeholder="Enter Name"
                     className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:border-primary placeholder:text-sm"
                   />
@@ -35,37 +84,19 @@ export default function UpdateWriterProfile() {
                     type="text"
                     id="userName"
                     name="userName"
-                    defaultValue="khalid_hasan"
+                    defaultValue={profile?.userName}
                     disabled
                     className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:border-primary placeholder:text-sm"
                   />
                 </div>
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="oldPassword">Old Password</label>
-                  <input
-                    type="password"
-                    id="oldPassword"
-                    name="oldPassword"
-                    placeholder="Enter Password"
-                    className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:border-primary placeholder:text-sm"
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="newPassword">New Password</label>
-                  <input
-                    type="password"
-                    id="newPassword"
-                    name="newPassword"
-                    placeholder="Enter Password"
-                    className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:border-primary placeholder:text-sm"
-                  />
-                </div>
+
                 <div className="flex flex-col gap-1">
                   <label htmlFor="phone">Phone</label>
                   <input
                     type="text"
                     id="phone"
                     name="phone"
+                    defaultValue={profile?.phone}
                     placeholder="Enter Phone Number"
                     className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:border-primary placeholder:text-sm"
                   />
@@ -120,9 +151,10 @@ export default function UpdateWriterProfile() {
               <div className="flex flex-col gap-1 mt-5">
                 <button
                   type="submit"
+                  disabled={isLoading && "disabled"}
                   className="bg-primary text-white px-3 py-2 rounded-md uppercase"
                 >
-                  Update
+                  {isLoading ? "Updating..." : "Update"}
                 </button>
               </div>
             </form>

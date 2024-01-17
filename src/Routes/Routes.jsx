@@ -38,6 +38,7 @@ import WriterViewNews from "../Pages/Writer/News/WriterViewNews";
 import UpdateWriterProfile from "../Pages/Writer/Profile/UpdateWriterProfile";
 import WriterProfile from "../Pages/Writer/Profile/WriterProfile";
 import WriterDashboard from "../Pages/Writer/WriterDashboard/WriterDashboard";
+import UpdateWriterPassword from "../Pages/Writer/Profile/UpdateWriterPassword";
 
 export const routes = createBrowserRouter([
   {
@@ -212,6 +213,10 @@ export const routes = createBrowserRouter([
       {
         path: "/writer/profile/update-profile",
         element: <UpdateWriterProfile />,
+      },
+      {
+        path: "/writer/profile/update-password",
+        element: <UpdateWriterPassword />,
       },
     ],
   },

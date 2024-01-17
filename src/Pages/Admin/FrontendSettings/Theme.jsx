@@ -12,7 +12,6 @@ export default function Theme() {
   const theme = themeData?.data[0];
   const id = theme?._id;
 
-  console.log(theme, id);
   const [
     updateTheme,
     {

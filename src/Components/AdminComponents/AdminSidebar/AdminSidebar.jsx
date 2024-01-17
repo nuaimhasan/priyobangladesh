@@ -106,7 +106,7 @@ export default function AdminSidebar() {
           </ul>
         </nav>
 
-        <button className="p-3 flex items-center gap-1" onClick={handelLogout}>
+        <button className="p-3 flex items-center gap-1 text-sm" onClick={handelLogout}>
           <IoIosLogOut className="text-lg" />
           Log Out
         </button>

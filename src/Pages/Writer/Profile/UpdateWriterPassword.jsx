@@ -6,7 +6,7 @@ import BreadCrumb from "../../../Components/UI/BreadCrumb";
 import { useUpdatePasswordMutation } from "../../../redux/user/userApi";
 import { userLogout } from "../../../redux/user/userSlice";
 
-export default function UpdatePassword() {
+export default function UpdateWriterPassword() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
