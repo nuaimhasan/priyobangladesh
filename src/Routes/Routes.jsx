@@ -119,7 +119,7 @@ export const routes = createBrowserRouter([
         element: <EditWriter />,
       },
       {
-        path: "/admin/writers/:id",
+        path: "/admin/writers/:userName",
         element: <ViewWriter />,
       },
       {

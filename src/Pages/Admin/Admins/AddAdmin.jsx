@@ -1,8 +1,8 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
 import { useAddAdminMutation } from "../../../redux/user/userApi";
-import { useNavigate } from "react-router-dom";
 
 export default function AddAdmin() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function AddAdmin() {
       navigate("/admin/admins");
     }
     if (isError) {
-      Swal.fire("", "An error occured when adding this admin", "error");
+      Swal.fire("", "Username & number should  be unique!", "error");
     }
   }, [isSuccess, isError, error, navigate]);
 

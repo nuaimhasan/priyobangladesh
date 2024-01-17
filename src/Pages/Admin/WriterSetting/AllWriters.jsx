@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -8,7 +9,14 @@ import {
 } from "../../../redux/user/userApi";
 
 export default function AllWriters() {
-  const { data, isLoading } = useGetWritersQuery();
+  const query = {};
+  const [status, setStatus] = useState("");
+  const [name, setName] = useState("");
+
+  query["status"] = status;
+  query["name"] = name;
+  const { data, isLoading } = useGetWritersQuery({ ...query });
+
   const [updateStatus, { isLoading: statusLoading }] =
     useUpdateWriterStatusMutation();
 
@@ -45,19 +53,17 @@ export default function AllWriters() {
         </div>
         <div className="flex items-center gap-5 w-full">
           <select
-            // value={filter}
-            // onChange={(e) => handleFilterChange(e.target.value)}
+            onChange={(e) => setStatus(e.target.value)}
             className="border border-gray-400 rounded-md p-1 text-sm md:w-[20%] w-[35%] focus:outline-none focus:border-primary"
           >
-            <option value="all">--Select Status--</option>
+            <option value="">--Select Status--</option>
             <option value="active">Active</option>
-            <option value="deactive">Inactive</option>
+            <option value="inactive">Inactive</option>
           </select>
 
           <input
             type="text"
-            // value={searchQuery}
-            // onChange={handleSearchChange}
+            onChange={(e) => setName(e.target.value)}
             className="border border-gray-400 rounded-md p-1 text-sm md:w-1/4 focus:outline-none focus:border-primary placeholder:text-xs"
             placeholder="Search Name..."
           />
@@ -103,7 +109,9 @@ export default function AllWriters() {
                   <button
                     onClick={() => handleStatus(writer?._id)}
                     className={`text-white px-2 py-1 rounded-md text-xs ${
-                      writer?.status === "active" ? "bg-green-500" : "bg-red-500"
+                      writer?.status === "active"
+                        ? "bg-green-500"
+                        : "bg-red-500"
                     }`}
                   >
                     {statusLoading ? (

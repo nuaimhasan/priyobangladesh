@@ -1,16 +1,46 @@
+import { useEffect } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
-import { useGetAdminsQuery } from "../../../redux/user/userApi";
+import {
+  useDeleteUserMutation,
+  useGetAdminsQuery,
+} from "../../../redux/user/userApi";
 
 export default function AllAdmins() {
   const { data, isLoading } = useGetAdminsQuery();
+  const [deleteAdmin, { isSuccess: deleteSuccess, isError: deleteError }] =
+    useDeleteUserMutation();
+
+  useEffect(() => {
+    if (deleteSuccess) {
+      Swal.fire("", "Admin Deleted Successfully", "success");
+    }
+    if (deleteError) {
+      Swal.fire("", "An error occured when deleting", "error");
+    }
+  }, [deleteSuccess, deleteError]);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
 
   const admins = data?.data;
+
+  const handleDelete = async (id) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this admin?"
+    );
+    if (!confirm) return;
+
+    if (admins?.length === 1) {
+      Swal.fire("", "There must be at least one admin!", "error");
+      return;
+    }
+
+    await deleteAdmin(id);
+  };
 
   return (
     <div>
@@ -71,7 +101,10 @@ export default function AllAdmins() {
                     >
                       <FiEdit3 />
                     </Link> */}
-                    <button className="hover:text-primary text-lg">
+                    <button
+                      onClick={() => handleDelete(admin?._id)}
+                      className="hover:text-primary text-lg"
+                    >
                       <AiOutlineDelete />
                     </button>
                   </div>

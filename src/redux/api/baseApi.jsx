@@ -22,5 +22,6 @@ export const baseApi = createApi({
     "aboutus",
     "news",
     "advertise",
+    "theme",
   ],
 });

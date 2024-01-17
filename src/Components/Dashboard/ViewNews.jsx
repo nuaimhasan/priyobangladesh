@@ -1,23 +1,21 @@
 /* eslint-disable react/prop-types */
 
+import perser from "html-react-parser";
 import { Link } from "react-router-dom";
 
 export default function ViewNews({ news }) {
-  console.log(news?.writer?.role);
+  const perserDescription = news?.description && perser(news?.description);
   return (
     <div>
       <div className="flex items-center justify-between bg-white shadow-lg p-5 rounded-md mb-1">
         <h1 className="md:text-xl text-base font-semibold">View News</h1>
-        <div className="flex items-center gap-5">
+        <div className="">
           <Link
             to={`/${news?.writer?.role}/news/edit-news/${news._id}`}
             className="bg-secondary text-white md:px-3 px-2 py-1 rounded-md transition hover:scale-105 duration-300 text-xs md:text-sm"
           >
             Edit
           </Link>
-          <button className="bg-red-500 text-white md:px-3 px-2 py-1 rounded-md hover:bg-red-600 transition hover:scale-105 duration-300 text-xs md:text-sm">
-            Delete
-          </button>
         </div>
       </div>
 
@@ -39,7 +37,7 @@ export default function ViewNews({ news }) {
               <p className="text-xs text-gray-400">|</p>
               <p className="text-xs text-gray-400">{news.writer?.name}</p>
             </div>
-            <p className="text-sm">{news.description}</p>
+            <p className="text-sm">{perserDescription}</p>
           </div>
         </div>
       </div>

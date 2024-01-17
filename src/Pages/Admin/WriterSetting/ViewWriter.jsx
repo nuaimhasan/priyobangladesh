@@ -1,30 +1,34 @@
-import { AiOutlineDelete } from "react-icons/ai";
+/* eslint-disable no-unused-vars */
 import { FaRegEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
-
-const data = [
-  {
-    _id: 1,
-    title: "Messi kick the goal",
-    image: "/images/tools.jpeg",
-    category: "Sports",
-    writer: "Khalid",
-    createdAt: "2021-08-01T18:30:00.000Z",
-    status: "active",
-  },
-  {
-    _id: 2,
-    title: "Messi kick the goal",
-    image: "/images/tools.jpeg",
-    category: "Sports",
-    writer: "Khalid",
-    createdAt: "2023-12-01T18:30:00.000Z",
-    status: "pending",
-  },
-];
+import {
+  useGetNewsByWriterQuery,
+  useUpdateStatusMutation,
+} from "../../../redux/news/newsApi";
+import { useGetUserBySlugQuery } from "../../../redux/user/userApi";
 
 export default function ViewWriter() {
+  const { userName } = useParams();
+  const { data: userData } = useGetUserBySlugQuery(userName);
+  const user = userData?.data;
+  const writerId = user?._id;
+
+  const { data: newsData } = useGetNewsByWriterQuery(writerId);
+  const data = newsData?.data;
+
+  const [updateStatus, { isLoading: statusLoading }] =
+    useUpdateStatusMutation();
+
+  const handleStatus = async (id) => {
+    const confirm = window.confirm(
+      "Are you sure you want to change the status of this news?"
+    );
+    if (!confirm) return;
+
+    await updateStatus(id);
+  };
+
   return (
     <div>
       <div className="lg:hidden flex">
@@ -34,36 +38,20 @@ export default function ViewWriter() {
       <div className="bg-white shadow-lg rounded-md">
         <div className=" p-10  flex md:flex-row flex-col items-center justify-center mx-auto gap-5">
           <img
-            src="/images/profile.png"
+            src={
+              user?.image
+                ? `${import.meta.env.VITE_BACKEND_URL}/user/${user?.image}`
+                : "/images/profile.png"
+            }
             alt=""
             className="h-32 w-32 rounded-full"
           />
           <div className="text-center md:text-left">
-            <h1 className="text-xl font-semibold">Khalid Hasan</h1>
-            <p className="text-sm font-medium">( khalid_hasan )</p>
-            <p className="text-gray-500">Writer</p>
-            <p>0123456789</p>
+            <h1 className="text-xl font-semibold">{user?.name}</h1>
+            <p className="text-sm font-medium">({user?.userName})</p>
+            <p className="text-gray-500">{user?.role}</p>
+            <p>{user?.phone}</p>
           </div>
-        </div>
-        <div className="flex items-center gap-5 w-full pl-3 pb-3">
-          <select
-            // value={filter}
-            // onChange={(e) => handleFilterChange(e.target.value)}
-            className="border border-gray-400 rounded-md p-1 text-sm md:w-[20%] w-[35%] focus:outline-none focus:border-primary"
-          >
-            <option value="all">--Select Status--</option>
-            <option value="active">Active</option>
-            <option value="pending">Pending</option>
-            <option value="deactive">Deactive</option>
-          </select>
-
-          <input
-            type="text"
-            // value={searchQuery}
-            // onChange={handleSearchChange}
-            className="border border-gray-400 rounded-md p-1 text-sm md:w-1/4 focus:outline-none focus:border-primary placeholder:text-xs"
-            placeholder="Search Title..."
-          />
         </div>
       </div>
 
@@ -82,39 +70,47 @@ export default function ViewWriter() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {data?.map((data) => (
-              <tr key={data?._id}>
-                <td>{data?.title}</td>
+            {data?.map((news) => (
+              <tr key={news?._id}>
+                <td>{news?.title}</td>
                 <td>
-                  <img src={data?.image} alt="" className="h-12 w-24" />
+                  <img
+                    src={`${import.meta.env.VITE_BACKEND_URL}/news/${
+                      news?.image
+                    }`}
+                    alt=""
+                    className="h-12 w-24"
+                  />
                 </td>
-                <td>{data?.category}</td>
-                <td>{data?.writer}</td>
-                <td>{data?.createdAt.split("T")[0]}</td>
+                <td>{news?.category?.category}</td>
+                <td>{news?.writer?.name}</td>
+                <td>{news?.createdAt.split("T")[0]}</td>
                 <td>
-                  <span
-                    className={`${
-                      data?.status === "active"
+                  <button
+                    onClick={() => handleStatus(news?._id)}
+                    className={`text-white px-2 py-1 rounded-md text-xs ${
+                      news?.status === "active"
                         ? "bg-green-500"
-                        : data?.status === "pending"
-                        ? "bg-yellow-500"
-                        : "bg-red-500"
-                    } text-white px-2 py-1 rounded-md text-xs`}
+                        : news?.status === "inactive"
+                        ? "bg-red-500"
+                        : "bg-yellow-500"
+                    }`}
                   >
-                    {data?.status}
-                  </span>
+                    {statusLoading ? (
+                      <span className="text-xs">Updating...</span>
+                    ) : (
+                      news?.status
+                    )}
+                  </button>
                 </td>
                 <td>
                   <div className="flex items-center gap-2">
                     <Link
-                      to={`/admin/news/${data?._id}`}
+                      to={`/admin/news/${news?._id}`}
                       className="hover:text-primary text-lg"
                     >
                       <FaRegEye />
                     </Link>
-                    <button className="hover:text-primary text-lg">
-                      <AiOutlineDelete />
-                    </button>
                   </div>
                 </td>
               </tr>

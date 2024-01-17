@@ -33,6 +33,12 @@ export const userApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getUserBySlug: builder.query({
+      query: (slug) => ({
+        url: `/user/profile/userName/${slug}`,
+        method: "GET",
+      }),
+    }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/user/delete/${id}`,
@@ -75,9 +81,10 @@ export const userApi = baseApi.injectEndpoints({
 
     // ------------- writer -----------------
     getWriters: builder.query({
-      query: () => ({
+      query: (query) => ({
         url: "/user/allWriters",
         method: "GET",
+        params: query,
       }),
       providesTags: ["writer"],
     }),
@@ -102,6 +109,7 @@ export const userApi = baseApi.injectEndpoints({
 export const {
   useLoginMutation,
   useGetUserByIdQuery,
+  useGetUserBySlugQuery,
   useDeleteUserMutation,
   useUpdateUserMutation,
   useUpdatePasswordMutation,

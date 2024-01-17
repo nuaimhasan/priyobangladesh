@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
@@ -18,7 +19,10 @@ export default function Dashboard() {
   const { data: writerData } = useGetWritersQuery();
   const writers = writerData?.data;
 
-  const { data, isLoading } = useGetAllNewsQuery();
+  const query = {};
+  const [limit, setLimit] = useState(10);
+  query["limit"] = limit;
+  const { data, isLoading } = useGetAllNewsQuery({ ...query });
   const newses = data?.data;
 
   useEffect(() => {
