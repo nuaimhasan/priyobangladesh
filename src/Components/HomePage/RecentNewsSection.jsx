@@ -23,7 +23,7 @@ export default function RecentNewsSection() {
           {newses?.map((news) => (
             <Link
               key={news?._id}
-              to={`/news/${news?.category?.category}/${news?._id}`}
+              to={`/news/${news?.category?.slug}/${news?.slug}`}
             >
               <div className="flex items-center gap-3">
                 <img

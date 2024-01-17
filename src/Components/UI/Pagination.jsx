@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 

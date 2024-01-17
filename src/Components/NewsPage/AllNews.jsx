@@ -28,12 +28,13 @@ export default function AllNews() {
 
   const { data, isLoading } = useGetAllNewsQuery({ ...query });
   const newses = data?.data;
+  // console.log(newses);
 
   if (isLoading) return <h1>Loading...</h1>;
 
   const handlePageChange = (pageNumber) => {
-    // if (pageNumber < 1) return;
-    // if (data?.meta?.total && pageNumber > data?.meta.total / limit) return;
+    if (pageNumber < 1) return;
+    if (data?.meta?.total && pageNumber > data?.meta.total / limit) return;
 
     setPage(pageNumber);
   };
@@ -55,8 +56,8 @@ export default function AllNews() {
           {/* pagination */}
           <Pagination
             handlePageChange={handlePageChange}
-            limit={5}
-            total={20}
+            limit={limit}
+            total={data?.meta?.total}
             page={page}
           />
         </div>

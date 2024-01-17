@@ -7,37 +7,37 @@ import AddAdmin from "../Pages/Admin/Admins/AddAdmin";
 import AllAdmins from "../Pages/Admin/Admins/AllAdmins";
 import EditAdmin from "../Pages/Admin/Admins/EditAdmin";
 import Dashboard from "../Pages/Admin/Dashboard/Dashboard";
+import AboutUs from "../Pages/Admin/FrontendSettings/AboutUs";
+import AddAdvertise from "../Pages/Admin/FrontendSettings/Advertise/AddAdvertise";
 import Advertises from "../Pages/Admin/FrontendSettings/Advertise/Advertises";
+import EditAdvertise from "../Pages/Admin/FrontendSettings/Advertise/EditAdvertise";
+import ContactUs from "../Pages/Admin/FrontendSettings/ContactUs";
 import Logo from "../Pages/Admin/FrontendSettings/Logo";
+import Theme from "../Pages/Admin/FrontendSettings/Theme";
 import AddNews from "../Pages/Admin/News/AddNews";
+import AdminViewNews from "../Pages/Admin/News/AdminViewNews";
 import EditNews from "../Pages/Admin/News/EditNews";
 import NewsesList from "../Pages/Admin/News/NewsesList";
 import AddNewsCategories from "../Pages/Admin/NewsCategories/AddNewsCategories";
 import EditNewsCategories from "../Pages/Admin/NewsCategories/EditNewsCategories";
 import NewsCategories from "../Pages/Admin/NewsCategories/NewsCategories";
 import Profile from "../Pages/Admin/Profile/Profile";
+import UpdatePassword from "../Pages/Admin/Profile/UpdatePassword";
 import UpdateProfile from "../Pages/Admin/Profile/UpdateProfile";
+import AddWriter from "../Pages/Admin/WriterSetting/AddWriter";
+import AllWriters from "../Pages/Admin/WriterSetting/AllWriters";
+import EditWriter from "../Pages/Admin/WriterSetting/EditWriter";
+import ViewWriter from "../Pages/Admin/WriterSetting/ViewWriter";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import News from "../Pages/News/News";
 import WriterAddNews from "../Pages/Writer/News/WriterAddNews";
 import WriterEditNews from "../Pages/Writer/News/WriterEditNews";
 import WriterNewsesList from "../Pages/Writer/News/WriterNewses";
+import WriterViewNews from "../Pages/Writer/News/WriterViewNews";
 import UpdateWriterProfile from "../Pages/Writer/Profile/UpdateWriterProfile";
 import WriterProfile from "../Pages/Writer/Profile/WriterProfile";
 import WriterDashboard from "../Pages/Writer/WriterDashboard/WriterDashboard";
-import AddAdvertise from "../Pages/Admin/FrontendSettings/Advertise/AddAdvertise";
-import EditAdvertise from "../Pages/Admin/FrontendSettings/Advertise/EditAdvertise";
-import ContactUs from "../Pages/Admin/FrontendSettings/ContactUs";
-import AboutUs from "../Pages/Admin/FrontendSettings/AboutUs";
-import Theme from "../Pages/Admin/FrontendSettings/Theme";
-import WriterViewNews from "../Pages/Writer/News/WriterViewNews";
-import AdminViewNews from "../Pages/Admin/News/AdminViewNews";
-import UpdatePassword from "../Pages/Admin/Profile/UpdatePassword";
-import AllWriters from "../Pages/Admin/WriterSetting/AllWriters";
-import AddWriter from "../Pages/Admin/WriterSetting/AddWriter";
-import EditWriter from "../Pages/Admin/WriterSetting/EditWriter";
-import ViewWriter from "../Pages/Admin/WriterSetting/ViewWriter";
 
 export const routes = createBrowserRouter([
   {
@@ -57,7 +57,7 @@ export const routes = createBrowserRouter([
         element: <News />,
       },
       {
-        path: "/news/:category/:id",
+        path: "/news/:category/:slug",
         element: <NewsDetails />,
       },
     ],

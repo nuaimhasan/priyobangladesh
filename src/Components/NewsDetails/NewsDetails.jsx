@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
+import perser from "html-react-parser";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   useGetAllNewsQuery,
-  useGetNewsByIdQuery,
+  useGetNewsBySlugQuery,
 } from "../../redux/news/newsApi";
 import CategoryLength from "../NewsPage/CategoryLength";
 import BreadCrumb from "../UI/BreadCrumb";
@@ -12,10 +13,10 @@ import RecentNews from "../UI/RecentNews/RecentNews";
 import SectionHeader from "../UI/SectionHeader";
 
 export default function NewsDetails() {
-  const { id } = useParams();
-  console.log(id);
-  const { data, isLoading } = useGetNewsByIdQuery(id);
+  const { slug } = useParams();
+  const { data, isLoading } = useGetNewsBySlugQuery(slug);
   const news = data?.data;
+  const perserDescription = news?.description && perser(news?.description);
 
   const query = {};
   const [limit, setLimit] = useState(4);
@@ -49,12 +50,12 @@ export default function NewsDetails() {
               <p className="text-primary font-semibold uppercase">
                 {news?.category?.category}
               </p>
-              <p className="text-sm">{news?.author}</p>
+              <p className="text-sm">{news?.writer?.name}</p>
             </div>
             <h1 className="text-xl font-medium">{news?.title}</h1>
             <p className=" text-sm mb-2">{news?.createdAt.slice(0, 10)}</p>
 
-            <p>{news?.description}</p>
+            <p>{perserDescription}</p>
           </div>
 
           <div className="shrink-0 md:w-72 w-full">
@@ -73,9 +74,11 @@ export default function NewsDetails() {
         <div className="my-10">
           <SectionHeader title="Related News" />
           <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3">
-            {newses?.map((news) => (
-              <NewsCard key={news?._id} news={news} />
-            ))}
+            {newses
+              ?.filter((news) => news._id !== data?.data?._id)
+              .map((news) => (
+                <NewsCard key={news?._id} news={news} />
+              ))}
           </div>
         </div>
       </div>

@@ -37,6 +37,10 @@ export const newsApi = baseApi.injectEndpoints({
       query: (newsId) => `/news/${newsId}`,
       providesTags: ["news"],
     }),
+    getNewsBySlug: builder.query({
+      query: (slug) => `/news/newsBySlug/${slug}`,
+      providesTags: ["news"],
+    }),
     updateStatus: builder.mutation({
       query: (id) => ({
         url: `/news/status-change/${id}`,
@@ -57,6 +61,7 @@ export const {
   useDeleteNewsMutation,
   useGetAllNewsQuery,
   useGetNewsByIdQuery,
+  useGetNewsBySlugQuery,
   useUpdateStatusMutation,
   useGetNewsByWriterQuery,
 } = newsApi;

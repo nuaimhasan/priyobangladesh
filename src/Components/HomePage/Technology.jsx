@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useGetAllNewsQuery } from "../../redux/news/newsApi";
 import SecondaryNewsCard from "../UI/Cards/SecondaryNewsCard";
 import SectionHeader from "../UI/SectionHeader";
+import BigNewsCard from "../UI/Cards/BigNewsCard";
 
 export default function Technology() {
   const query = {};
@@ -22,31 +23,7 @@ export default function Technology() {
       <SectionHeader title="Technology" />
       <div className="grid md:grid-cols-2 gap-3">
         {newses?.length > 0 && (
-          <div className="bg-white rounded-md h-auto">
-            <div className="relative">
-              <img
-                src={`${import.meta.env.VITE_BACKEND_URL}/news/${
-                  newses[0]?.image
-                }`}
-                alt=""
-                className="w-full h-48 object-cover rounded-t-md"
-              />
-              <span className="absolute left-2 bottom-2 text-xs bg-primary text-white p-1 rounded-md">
-                {newses[0]?.category?.category}
-              </span>
-            </div>
-            <div className="p-4 flex flex-col gap-y-1">
-              <h1 className="text-lg font-semibold">{newses[0]?.title}</h1>
-              <p className="text-sm text-gray-500">
-                {newses[0]?.createdAt.slice(0, 10)} | {newses[0]?.writer?.name}
-              </p>
-              <p>
-                {newses[0]?.description.length > 160
-                  ? newses[0]?.description.slice(0, 160) + "..."
-                  : newses[0]?.description}
-              </p>
-            </div>
-          </div>
+          <BigNewsCard news={newses[0]} />
         )}
         <div className="flex flex-col gap-3 h-auto">
           {newses?.slice(1).map((news) => (

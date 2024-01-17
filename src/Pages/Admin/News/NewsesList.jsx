@@ -6,6 +6,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
+import Pagination from "../../../Components/UI/Pagination";
 import {
   useDeleteNewsMutation,
   useGetAllNewsQuery,
@@ -59,6 +60,13 @@ export default function NewsesList() {
     await updateStatus(id);
   };
 
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber < 1) return;
+    if (pageNumber > data?.meta?.total / limit) return;
+
+    setPage(pageNumber);
+  };
+
   return (
     <div>
       <div className="lg:hidden block">
@@ -97,7 +105,7 @@ export default function NewsesList() {
       </div>
 
       {/* all news */}
-      <div className="overflow-x-auto bg-white rounded-md shadow-lg mt-1">
+      <div className="overflow-x-auto bg-white rounded-md shadow-lg mt-1 pb-5">
         <table className="min-w-full divide-y divide-gray-200 dashboard_table">
           <thead className="bg-white">
             <tr>
@@ -170,6 +178,14 @@ export default function NewsesList() {
             ))}
           </tbody>
         </table>
+
+        {/* pagination */}
+        <Pagination
+          handlePageChange={handlePageChange}
+          limit={limit}
+          total={data?.meta?.total}
+          page={page}
+        />
       </div>
     </div>
   );
