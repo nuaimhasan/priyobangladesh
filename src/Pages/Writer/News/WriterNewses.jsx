@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa6";
 import { FiEdit3 } from "react-icons/fi";
@@ -6,6 +7,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
+import Pagination from "../../../Components/UI/Pagination";
 import {
   useDeleteNewsMutation,
   useGetNewsByWriterQuery,
@@ -16,7 +18,18 @@ export default function WriterNewsesList() {
   const writerId = loggedUser?.data?._id;
 
   const [deleteNews, { isSuccess, isError }] = useDeleteNewsMutation();
-  const { data, isLoading } = useGetNewsByWriterQuery(writerId);
+
+  const query = {};
+  const [status, setStatus] = useState("active");
+  const [title, setTitle] = useState("");
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
+  query["status"] = status;
+  query["title"] = title;
+  query["page"] = page;
+  query["limit"] = limit;
+  const { data, isLoading } = useGetNewsByWriterQuery({ writerId, ...query });
   const newses = data?.data;
 
   useEffect(() => {
@@ -38,6 +51,13 @@ export default function WriterNewsesList() {
 
     await deleteNews(id);
   };
+
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber < 1) return;
+    if (pageNumber > data?.meta?.total / limit) return;
+
+    setPage(pageNumber);
+  };
   return (
     <div>
       <div className="lg:hidden block">
@@ -56,20 +76,18 @@ export default function WriterNewsesList() {
         </div>
         <div className="flex items-center gap-5 w-full">
           <select
-            // value={filter}
-            // onChange={(e) => handleFilterChange(e.target.value)}
+            onChange={(e) => setStatus(e.target.value)}
             className="border border-gray-400 rounded-md p-1 text-sm md:w-[20%] w-[35%] focus:outline-none focus:border-primary"
           >
             <option value="all">--Select Status--</option>
             <option value="active">Active</option>
             <option value="pending">Pending</option>
-            <option value="deactive">Deactive</option>
+            <option value="inactive">Inactive</option>
           </select>
 
           <input
             type="text"
-            // value={searchQuery}
-            // onChange={handleSearchChange}
+            onChange={(e) => setTitle(e.target.value)}
             className="border border-gray-400 rounded-md p-1 text-sm md:w-1/4 focus:outline-none focus:border-primary placeholder:text-xs"
             placeholder="Search Title, Category..."
           />
@@ -77,7 +95,7 @@ export default function WriterNewsesList() {
       </div>
 
       {/* all news */}
-      <div className="overflow-x-auto bg-white rounded-md shadow-lg mt-1">
+      <div className="overflow-x-auto bg-white rounded-md shadow-lg mt-1 pb-5">
         <table className="min-w-full divide-y divide-gray-200 dashboard_table">
           <thead className="bg-white">
             <tr>
@@ -145,6 +163,14 @@ export default function WriterNewsesList() {
             ))}
           </tbody>
         </table>
+
+        {/* pagination */}
+        <Pagination
+          handlePageChange={handlePageChange}
+          limit={limit}
+          total={data?.meta?.total}
+          page={page}
+        />
       </div>
     </div>
   );

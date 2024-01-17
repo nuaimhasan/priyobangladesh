@@ -49,9 +49,10 @@ export const newsApi = baseApi.injectEndpoints({
       invalidatesTags: ["news"],
     }),
     getNewsByWriter: builder.query({
-      query: (writerId) => ({
+      query: ({ writerId, ...query }) => ({
         url: `/news/writer/${writerId}`,
         method: "GET",
+        params: query,
       }),
       providesTags: ["news"],
     }),

@@ -55,7 +55,7 @@ export default function MenuHeader() {
           ))}
         </div>
 
-        <div className="lg:hidden">
+        <div className="lg:hidden z-50">
           <button
             onClick={() => setMobileMenu(true)}
             className="text-2xl text-white mt-1.5"

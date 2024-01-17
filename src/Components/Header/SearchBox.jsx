@@ -63,7 +63,7 @@ export default function SearchBox({
                 className="hover:bg-gray-100 p-1"
               >
                 <Link
-                  to={`/news/${news?.category?.category}/${news?._id}`}
+                  to={`/news/${news?.category?.category}/${news?.slug}`}
                   className="flex gap-2 items-center"
                 >
                   <img

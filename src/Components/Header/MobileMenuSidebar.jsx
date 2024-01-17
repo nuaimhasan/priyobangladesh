@@ -1,9 +1,15 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useGetAllCategoryQuery } from "../../redux/category/categoryApi";
 import SearchBox from "./SearchBox";
 
 export default function MobileMenuSidebar({ mobileMenu, setMobileMenu }) {
   const [tab, setTab] = useState(1);
+
+  const { data } = useGetAllCategoryQuery();
+  const categories = data?.data;
+
   return (
     <div className="lg:hidden">
       <button
@@ -37,31 +43,18 @@ export default function MobileMenuSidebar({ mobileMenu, setMobileMenu }) {
                 <NavLink to="/">Home</NavLink>
               </li>
               <li>
-                <NavLink to="/shops">Shop</NavLink>
-              </li>
-              <li>
-                <NavLink to="/about-us">About Us</NavLink>
+                <NavLink to="/news">News</NavLink>
               </li>
             </ul>
           )}
 
           {tab === 2 && (
             <ul className="px-4 flex flex-col gap-2">
-              <li>
-                <Link to="/news/sports">Sports</Link>
-              </li>
-              <li>
-                <Link to="/news/technology">Technology</Link>
-              </li>
-              <li>
-                <Link to="/news/health">Health</Link>
-              </li>
-              <li>
-                <Link to="/news/entertainment">Entertainment</Link>
-              </li>
-              <li>
-                <Link to="/news/business">Business</Link>
-              </li>
+              {categories?.map((category) => (
+                <li key={category._id}>
+                  <Link to={`/news/${category.slug}`}>{category.category}</Link>
+                </li>
+              ))}
             </ul>
           )}
         </div>
