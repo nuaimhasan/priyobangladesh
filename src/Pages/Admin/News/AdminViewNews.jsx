@@ -2,12 +2,13 @@ import { useParams } from "react-router-dom";
 import ViewNews from "../../../Components/Dashboard/ViewNews";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
 import { useGetNewsByIdQuery } from "../../../redux/news/newsApi";
+import Spinner from "../../../Components/Spinner/Spinner";
 
 export default function AdminViewNews() {
   const { id } = useParams();
   const { data, isLoading } = useGetNewsByIdQuery(id);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   const news = data?.data;
 

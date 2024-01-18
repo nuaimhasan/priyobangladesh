@@ -27,7 +27,8 @@ export default function AddWriter() {
 
     const data = { name, userName, password, phone };
 
-    await addWriter(data);
+    const res = await addWriter(data);
+    console.log(res);
   };
 
   return (

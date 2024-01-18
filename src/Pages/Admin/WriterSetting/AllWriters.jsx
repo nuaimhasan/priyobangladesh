@@ -7,6 +7,7 @@ import {
   useGetWritersQuery,
   useUpdateWriterStatusMutation,
 } from "../../../redux/user/userApi";
+import Spinner from "../../../Components/Spinner/Spinner";
 
 export default function AllWriters() {
   const query = {};
@@ -21,7 +22,7 @@ export default function AllWriters() {
     useUpdateWriterStatusMutation();
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <Spinner />;
   }
 
   const writers = data?.data;

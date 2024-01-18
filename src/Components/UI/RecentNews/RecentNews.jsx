@@ -29,7 +29,7 @@ export default function RecentNews() {
               <img
                 src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}
                 alt=""
-                className="w-20 h-20 object-cover rounded-md"
+                className="w-20 h-16 object-cover rounded-md"
               />
               <div>
                 <p className="text-xs text-primary">

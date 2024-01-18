@@ -12,6 +12,7 @@ import {
   useDeleteNewsMutation,
   useGetNewsByWriterQuery,
 } from "../../../redux/news/newsApi";
+import Spinner from "../../../Components/Spinner/Spinner";
 
 export default function WriterNewsesList() {
   const { loggedUser } = useSelector((state) => state.user);
@@ -41,7 +42,7 @@ export default function WriterNewsesList() {
     }
   }, [isSuccess, isError]);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   const handleDelete = async (id) => {
     const confirm = window.confirm(

@@ -29,7 +29,9 @@ export default function AdminHeader({ setSidebar }) {
           <img
             src={
               loggedUser?.data?.image
-                ? `${import.meta.env.VITE_BACKEND_URL}/user/${loggedUser?.data?.image}`
+                ? `${import.meta.env.VITE_BACKEND_URL}/user/${
+                    loggedUser?.data?.image
+                  }`
                 : "/images/profile.png"
             }
             alt="user"

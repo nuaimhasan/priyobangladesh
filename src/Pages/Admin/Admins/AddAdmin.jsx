@@ -15,7 +15,11 @@ export default function AddAdmin() {
       navigate("/admin/admins");
     }
     if (isError) {
-      Swal.fire("", "Username & number should  be unique!", "error");
+      Swal.fire(
+        "",
+        error?.data?.error ? error?.data?.error : "Somethin went wrong",
+        "error"
+      );
     }
   }, [isSuccess, isError, error, navigate]);
 

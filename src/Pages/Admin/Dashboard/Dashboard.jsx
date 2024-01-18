@@ -11,6 +11,7 @@ import {
   useUpdateStatusMutation,
 } from "../../../redux/news/newsApi";
 import { useGetWritersQuery } from "../../../redux/user/userApi";
+import Spinner from "../../../Components/Spinner/Spinner";
 
 export default function Dashboard() {
   const [updateStatus, { isLoading: statusLoading }] =
@@ -34,7 +35,7 @@ export default function Dashboard() {
     }
   }, [isSuccess, isError]);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   const handleDelete = async (id) => {
     const confirm = window.confirm(
@@ -97,7 +98,7 @@ export default function Dashboard() {
 
       {/* recent news */}
 
-      <div className="bg-white shadow-lg py-3 px-5 rounded-md flex items-center justify-between mt-14">
+      <div className="bg-white shadow-lg py-3 px-5 rounded-md flex items-center justify-between mt-6">
         <h1 className="md:text-xl text-base font-semibold">Recent News</h1>
         <Link
           to="/admin/news"
@@ -122,14 +123,18 @@ export default function Dashboard() {
           <tbody className="divide-y divide-gray-200">
             {newses?.map((data) => (
               <tr key={data?._id}>
-                <td>{data?.title}</td>
+                <td>
+                  {data?.title?.length > 30
+                    ? data?.title?.slice(0, 30) + "..."
+                    : data?.title}
+                </td>
                 <td>
                   <img
                     src={`${import.meta.env.VITE_BACKEND_URL}/news/${
                       data?.image
                     }`}
                     alt=""
-                    className="h-12"
+                    className="h-8 rounded"
                   />
                 </td>
                 <td>{data?.category?.category}</td>

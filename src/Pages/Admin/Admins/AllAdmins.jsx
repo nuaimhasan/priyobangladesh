@@ -7,6 +7,7 @@ import {
   useDeleteUserMutation,
   useGetAdminsQuery,
 } from "../../../redux/user/userApi";
+import Spinner from "../../../Components/Spinner/Spinner";
 
 export default function AllAdmins() {
   const { data, isLoading } = useGetAdminsQuery();
@@ -23,7 +24,7 @@ export default function AllAdmins() {
   }, [deleteSuccess, deleteError]);
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <Spinner />;
   }
 
   const admins = data?.data;

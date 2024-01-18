@@ -26,7 +26,7 @@ export default function Header() {
                   data?.data[0]?.logo
                 }`}
                 alt=""
-                className="md:h-20 h-16"
+                className="w-48"
               />
             </Link>
             <div className="w-1/2 rounded-md ">
@@ -40,7 +40,7 @@ export default function Header() {
                   disableOnInteraction: false,
                 }}
                 modules={[Autoplay]}
-                className="w-full md:h-20 h-16"
+                className="w-full h-16"
               >
                 {advertises?.data?.map((advertise) => (
                   <SwiperSlide key={advertise?._id}>
@@ -49,7 +49,7 @@ export default function Header() {
                         advertise?.image
                       }`}
                       alt=""
-                      className="w-full h-full object-cover rounded-md"
+                      className="w-full h-16 object-cover rounded-md"
                     />
                   </SwiperSlide>
                 ))}

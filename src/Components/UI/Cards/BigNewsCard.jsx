@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 export default function BigNewsCard({ news }) {
   const shortDescription =
-    news?.description && news?.description.length > 160
-      ? news?.description.slice(0, 160) + "..."
+    news?.description && news?.description.length > 150
+      ? news?.description.slice(0, 150) + "..."
       : news?.description;
   const perserDescription = shortDescription && perser(shortDescription);
   return (

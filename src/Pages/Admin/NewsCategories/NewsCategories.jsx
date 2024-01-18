@@ -8,6 +8,7 @@ import {
   useDeleteCategoryMutation,
   useGetAllCategoryQuery,
 } from "../../../redux/category/categoryApi";
+import Spinner from "../../../Components/Spinner/Spinner";
 
 export default function NewsCategories() {
   const { data, isLoading } = useGetAllCategoryQuery();
@@ -23,7 +24,7 @@ export default function NewsCategories() {
     }
   }, [isSuccess, isError]);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   const handleDelete = async (id) => {
     const confirm = window.confirm(

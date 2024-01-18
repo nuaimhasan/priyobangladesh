@@ -2,11 +2,11 @@
 
 import { Link } from "react-router-dom";
 
-export default function SecondaryNewsCard({news}) {
+export default function SecondaryNewsCard({ news }) {
   return (
     <>
       <Link key={news._id} to={`/news/${news?.category?.slug}/${news.slug}`}>
-        <div className="bg-white flex gap-x-4 rounded-md h-24">
+        <div className="bg-white flex gap-x-4 rounded-md h-[84px]">
           <div className="w-1/3">
             <img
               src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}

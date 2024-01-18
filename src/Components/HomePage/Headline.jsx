@@ -6,12 +6,13 @@ export default function Headline() {
       <div className="container">
         {/* breaking news */}
         <div className="flex items-center">
-          <div className="bg-gray-100 py-1  px-2 font-medium ">
-            <p>Headline</p>
+          <div className="bg-gray-100 py-1 px-2 font-medium ">
+            <h1 className="text-primary font-medium whitespace-nowrap">
+              Breaking News :
+            </h1>
           </div>
           <marquee behavior="scroll" direction="left">
             <div className="flex items-center gap-5 text-sm text-black">
-              <h1 className="text-primary font-medium">Breaking News :</h1>
               <p>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla
                 esse molestias facere autem minima odit rem obcaecati.

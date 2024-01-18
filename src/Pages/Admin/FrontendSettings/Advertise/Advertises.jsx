@@ -8,6 +8,7 @@ import {
   useDeleteAdvertiseMutation,
   useGetAllAdvertiseQuery,
 } from "../../../../redux/advertise/advertiseApi";
+import Spinner from "../../../../Components/Spinner/Spinner";
 
 export default function Advertises() {
   const { data, isLoading } = useGetAllAdvertiseQuery();
@@ -26,7 +27,7 @@ export default function Advertises() {
   }, [deleteSuccess, deleteError]);
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <Spinner />;
   }
 
   const handleDelete = async (id) => {

@@ -12,6 +12,7 @@ import {
   useGetAllNewsQuery,
   useUpdateStatusMutation,
 } from "../../../redux/news/newsApi";
+import Spinner from "../../../Components/Spinner/Spinner";
 
 export default function NewsesList() {
   const [updateStatus, { isLoading: statusLoading }] =
@@ -40,7 +41,7 @@ export default function NewsesList() {
     }
   }, [isSuccess, isError]);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
 
   const handleDelete = async (id) => {
     const confirm = window.confirm(

@@ -10,6 +10,7 @@ import {
   useGetNewsByIdQuery,
   useUpdateNewsMutation,
 } from "../../../redux/news/newsApi";
+import Spinner from "../../../Components/Spinner/Spinner";
 
 export default function EditNews() {
   const editor = useRef(null);
@@ -33,7 +34,7 @@ export default function EditNews() {
     }
   }, [isSuccess, isError, navigate]);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
   const news = data?.data;
 
   const handleSubmit = async (e) => {

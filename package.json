@@ -1,5 +1,6 @@
 {
   "name": "news-portal",
+  "homepage": "https://news.emanagerit.com",
   "private": true,
   "version": "0.0.0",
   "type": "module",

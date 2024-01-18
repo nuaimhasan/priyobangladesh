@@ -11,6 +11,7 @@ import BreadCrumb from "../UI/BreadCrumb";
 import NewsCard from "../UI/Cards/NewsCard";
 import RecentNews from "../UI/RecentNews/RecentNews";
 import SectionHeader from "../UI/SectionHeader";
+import Spinner from "../Spinner/Spinner";
 
 export default function NewsDetails() {
   const { slug } = useParams();
@@ -30,7 +31,7 @@ export default function NewsDetails() {
   });
   const newses = newsesData?.data;
 
-  if (isLoading || allLoading) return <h1>Loading...</h1>;
+  if (isLoading || allLoading) return <Spinner />;
 
   return (
     <div>

@@ -39,6 +39,8 @@ import UpdateWriterProfile from "../Pages/Writer/Profile/UpdateWriterProfile";
 import WriterProfile from "../Pages/Writer/Profile/WriterProfile";
 import WriterDashboard from "../Pages/Writer/WriterDashboard/WriterDashboard";
 import UpdateWriterPassword from "../Pages/Writer/Profile/UpdateWriterPassword";
+import AdminRoute from "../PrivateRoute/AdminRoute";
+import WriterRoute from "../PrivateRoute/WriterRoute";
 
 export const routes = createBrowserRouter([
   {
@@ -69,7 +71,11 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <AdminRoute>
+        <AdminLayout />
+      </AdminRoute>
+    ),
     children: [
       {
         path: "/admin",
@@ -180,7 +186,11 @@ export const routes = createBrowserRouter([
   // writer
   {
     path: "/writer",
-    element: <WriterLayout />,
+    element: (
+      <WriterRoute>
+        <WriterLayout />
+      </WriterRoute>
+    ),
     children: [
       {
         path: "/writer",

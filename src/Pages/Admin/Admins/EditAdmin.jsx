@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
-import {  useGetUserByIdQuery } from "../../../redux/user/userApi";
+import { useGetUserByIdQuery } from "../../../redux/user/userApi";
+import Spinner from "../../../Components/Spinner/Spinner";
 
 export default function EditAdmin() {
   const { id } = useParams();
@@ -8,7 +9,7 @@ export default function EditAdmin() {
   const { data, isLoading } = useGetUserByIdQuery(id);
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <Spinner />;
   }
   const admin = data?.data;
 

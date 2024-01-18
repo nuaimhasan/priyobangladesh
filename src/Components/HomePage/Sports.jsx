@@ -22,9 +22,7 @@ export default function Sports() {
     <div className="md:col-span-2 col-span-1">
       <SectionHeader title="Sports" />
       <div className="grid md:grid-cols-2 gap-3">
-        {newses?.length > 0 && (
-          <BigNewsCard news={newses[0]} />
-        )}
+        {newses?.length > 0 && <BigNewsCard news={newses[0]} />}
         <div className="flex flex-col gap-3 h-auto">
           {newses?.slice(1)?.map((news) => (
             <SecondaryNewsCard key={news?._id} news={news} />

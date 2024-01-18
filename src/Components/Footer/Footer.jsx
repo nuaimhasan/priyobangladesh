@@ -71,14 +71,10 @@ export default function Footer() {
 
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-[15px] text-neutral-content">
-            © 2023{" "}
-            <a
-              to="https://www.facebook.com/aestheticcloth247"
-              className="hover:underline"
-            >
-              newsportal.com
-            </a>
-            . All Rights Reserved.
+            © 2024 <strong>newsportal</strong>. All Rights Reserved. Powered by
+            <Link to="emanagerit.com" className="ml-1.5 underline">
+              eManager
+            </Link>
           </span>
           <ul className="flex items-center gap-2 text-neutral-content mt-3 sm:mt-0">
             <li>

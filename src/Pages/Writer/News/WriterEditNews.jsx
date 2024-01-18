@@ -3,11 +3,14 @@ import { useEffect, useRef, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import ImageUploading from "react-images-uploading";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
-import { useGetNewsByIdQuery, useUpdateNewsMutation } from "../../../redux/news/newsApi";
+import {
+  useGetNewsByIdQuery,
+  useUpdateNewsMutation,
+} from "../../../redux/news/newsApi";
 import { useGetAllCategoryQuery } from "../../../redux/category/categoryApi";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import Spinner from "../../../Components/Spinner/Spinner";
 
 export default function WriterEditNews() {
   const editor = useRef(null);
@@ -31,7 +34,7 @@ export default function WriterEditNews() {
     }
   }, [isSuccess, isError, navigate]);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Spinner />;
   const news = data?.data;
 
   const handleSubmit = async (e) => {
