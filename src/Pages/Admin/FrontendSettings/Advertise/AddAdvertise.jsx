@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import ImageUploading from "react-images-uploading";
-import BreadCrumb from "../../../../Components/UI/BreadCrumb";
-import { useCreateAdvertiseMutation } from "../../../../redux/advertise/advertiseApi";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import BreadCrumb from "../../../../Components/UI/BreadCrumb";
+import { useCreateAdvertiseMutation } from "../../../../redux/advertise/advertiseApi";
 
 export default function AddAdvertise() {
   const navigate = useNavigate();
@@ -12,18 +12,19 @@ export default function AddAdvertise() {
   const [addAdvertise, { isLoading, isSuccess, isError }] =
     useCreateAdvertiseMutation();
 
-    useEffect(() => {
-      if (isSuccess) {
-        Swal.fire("", "Advertise Added Successfully", "success");
-        navigate("/admin/front-end/advertise");
-      }
-      if (isError) {
-        Swal.fire("", "An error occured when adding", "error");
-      }
-    }, [isSuccess, isError, navigate]);
+  useEffect(() => {
+    if (isSuccess) {
+      Swal.fire("", "Advertise Added Successfully", "success");
+      navigate("/admin/front-end/advertise");
+    }
+    if (isError) {
+      Swal.fire("", "An error occured when adding", "error");
+    }
+  }, [isSuccess, isError, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const showingPlace = e.target.showingPlace.value;
 
     if (images.length === 0) {
       return alert("Please choose an image");
@@ -31,6 +32,7 @@ export default function AddAdvertise() {
 
     const formData = new FormData();
     formData.append("image", images[0]?.file);
+    formData.append("showingPlace", showingPlace);
 
     await addAdvertise(formData);
   };
@@ -45,7 +47,7 @@ export default function AddAdvertise() {
         <div className="p-5">
           <h1 className="text-xl font-semibold text-center">Add Advertise</h1>
 
-          <div className="py-10">
+          <form onSubmit={handleSubmit} className="py-10">
             <p className="mb-1">Image</p>
             <div className="p-4 sm:flex items-center gap-4 border rounded-md">
               <ImageUploading
@@ -87,17 +89,28 @@ export default function AddAdvertise() {
               </ImageUploading>
             </div>
 
+            <div className="flex flex-col gap-1 mt-3">
+              <label htmlFor="showingPlace">Showing Place</label>
+              <select
+                name="showingPlace"
+                className="border border-gray-400 rounded-md p-2 text-sm focus:outline-none focus:border-primary"
+              >
+                <option value="header">Header</option>
+                <option value="footer">Footer</option>
+                <option value="content">Content</option>
+              </select>
+            </div>
+
             <div className="flex flex-col gap-1 mt-5">
               <button
                 type="submit"
-                onClick={handleSubmit}
                 disabled={isLoading && "disabled"}
                 className="bg-primary text-white px-3 py-2 rounded-md uppercase"
               >
                 {isLoading ? "Loading..." : "Submit"}
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

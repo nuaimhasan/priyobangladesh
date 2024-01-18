@@ -11,6 +11,8 @@ import AboutUs from "../Pages/Admin/FrontendSettings/AboutUs";
 import AddAdvertise from "../Pages/Admin/FrontendSettings/Advertise/AddAdvertise";
 import Advertises from "../Pages/Admin/FrontendSettings/Advertise/Advertises";
 import EditAdvertise from "../Pages/Admin/FrontendSettings/Advertise/EditAdvertise";
+import AddBreakingNews from "../Pages/Admin/FrontendSettings/BreakingNews/AddBreakingNews";
+import BreakingNews from "../Pages/Admin/FrontendSettings/BreakingNews/BreakingNews";
 import ContactUs from "../Pages/Admin/FrontendSettings/ContactUs";
 import Logo from "../Pages/Admin/FrontendSettings/Logo";
 import Theme from "../Pages/Admin/FrontendSettings/Theme";
@@ -35,10 +37,10 @@ import WriterAddNews from "../Pages/Writer/News/WriterAddNews";
 import WriterEditNews from "../Pages/Writer/News/WriterEditNews";
 import WriterNewsesList from "../Pages/Writer/News/WriterNewses";
 import WriterViewNews from "../Pages/Writer/News/WriterViewNews";
+import UpdateWriterPassword from "../Pages/Writer/Profile/UpdateWriterPassword";
 import UpdateWriterProfile from "../Pages/Writer/Profile/UpdateWriterProfile";
 import WriterProfile from "../Pages/Writer/Profile/WriterProfile";
 import WriterDashboard from "../Pages/Writer/WriterDashboard/WriterDashboard";
-import UpdateWriterPassword from "../Pages/Writer/Profile/UpdateWriterPassword";
 import AdminRoute from "../PrivateRoute/AdminRoute";
 import WriterRoute from "../PrivateRoute/WriterRoute";
 
@@ -180,6 +182,14 @@ export const routes = createBrowserRouter([
       {
         path: "/admin/front-end/advertise/edit-advertise/:id",
         element: <EditAdvertise />,
+      },
+      {
+        path: "/admin/front-end/breaking-news",
+        element: <BreakingNews />,
+      },
+      {
+        path: "/admin/front-end/breaking-news/add-breaking-news",
+        element: <AddBreakingNews />,
       },
     ],
   },

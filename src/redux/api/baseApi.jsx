@@ -23,5 +23,6 @@ export const baseApi = createApi({
     "news",
     "advertise",
     "theme",
+    "breakingnews",
   ],
 });

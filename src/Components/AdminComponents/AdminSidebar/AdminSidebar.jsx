@@ -74,6 +74,10 @@ export default function AdminSidebar() {
           title: "Theme",
           path: "/admin/front-end/theme",
         },
+        {
+          title: "Breaking News",
+          path: "/admin/front-end/breaking-news",
+        }
       ],
     },
   ];

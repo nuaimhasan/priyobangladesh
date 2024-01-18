@@ -31,11 +31,14 @@ export default function EditAdvertise() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const showingPlace = e.target.showingPlace.value;
 
     const formData = new FormData();
+    formData.append("showingPlace", showingPlace);
     if (images.length > 0) {
       formData.append("image", images[0]?.file);
     }
+    
 
     await updateAdvertise({ id, formData });
   };
@@ -50,7 +53,7 @@ export default function EditAdvertise() {
         <div className="p-5">
           <h1 className="text-xl font-semibold text-center">Edit Advertise</h1>
 
-          <div className="py-10">
+          <form onSubmit={handleSubmit} className="py-10">
             <p className="mb-1">Image</p>
             <div className="p-4 sm:flex items-center gap-4 border rounded-md">
               <ImageUploading
@@ -101,17 +104,30 @@ export default function EditAdvertise() {
               />
             )}
 
+            <div className="flex flex-col gap-1 mt-3">
+              <label htmlFor="showingPlace">Showing Place</label>
+              <select
+                name="showingPlace"
+                defaultValue={data?.data?.showingPlace}
+                className="border border-gray-400 rounded-md p-2 text-sm focus:outline-none focus:border-primary"
+              >
+                <option disabled defaultValue={data?.data?.showingPlace}>Select Value</option>
+                <option value="header">Header</option>
+                <option value="footer">Footer</option>
+                <option value="content">Content</option>
+              </select>
+            </div>
+
             <div className="flex flex-col gap-1 mt-5">
               <button
                 type="submit"
-                onClick={handleSubmit}
                 disabled={isLoading && "disabled"}
                 className="bg-primary text-white px-3 py-2 rounded-md uppercase"
               >
                 {isLoading ? "Loading..." : "Update"}
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
