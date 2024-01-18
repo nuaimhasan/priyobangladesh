@@ -1,6 +1,12 @@
 /* eslint-disable react/no-unknown-property */
 
+import perser from "html-react-parser";
+import { useGetBreakingNewsQuery } from "../../redux/breakingNews/breakingNewsApi";
+
 export default function Headline() {
+  const { data } = useGetBreakingNewsQuery();
+  const breakingNews = data?.data;
+
   return (
     <div className="bg-white">
       <div className="container">
@@ -13,14 +19,10 @@ export default function Headline() {
           </div>
           <marquee behavior="scroll" direction="left">
             <div className="flex items-center gap-5 text-sm text-black">
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla
-                esse molestias facere autem minima odit rem obcaecati.
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Consequuntur fuga sapiente, ex ab doloremque vel.
-              </p>
+              {breakingNews?.map((news) => {
+                const perserDescription = news?.news && perser(news?.news);
+                return <p key={news?._id}>{perserDescription}</p>;
+              })}
             </div>
           </marquee>
         </div>

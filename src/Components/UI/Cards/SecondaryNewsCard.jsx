@@ -5,13 +5,17 @@ import { Link } from "react-router-dom";
 export default function SecondaryNewsCard({ news }) {
   return (
     <>
-      <Link key={news._id} to={`/news/${news?.category?.slug}/${news.slug}`}>
-        <div className="bg-white flex gap-x-4 rounded-md h-[84px]">
+      <Link
+        key={news._id}
+        to={`/news/${news?.category?.slug}/${news.slug}`}
+        className="group hover:scale-105 delay-150 duration-300 transition-all"
+      >
+        <div className="bg-white flex gap-x-4 rounded-md h-[84px] overflow-hidden group-hover:shadow-lg transition-all duration-300">
           <div className="w-1/3">
             <img
               src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}
               alt=""
-              className="w-full h-full object-cover rounded-l-md"
+              className="w-full h-full object-cover rounded-l-md "
             />
           </div>
           <div className="flex items-start justify-center flex-col gap-x-1">

@@ -19,7 +19,11 @@ export const advertiseApi = baseApi.injectEndpoints({
       invalidatesTags: ["advertise"],
     }),
     getAllAdvertise: builder.query({
-      query: () => `/advertise/all-advertise`,
+      query: (query) => ({
+        url: `/advertise/all-advertise`,
+        method: "GET",
+        params: query,
+      }),
       providesTags: ["advertise"],
     }),
     deleteAdvertise: builder.mutation({

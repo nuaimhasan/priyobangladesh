@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import MenuHeader from "./MenuHeader";
@@ -7,10 +8,15 @@ import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import { useGetAllAdvertiseQuery } from "../../redux/advertise/advertiseApi";
 import { useGetAllLogoQuery } from "../../redux/logo/logoApi";
+import { useState } from "react";
 
 export default function Header() {
   const { data } = useGetAllLogoQuery();
-  const { data: advertises } = useGetAllAdvertiseQuery();
+
+  const query = {}
+  const [showingPlace, setShowingPlace] = useState('header')
+  query["showingPlace"] = showingPlace
+  const { data: advertises } = useGetAllAdvertiseQuery({ ...query});
 
   return (
     <>
