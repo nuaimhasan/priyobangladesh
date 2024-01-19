@@ -24,6 +24,7 @@ export default function AddAdvertise() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const link = e.target.link.value;
     const showingPlace = e.target.showingPlace.value;
 
     if (images.length === 0) {
@@ -32,6 +33,7 @@ export default function AddAdvertise() {
 
     const formData = new FormData();
     formData.append("image", images[0]?.file);
+    formData.append("link", link);
     formData.append("showingPlace", showingPlace);
 
     await addAdvertise(formData);
@@ -87,6 +89,15 @@ export default function AddAdvertise() {
                   </div>
                 )}
               </ImageUploading>
+            </div>
+
+            <div className="flex flex-col gap-1 mt-3">
+              <label htmlFor="link">Link</label>
+              <input
+                type="text"
+                name="link"
+                className="w-full border rounded outline-none px-3 py-1.5"
+              />
             </div>
 
             <div className="flex flex-col gap-1 mt-3">

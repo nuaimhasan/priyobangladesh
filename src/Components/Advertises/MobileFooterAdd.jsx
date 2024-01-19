@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useGetAllAdvertiseQuery } from "../../redux/advertise/advertiseApi";
+import { Link } from "react-router-dom";
 
 export default function MobileFooterAdd() {
   const query = {};
@@ -16,11 +17,13 @@ export default function MobileFooterAdd() {
       }`}
     >
       <div className="relative">
-        <img
-          src={`${import.meta.env.VITE_BACKEND_URL}/advertise/${add?.image}`}
-          alt=""
-          className="w-[95%] h-14 mx-auto"
-        />
+        <Link to={add?.link} target="_blank">
+          <img
+            src={`${import.meta.env.VITE_BACKEND_URL}/advertise/${add?.image}`}
+            alt=""
+            className="w-[95%] h-14 mx-auto"
+          />
+        </Link>
 
         <button
           onClick={() => setShow(false)}

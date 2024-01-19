@@ -4,24 +4,32 @@ import { Link } from "react-router-dom";
 import { useGetAllCategoryQuery } from "../../redux/category/categoryApi";
 import { useGetAllContactUsQuery } from "../../redux/contactUs/contactUsApi";
 import SectionHeader from "../UI/SectionHeader";
+import { useGetAllLogoQuery } from "../../redux/logo/logoApi";
 
 export default function Footer() {
   const { data } = useGetAllContactUsQuery();
+  const { data: logo } = useGetAllLogoQuery();
   const contactUs = data?.data[0];
 
   const { data: categories } = useGetAllCategoryQuery();
   return (
-    <footer className="border-t pt-8 pb-4 bg-secondary text-white">
+    <footer className="border-t pt-8 pb-4 bg-secondary text-gray-400">
       <div className="container">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="w-max">
               <Link to="/">
-                <img src="/images/news-portal.png" alt="" className="w-36" />
+                <img
+                  src={`${import.meta.env.VITE_BACKEND_URL}/logo/${
+                    logo?.data[0]?.logo
+                  }`}
+                  alt=""
+                  className="w-40 sm:w-48 mx-auto"
+                />
               </Link>
             </div>
 
-            <div className="mt-2 text-sm text-neutral-content">
+            <div className="mt-2 text-sm ">
               <p>
                 Here you can find all the latest news and updates from the
                 world. We are a team of dedicated journalists who are working
@@ -33,7 +41,7 @@ export default function Footer() {
 
           <div>
             <SectionHeader title="Categories" />
-            <ul className="text-neutral-content text-[15px]">
+            <ul className="text-[15px]">
               {categories?.data?.map((category) => (
                 <li key={category._id}>
                   <Link
@@ -49,7 +57,7 @@ export default function Footer() {
 
           <div>
             <SectionHeader title="Get In Touch" />
-            <ul className="text-neutral-content text-[15px]">
+            <ul className="text-[15px]">
               <li className="mb-1">
                 <p className="italic">{contactUs?.address}</p>
               </li>
@@ -70,13 +78,17 @@ export default function Footer() {
         <hr className="my-4 border-gray-200 sm:mx-auto" />
 
         <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-[15px] text-neutral-content">
+          <span className="text-[15px] ">
             © 2024 <strong>newsportal</strong>. All Rights Reserved. Powered by
-            <Link to="emanagerit.com" className="ml-1.5 underline">
+            <Link
+              to="https://emanagerit.com"
+              target="blank"
+              className="ml-1.5 underline"
+            >
               eManager
             </Link>
           </span>
-          <ul className="flex items-center gap-2 text-neutral-content mt-3 sm:mt-0">
+          <ul className="flex items-center gap-2 mt-3 sm:mt-0">
             <li>
               <a href={contactUs?.facebook} target="_blank" rel="noreferrer">
                 <BsFacebook className="text-lg hover:-mt-2 duration-300" />
