@@ -43,6 +43,7 @@ import WriterProfile from "../Pages/Writer/Profile/WriterProfile";
 import WriterDashboard from "../Pages/Writer/WriterDashboard/WriterDashboard";
 import AdminRoute from "../PrivateRoute/AdminRoute";
 import WriterRoute from "../PrivateRoute/WriterRoute";
+import AdminNewses from "../Pages/Admin/News/AdminNewsws";
 
 export const routes = createBrowserRouter([
   {
@@ -102,6 +103,10 @@ export const routes = createBrowserRouter([
       {
         path: "/admin/news",
         element: <NewsesList />,
+      },
+      {
+        path: "/admin/admin-news",
+        element: <AdminNewses />,
       },
       {
         path: "/admin/news/add-news",

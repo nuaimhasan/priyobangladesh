@@ -4,7 +4,7 @@ import perser from "html-react-parser";
 import { Link } from "react-router-dom";
 
 export default function ViewNews({ news }) {
-  const perserDescription = news?.description && perser(news?.description);
+  const perserDescription = news?.details && perser(news?.details);
   return (
     <div>
       <div className="flex items-center justify-between bg-white shadow-lg p-5 rounded-md mb-1">
@@ -25,7 +25,7 @@ export default function ViewNews({ news }) {
             <img
               src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}
               alt="news"
-              className="w-full h-full object-cover"
+              className="w-full md:w-1/2 mx-auto h-full rounded"
             />
           </div>
           <div className="flex flex-col">
@@ -37,7 +37,10 @@ export default function ViewNews({ news }) {
               <p className="text-xs text-gray-400">|</p>
               <p className="text-xs text-gray-400">{news.writer?.name}</p>
             </div>
-            <p className="text-sm">{perserDescription}</p>
+            <div className="text-[15px] text-neutral-content">
+              <p>{news?.shortDescription}</p>
+              <p>{perserDescription}</p>
+            </div>
           </div>
         </div>
       </div>

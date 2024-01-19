@@ -7,6 +7,7 @@ import SectionHeader from "../../UI/SectionHeader";
 export default function NewsSection({ category }) {
   const query = {};
   query["category"] = category?.slug;
+  query["status"] = "active";
   const { data, isLoading, isError, error } = useGetAllNewsQuery({
     ...query,
   });
@@ -22,7 +23,7 @@ export default function NewsSection({ category }) {
   if (!isLoading && !isError && newses?.length > 0) {
     content = (
       <section>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           <div>{newses?.length > 0 && <BigNewsCard news={newses[0]} />}</div>
           <div>{newses?.length > 1 && <BigNewsCard news={newses[1]} />}</div>
           <div className="flex flex-col gap-3 h-auto">
@@ -37,7 +38,7 @@ export default function NewsSection({ category }) {
 
   if (newses?.length > 0) {
     return (
-      <div className="pb-10">
+      <div className="pb-6">
         <div className="container">
           <SectionHeader title={category?.category} />
 

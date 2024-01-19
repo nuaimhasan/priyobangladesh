@@ -1,24 +1,16 @@
-import perser from "html-react-parser";
 import { Link } from "react-router-dom";
 
-/* eslint-disable react/prop-types */
 export default function NewsCard({ news }) {
-  const shortDescription =
-    news?.description && news?.description.length > 65
-      ? news?.description.slice(0, 65) + "..."
-      : news?.description;
-  const perserDescription = shortDescription && perser(shortDescription);
-
   return (
     <Link
       to={`/news/${news?.category?.slug}/${news?.slug}`}
       className="bg-white rounded-md hover:scale-105 transition ease-in-out delay-75 duration-300"
     >
-      <div className="w-full h-52 relative">
+      <div className="w-full h-40 relative">
         <img
           src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}
           alt=""
-          className="w-full h-full object-cover rounded-t-md"
+          className="w-full h-full rounded-t-md"
         />
         <div className="absolute bottom-2 left-2 flex items-center gap-x-2">
           {news?.rating >= 4 ? (
@@ -40,7 +32,11 @@ export default function NewsCard({ news }) {
         <p className="text-xs">
           {news?.createdAt.slice(0, 10)} , {news?.writer?.name}
         </p>
-        <p className="text-sm">{perserDescription}</p>
+        <p className="text-[15px] text-neutral-content">
+          {news?.shortDescription?.length > 100
+            ? news?.shortDescription.slice(0, 100) + "..."
+            : news?.shortDescription}
+        </p>
       </div>
     </Link>
   );

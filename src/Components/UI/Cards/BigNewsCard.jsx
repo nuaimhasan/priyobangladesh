@@ -1,14 +1,6 @@
-/* eslint-disable react/prop-types */
-
-import perser from "html-react-parser";
 import { Link } from "react-router-dom";
 
 export default function BigNewsCard({ news }) {
-  const shortDescription =
-    news?.description && news?.description.length > 150
-      ? news?.description.slice(0, 150) + "..."
-      : news?.description;
-  const perserDescription = shortDescription && perser(shortDescription);
   return (
     <>
       <Link
@@ -29,12 +21,18 @@ export default function BigNewsCard({ news }) {
           </div>
           <div className="p-4 flex flex-col gap-y-1">
             <h1 className="text-lg font-semibold group-hover:text-primary transition-all duration-300">
-              {news?.title}
+              {news?.title?.length > 50
+                ? news?.title.slice(0, 50) + "..."
+                : news?.title}
             </h1>
             <p className="text-sm text-gray-500">
               {news?.createdAt.slice(0, 10)} | {news?.writer?.name}
             </p>
-            <p>{perserDescription}</p>
+            <p className="text-neutral-content">
+              {news?.shortDescription?.length > 100
+                ? news?.shortDescription.slice(0, 100) + "..."
+                : news?.shortDescription}
+            </p>
           </div>
         </div>
       </Link>

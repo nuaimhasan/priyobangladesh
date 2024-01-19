@@ -19,16 +19,6 @@ export default function AddNews() {
   const { data: categoryData } = useGetAllCategoryQuery();
   const [addNews, { isLoading, isSuccess, isError }] = useCreateNewsMutation();
 
-  useEffect(() => {
-    if (isSuccess) {
-      Swal.fire("", "News Added Successfully", "success");
-      navigate("/admin/news");
-    }
-    if (isError) {
-      Swal.fire("", "An error occured when adding this news", "error");
-    }
-  }, [isSuccess, isError, navigate]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -45,12 +35,23 @@ export default function AddNews() {
     const formData = new FormData();
     formData.append("title", e.target.title.value);
     formData.append("category", e.target.category.value);
-    formData.append("description", details);
+    formData.append("shortDescription", e.target.short_description.value);
+    formData.append("details", details);
     formData.append("image", logos[0].file);
     formData.append("writer", loggedUser?.data?._id);
 
     await addNews(formData);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      Swal.fire("", "News Added Successfully", "success");
+      navigate("/admin/news");
+    }
+    if (isError) {
+      Swal.fire("", "An error occured when adding this news", "error");
+    }
+  }, [isSuccess, isError, navigate]);
 
   return (
     <div>
@@ -127,6 +128,15 @@ export default function AddNews() {
                         )}
                       </ImageUploading>
                     </div>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <label htmlFor="title">Short Description</label>
+                    <textarea
+                      name="short_description"
+                      rows="4"
+                      className="border rounded w-full p-3 outline-none focus:border-red-500"
+                    ></textarea>
                   </div>
                 </div>
 

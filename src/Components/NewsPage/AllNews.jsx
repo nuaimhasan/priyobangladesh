@@ -42,8 +42,8 @@ export default function AllNews() {
     <div className="container">
       <BreadCrumb />
 
-      <div className="py-5 grid md:grid-cols-4 gap-5">
-        <div className="col-span-3">
+      <div className="py-5 grid lg:grid-cols-4 gap-4">
+        <div className="lg:col-span-3">
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3">
             {newses?.map((news) => (
               <NewsCard key={news?._id} news={news} />
@@ -61,7 +61,7 @@ export default function AllNews() {
           )}
         </div>
 
-        <div>
+        <div className="w-full sm:w-1/2 lg:w-full">
           <RecentNews />
           <div className="w-full bg-white p-4 rounded-md mt-5">
             <SectionHeader title="Category" />

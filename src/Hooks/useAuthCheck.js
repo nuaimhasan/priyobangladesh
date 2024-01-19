@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { userLoggedIn } from "../redux/user/userSlice";
+import { useJwt } from "react-jwt";
 
 export default async function useAuthCheck() {
   const dispatch = useDispatch();
   const [authChecked, setAuthChecked] = useState(false);
+  const token = localStorage?.getItem("news_token");
+  const { isExpired } = useJwt(token);
+  if (isExpired) {
+    localStorage.removeItem("news_token");
+  }
 
   useEffect(() => {
-    const localAuth = localStorage?.getItem("news_token");
-
-    if (localAuth) {
+    if (token) {
       fetch(`${import.meta.env.VITE_BACKEND_URL}/user/loggedUser`, {
         headers: {
-          authorization: `bearer ${localAuth}`,
+          authorization: `bearer ${token}`,
         },
       })
         .then((res) => res.json())
@@ -20,7 +24,7 @@ export default async function useAuthCheck() {
           if (data?.success) {
             dispatch(
               userLoggedIn({
-                token: localAuth,
+                token: token,
                 data: data,
               })
             );
@@ -30,7 +34,7 @@ export default async function useAuthCheck() {
           setAuthChecked(true);
         });
     }
-  }, [dispatch, setAuthChecked]);
+  }, [dispatch, setAuthChecked, token]);
 
   return authChecked;
 }

@@ -15,7 +15,7 @@ import Spinner from "../../../Components/Spinner/Spinner";
 export default function EditNews() {
   const editor = useRef(null);
   const navigate = useNavigate();
-  const [logos, setLogos] = useState([]);
+  const [images, setImages] = useState([]);
   const [details, setDetails] = useState("");
 
   const { id } = useParams();
@@ -43,13 +43,14 @@ export default function EditNews() {
     const formData = new FormData();
     formData.append("title", e.target.title.value);
     formData.append("category", e.target.category.value);
+    formData.append("shortDescription", e.target.short_description.value);
     if (details) {
-      formData.append("description", details);
+      formData.append("details", details);
     } else {
-      formData.append("description", news?.description);
+      formData.append("details", news?.details);
     }
-    if (logos.length > 0) {
-      formData.append("image", logos[0].file);
+    if (images?.length > 0) {
+      formData.append("image", images[0].file);
     }
 
     await updateNews({ id, formData });
@@ -85,8 +86,8 @@ export default function EditNews() {
                     <p className="mb-1">Image</p>
                     <div className="p-4 sm:flex items-center gap-4 border rounded-md">
                       <ImageUploading
-                        value={logos}
-                        onChange={(file) => setLogos(file)}
+                        value={images}
+                        onChange={(file) => setImages(file)}
                         dataURLKey="data_url"
                       >
                         {({ onImageUpload, onImageRemove, dragProps }) => (
@@ -107,8 +108,8 @@ export default function EditNews() {
                               </p>
                             </div>
 
-                            <div className={`${logos?.length > 0 && "mt-4"} `}>
-                              {logos?.map((img, index) => (
+                            <div className={`${images?.length > 0 && "mt-4"} `}>
+                              {images?.map((img, index) => (
                                 <div
                                   key={index}
                                   className="image-item relative"
@@ -141,6 +142,16 @@ export default function EditNews() {
                       />
                     )}
                   </div>
+
+                  <div className="flex flex-col gap-1">
+                    <label htmlFor="title">Short Description</label>
+                    <textarea
+                      name="short_description"
+                      rows="4"
+                      className="border rounded w-full p-3 outline-none focus:border-red-500"
+                      defaultValue={news?.shortDescription}
+                    ></textarea>
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-5">
@@ -171,7 +182,7 @@ export default function EditNews() {
                     <div className="mt-1 border rounded p-4">
                       <JoditEditor
                         ref={editor}
-                        value={news?.description ? news?.description : details}
+                        value={news?.details ? news?.details : details}
                         onBlur={(text) => setDetails(text)}
                       />
                     </div>

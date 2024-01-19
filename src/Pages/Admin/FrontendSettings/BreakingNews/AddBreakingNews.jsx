@@ -1,13 +1,11 @@
-import JoditEditor from "jodit-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import BreadCrumb from "../../../../Components/UI/BreadCrumb";
 import { useAddBreakingNewsMutation } from "../../../../redux/breakingNews/breakingNewsApi";
 
 export default function AddBreakingNews() {
-  const editor = useRef(null);
-  const [details, setDetails] = useState("");
+  const [breakingNews, setBreakingNews] = useState("");
   const navigate = useNavigate();
   const [addBreakingNews, { isLoading, isSuccess, isError }] =
     useAddBreakingNewsMutation();
@@ -25,12 +23,12 @@ export default function AddBreakingNews() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!details) {
-      return Swal.fire("", "Please add some news", "error");
+    if (!breakingNews) {
+      return Swal.fire("", "Please add some text", "error");
     }
 
     const data = {
-      news: details,
+      news: breakingNews,
     };
 
     await addBreakingNews(data);
@@ -49,20 +47,18 @@ export default function AddBreakingNews() {
           </h1>
 
           <div className="py-10">
-            <div className=" border rounded p-4">
-              <JoditEditor
-                ref={editor}
-                value={details}
-                onBlur={(text) => setDetails(text)}
-              />
-            </div>
+            <textarea
+              rows="4"
+              onChange={(e) => setBreakingNews(e.target.value)}
+              className="w-full rounded border outline-none p-4"
+            ></textarea>
 
             <div className="flex flex-col gap-1 mt-5">
               <button
                 type="submit"
                 onClick={handleSubmit}
                 disabled={isLoading && "disabled"}
-                className="bg-primary text-white px-3 py-2 rounded-md uppercase"
+                className="w-max px-4 bg-primary text-white py-2 rounded-md uppercase"
               >
                 {isLoading ? "Loading..." : "Submit"}
               </button>

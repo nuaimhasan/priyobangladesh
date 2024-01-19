@@ -12,7 +12,7 @@ import { useCreateNewsMutation } from "../../../redux/news/newsApi";
 export default function WriterAddNews() {
   const navigate = useNavigate();
   const editor = useRef(null);
-  const [logos, setLogos] = useState([]);
+  const [images, setImages] = useState([]);
   const [details, setDetails] = useState("");
 
   const { loggedUser } = useSelector((state) => state.user);
@@ -37,7 +37,7 @@ export default function WriterAddNews() {
       return;
     }
 
-    if (logos.length === 0) {
+    if (images?.length === 0) {
       alert("Please choose image");
       return;
     }
@@ -45,8 +45,9 @@ export default function WriterAddNews() {
     const formData = new FormData();
     formData.append("title", e.target.title.value);
     formData.append("category", e.target.category.value);
-    formData.append("description", details);
-    formData.append("image", logos[0].file);
+    formData.append("shortDescription", e.target.short_description.value);
+    formData.append("details", details);
+    formData.append("image", images[0].file);
     formData.append("writer", loggedUser?.data?._id);
 
     await addNews(formData);
@@ -81,8 +82,8 @@ export default function WriterAddNews() {
                     <p className="mb-1">Image</p>
                     <div className="p-4 sm:flex items-center gap-4 border rounded-md">
                       <ImageUploading
-                        value={logos}
-                        onChange={(file) => setLogos(file)}
+                        value={images}
+                        onChange={(file) => setImages(file)}
                         dataURLKey="data_url"
                       >
                         {({ onImageUpload, onImageRemove, dragProps }) => (
@@ -103,8 +104,8 @@ export default function WriterAddNews() {
                               </p>
                             </div>
 
-                            <div className={`${logos?.length > 0 && "mt-4"} `}>
-                              {logos?.map((img, index) => (
+                            <div className={`${images?.length > 0 && "mt-4"} `}>
+                              {images?.map((img, index) => (
                                 <div
                                   key={index}
                                   className="image-item relative"
@@ -127,6 +128,15 @@ export default function WriterAddNews() {
                         )}
                       </ImageUploading>
                     </div>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <label htmlFor="title">Short Description</label>
+                    <textarea
+                      name="short_description"
+                      rows="4"
+                      className="border rounded w-full p-3 outline-none focus:border-red-500"
+                    ></textarea>
                   </div>
                 </div>
 

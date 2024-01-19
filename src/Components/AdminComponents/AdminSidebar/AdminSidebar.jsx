@@ -10,10 +10,12 @@ import SidebarItems from "./SidebarItems";
 
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useGetAllLogoQuery } from "../../../redux/logo/logoApi";
 
 export default function AdminSidebar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { data } = useGetAllLogoQuery();
 
   const adminSidebarItems = [
     {
@@ -32,6 +34,10 @@ export default function AdminSidebar() {
         {
           title: "All Newses",
           path: "/admin/news",
+        },
+        {
+          title: "Admin Newses",
+          path: "/admin/admin-news",
         },
       ],
     },
@@ -77,7 +83,7 @@ export default function AdminSidebar() {
         {
           title: "Breaking News",
           path: "/admin/front-end/breaking-news",
-        }
+        },
       ],
     },
   ];
@@ -92,14 +98,13 @@ export default function AdminSidebar() {
     <div className="h-full flex flex-col justify-between">
       <div>
         <Link to="/admin/dashboard" className="block border-b py-4">
-          {/* <img
-            src={'/images/news-portal.png'}
+          <img
+            src={`${import.meta.env.VITE_BACKEND_URL}/logo/${
+              data?.data[0]?.logo
+            }`}
             alt=""
-            className="w-28 mx-auto h-16"
-          /> */}
-          <p className="text-2xl font-bold text-primary px-5 uppercase">
-            Daily News
-          </p>
+            className="w-44 sm:w-48 mx-auto"
+          />
         </Link>
 
         <nav className="admin_siderbar">
@@ -110,7 +115,10 @@ export default function AdminSidebar() {
           </ul>
         </nav>
 
-        <button className="p-3 flex items-center gap-1 text-sm" onClick={handelLogout}>
+        <button
+          className="p-3 flex items-center gap-1 text-sm"
+          onClick={handelLogout}
+        >
           <IoIosLogOut className="text-lg" />
           Log Out
         </button>

@@ -21,10 +21,10 @@ export default function WriterNewsesList() {
   const [deleteNews, { isSuccess, isError }] = useDeleteNewsMutation();
 
   const query = {};
-  const [status, setStatus] = useState("active");
+  const [status, setStatus] = useState("");
   const [title, setTitle] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
 
   query["status"] = status;
   query["title"] = title;
@@ -80,10 +80,14 @@ export default function WriterNewsesList() {
             onChange={(e) => setStatus(e.target.value)}
             className="border border-gray-400 rounded-md p-1 text-sm md:w-[20%] w-[35%] focus:outline-none focus:border-primary"
           >
-            <option value="all">--Select Status--</option>
+            <option value="" disabled>
+              --Select Status--
+            </option>
+            <option value="" selected>
+              All
+            </option>
             <option value="active">Active</option>
             <option value="pending">Pending</option>
-            <option value="inactive">Inactive</option>
           </select>
 
           <input
@@ -96,7 +100,7 @@ export default function WriterNewsesList() {
       </div>
 
       {/* all news */}
-      <div className="overflow-x-auto bg-white rounded-md shadow-lg mt-1 pb-5">
+      <div className="overflow-x-auto bg-white rounded-md shadow-lg mt-1 pb-5 min-h-[80vh]">
         <table className="min-w-full divide-y divide-gray-200 dashboard_table">
           <thead className="bg-white">
             <tr>
@@ -112,14 +116,18 @@ export default function WriterNewsesList() {
           <tbody className="divide-y divide-gray-200">
             {newses?.map((data) => (
               <tr key={data?._id}>
-                <td>{data?.title}</td>
+                <td>
+                  {data?.title?.length > 40
+                    ? data?.title.slice(0, 40) + "..."
+                    : data?.title}
+                </td>
                 <td>
                   <img
                     src={`${import.meta.env.VITE_BACKEND_URL}/news/${
                       data?.image
                     }`}
                     alt=""
-                    className="h-12"
+                    className="h-10 rounded"
                   />
                 </td>
                 <td>{data?.category?.category}</td>
@@ -166,12 +174,14 @@ export default function WriterNewsesList() {
         </table>
 
         {/* pagination */}
-        <Pagination
-          handlePageChange={handlePageChange}
-          limit={limit}
-          total={data?.meta?.total}
-          page={page}
-        />
+        {newses?.length > 5 && (
+          <Pagination
+            handlePageChange={handlePageChange}
+            limit={limit}
+            total={data?.meta?.total}
+            page={page}
+          />
+        )}
       </div>
     </div>
   );

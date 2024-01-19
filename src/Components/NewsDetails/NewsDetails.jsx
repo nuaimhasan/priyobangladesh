@@ -14,10 +14,11 @@ import SectionHeader from "../UI/SectionHeader";
 import Spinner from "../Spinner/Spinner";
 
 export default function NewsDetails() {
+  window.scroll(0, 0);
   const { slug } = useParams();
   const { data, isLoading } = useGetNewsBySlugQuery(slug);
   const news = data?.data;
-  const perserDescription = news?.description && perser(news?.description);
+  const perserDescription = news?.details && perser(news?.details);
 
   const query = {};
   const [limit, setLimit] = useState(4);
@@ -56,7 +57,10 @@ export default function NewsDetails() {
             <h1 className="text-xl font-medium">{news?.title}</h1>
             <p className=" text-sm mb-2">{news?.createdAt.slice(0, 10)}</p>
 
-            <p>{perserDescription}</p>
+            <div className="text-neutral-content">
+              <p>{news?.shortDescription}</p>
+              <p>{perserDescription}</p>
+            </div>
           </div>
 
           <div className="shrink-0 md:w-72 w-full">

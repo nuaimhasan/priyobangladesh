@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import { Link, NavLink } from "react-router-dom";
 import { useGetAllCategoryQuery } from "../../redux/category/categoryApi";
 import SearchBox from "./SearchBox";
@@ -14,7 +12,16 @@ export default function MobileMenuSidebar({ mobileMenu, setMobileMenu }) {
         onClick={() => setMobileMenu(false)}
         className={`overlay ${mobileMenu && "overlay_show"}`}
       ></button>
-      <div className={`menu_wrap ${mobileMenu && "menu_wrap_show"}`}>
+      <div className={`menu_wrap relative ${mobileMenu && "menu_wrap_show"}`}>
+        <button
+          onClick={() => setMobileMenu(false)}
+          className={`absolute z-50 -right-6 w-6 h-6 rounded-full bg-base-100 shadow flex justify-center items-center ${
+            !mobileMenu && "hidden"
+          }`}
+        >
+          <span className="text-red-500">X</span>
+        </button>
+
         <div className="m-2">
           <SearchBox />
         </div>

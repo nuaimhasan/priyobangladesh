@@ -98,6 +98,26 @@ body {
 }
 
 .jodit-wysiwyg {
-  min-height: 200px !important;
+  height: 300px !important;
+  overflow-y: auto;
 }
 
+/* ------------------------------- */
+.latest_news .swiper-button-prev {
+  top: 15px;
+  left: 88%;
+}
+.latest_news .swiper-button-next {
+  top: 15px;
+}
+.latest_news .swiper-button-next::after,
+.latest_news .swiper-button-prev::after {
+  font-size: 21px !important;
+  font-weight: 600;
+  color: red;
+}
+@media only screen and (max-width: 400px) {
+  .latest_news .swiper-button-prev {
+    left: 80%;
+  }
+}
