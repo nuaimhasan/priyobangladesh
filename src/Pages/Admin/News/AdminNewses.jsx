@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa6";
@@ -7,12 +6,12 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
-import Pagination from "../../../Components/UI/Pagination";
 import {
   useDeleteNewsMutation,
   useGetNewsByWriterQuery,
 } from "../../../redux/news/newsApi";
 import Spinner from "../../../Components/Spinner/Spinner";
+import Pagination from "../../../Components/Pagination/Pagination";
 
 export default function AdminNewses() {
   const { loggedUser } = useSelector((state) => state.user);
@@ -21,17 +20,17 @@ export default function AdminNewses() {
   const [deleteNews, { isSuccess, isError }] = useDeleteNewsMutation();
 
   const query = {};
+  const [currentPage, setCurrentPage] = useState(1);
   const [status, setStatus] = useState("");
   const [title, setTitle] = useState("");
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
 
   query["status"] = status;
   query["title"] = title;
-  query["page"] = page;
-  query["limit"] = limit;
+  query["page"] = currentPage;
+  query["limit"] = 5;
   const { data, isLoading } = useGetNewsByWriterQuery({ writerId, ...query });
   const newses = data?.data;
+  const pages = Math.ceil(parseInt( data?.meta?.total) / parseInt( data?.meta?.limit));
 
   useEffect(() => {
     if (isSuccess) {
@@ -42,8 +41,8 @@ export default function AdminNewses() {
     }
   }, [isSuccess, isError]);
 
-  if (isLoading) return <Spinner />;
 
+  // Delete News
   const handleDelete = async (id) => {
     const confirm = window.confirm(
       "Are you sure you want to delete this news?"
@@ -53,12 +52,10 @@ export default function AdminNewses() {
     await deleteNews(id);
   };
 
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber < 1) return;
-    if (pageNumber > data?.meta?.total / limit) return;
+// Loading
+  if (isLoading) return <Spinner />;
 
-    setPage(pageNumber);
-  };
+
   return (
     <div>
       <div className="lg:hidden block">
@@ -100,88 +97,86 @@ export default function AdminNewses() {
       </div>
 
       {/* all news */}
-      <div className="overflow-x-auto bg-white rounded-md shadow-lg mt-1 pb-5 min-h-[80vh]">
-        <table className="min-w-full divide-y divide-gray-200 dashboard_table">
-          <thead className="bg-white">
-            <tr>
-              <th>Title</th>
-              <th>Image</th>
-              <th>Category</th>
-              <th>Writer</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {newses?.map((data) => (
-              <tr key={data?._id}>
-                <td>
-                  {data?.title?.length > 40
-                    ? data?.title.slice(0, 40) + "..."
-                    : data?.title}
-                </td>
-                <td>
-                  <img
-                    src={`${import.meta.env.VITE_BACKEND_URL}/news/${
-                      data?.image
-                    }`}
-                    alt=""
-                    className="h-10 rounded"
-                  />
-                </td>
-                <td>{data?.category?.category}</td>
-                <td>{data?.writer?.name}</td>
-                <td>{data?.createdAt.split("T")[0]}</td>
-                <td>
-                  <span
-                    className={`${
-                      data?.status === "active"
-                        ? "bg-green-500"
-                        : data?.status === "pending"
-                        ? "bg-yellow-500"
-                        : "bg-red-500"
-                    } text-white px-2 py-1 rounded-md text-xs`}
-                  >
-                    {data?.status}
-                  </span>
-                </td>
-                <td>
-                  <div className="flex items-center gap-2">
-                    <Link
-                      to={`/writer/news/${data?._id}`}
-                      className="hover:text-primary text-lg"
-                    >
-                      <FaRegEye />
-                    </Link>
-                    <Link
-                      to={`/writer/news/edit-news/${data?._id}`}
-                      className="hover:text-primary text-lg"
-                    >
-                      <FiEdit3 />
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(data?._id)}
-                      className="hover:text-primary text-lg"
-                    >
-                      <AiOutlineDelete />
-                    </button>
-                  </div>
-                </td>
+      <div className="mt-1 bg-base-100 p-4 rounded">
+        <div className="overflow-x-auto min-h-[60vh]">
+          <table className="min-w-full divide-y divide-gray-200 dashboard_table">
+            <thead className="bg-white">
+              <tr>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Category</th>
+                <th>Writer</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {newses?.map((data) => (
+                <tr key={data?._id}>
+                  <td>
+                    {data?.title?.length > 40
+                      ? data?.title.slice(0, 40) + "..."
+                      : data?.title}
+                  </td>
+                  <td>
+                    <img
+                      src={`${import.meta.env.VITE_BACKEND_URL}/news/${
+                        data?.image
+                      }`}
+                      alt=""
+                      className="h-10 rounded"
+                    />
+                  </td>
+                  <td>{data?.category?.category}</td>
+                  <td>{data?.writer?.name}</td>
+                  <td>{data?.createdAt.split("T")[0]}</td>
+                  <td>
+                    <span
+                      className={`${
+                        data?.status === "active"
+                          ? "bg-green-500"
+                          : data?.status === "pending"
+                          ? "bg-yellow-500"
+                          : "bg-red-500"
+                      } text-white px-2 py-1 rounded-md text-xs`}
+                    >
+                      {data?.status}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="flex items-center gap-2">
+                      <Link
+                        to={`/writer/news/${data?._id}`}
+                        className="hover:text-primary text-lg"
+                      >
+                        <FaRegEye />
+                      </Link>
+                      <Link
+                        to={`/writer/news/edit-news/${data?._id}`}
+                        className="hover:text-primary text-lg"
+                      >
+                        <FiEdit3 />
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(data?._id)}
+                        className="hover:text-primary text-lg"
+                      >
+                        <AiOutlineDelete />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-        {/* pagination */}
-        {newses?.length > 5 && (
-          <Pagination
-            handlePageChange={handlePageChange}
-            limit={limit}
-            total={data?.meta?.total}
-            page={page}
-          />
-        )}
+        <Pagination
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          pages={pages}
+        />
       </div>
     </div>
   );

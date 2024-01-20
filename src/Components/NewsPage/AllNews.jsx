@@ -5,39 +5,31 @@ import { useGetAllCategoryQuery } from "../../redux/category/categoryApi";
 import { useGetAllNewsQuery } from "../../redux/news/newsApi";
 import BreadCrumb from "../UI/BreadCrumb";
 import NewsCard from "../UI/Cards/NewsCard";
-import Pagination from "../UI/Pagination";
 import RecentNews from "../UI/RecentNews/RecentNews";
 import SectionHeader from "../UI/SectionHeader";
 import CategoryLength from "./CategoryLength";
 import Spinner from "../Spinner/Spinner";
 import SidebarAdd from './../Advertises/SidebarAdd';
+import Pagination from "../Pagination/Pagination";
 
 export default function AllNews() {
   const { category } = useParams();
 
   const query = {};
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(6);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(9);
   const [status, setStatus] = useState("active");
 
-  query["page"] = page;
+  query["page"] = currentPage;
   query["limit"] = limit;
   query["category"] = category;
   query["status"] = status;
 
-  const { data: categoryData } = useGetAllCategoryQuery();
-
   const { data, isLoading } = useGetAllNewsQuery({ ...query });
   const newses = data?.data;
+  const pages = Math.ceil(parseInt( data?.meta?.total) / parseInt( data?.meta?.limit));
 
   if (isLoading) return <Spinner />;
-
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber < 1) return;
-    if (data?.meta?.total && pageNumber > data?.meta.total / limit) return;
-
-    setPage(pageNumber);
-  };
 
   return (
     <div className="container">
@@ -52,14 +44,11 @@ export default function AllNews() {
           </div>
 
           {/* pagination */}
-          {newses?.length > 10 && (
-            <Pagination
-              handlePageChange={handlePageChange}
-              limit={limit}
-              total={data?.meta?.total}
-              page={page}
-            />
-          )}
+          <Pagination
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          pages={pages}
+        />
         </div>
 
         <div className="w-full sm:w-1/2 lg:w-full">

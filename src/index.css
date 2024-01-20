@@ -114,10 +114,53 @@ body {
 .latest_news .swiper-button-prev::after {
   font-size: 21px !important;
   font-weight: 600;
-  color: red;
+  color: #ef233c;
 }
 @media only screen and (max-width: 400px) {
   .latest_news .swiper-button-prev {
     left: 80%;
+  }
+}
+
+
+/* ---------------Pagination-------------------- */
+.pagination-container {
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  font-weight: 500;
+  font-size: 15px;
+  margin-top: 40px;
+}
+
+.pagination-container button {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 7px 18px;
+  height: 35px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.pagination-container button:hover {
+  background: #ddd;
+}
+
+.pagination-container .prevBtn,
+.pagination-container .nextBtn {
+  font-size: 18px;
+  padding: 7px 10px;
+}
+
+.pagination-container button.active {
+  background: #ef233c;
+  color: #fff;
+  border-color: 1px solid #ef233c;
+}
+
+@media only screen and (max-width: 640px) {
+  .pagination-container button {
+    margin: 4px;
   }
 }
