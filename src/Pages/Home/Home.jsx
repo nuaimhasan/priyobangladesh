@@ -1,5 +1,4 @@
 import ContentAdd from "../../Components/Advertises/ContentAdd";
-import MobileFooterAdd from "../../Components/Advertises/MobileFooterAdd";
 import CategoryWaysNews from "../../Components/HomePage/CategoryWaysNews/CategoryWaysNews";
 import Headline from "../../Components/HomePage/Headline";
 import LatestNews from "../../Components/HomePage/LatestNews";
@@ -18,7 +17,6 @@ export default function Home() {
       <ContentAdd />
       <PopulerNews />
       <CategoryWaysNews />
-      <MobileFooterAdd />
     </>
   );
 }

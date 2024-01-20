@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import NewsDetails from "../Components/NewsDetails/NewsDetails";
 import AdminLayout from "../Layout/AdminLayout/AdminLayout";
 import MainLayout from "../Layout/MainLayout";
 import WriterLayout from "../Layout/WriterLayout/WriterLayout";
@@ -7,13 +6,11 @@ import AddAdmin from "../Pages/Admin/Admins/AddAdmin";
 import AllAdmins from "../Pages/Admin/Admins/AllAdmins";
 import EditAdmin from "../Pages/Admin/Admins/EditAdmin";
 import Dashboard from "../Pages/Admin/Dashboard/Dashboard";
-import AboutUs from "../Pages/Admin/FrontendSettings/AboutUs";
 import AddAdvertise from "../Pages/Admin/FrontendSettings/Advertise/AddAdvertise";
 import Advertises from "../Pages/Admin/FrontendSettings/Advertise/Advertises";
 import EditAdvertise from "../Pages/Admin/FrontendSettings/Advertise/EditAdvertise";
 import AddBreakingNews from "../Pages/Admin/FrontendSettings/BreakingNews/AddBreakingNews";
 import BreakingNews from "../Pages/Admin/FrontendSettings/BreakingNews/BreakingNews";
-import ContactUs from "../Pages/Admin/FrontendSettings/ContactUs";
 import Logo from "../Pages/Admin/FrontendSettings/Logo";
 import Theme from "../Pages/Admin/FrontendSettings/Theme";
 import AddNews from "../Pages/Admin/News/AddNews";
@@ -33,6 +30,7 @@ import ViewWriter from "../Pages/Admin/WriterSetting/ViewWriter";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import News from "../Pages/News/News";
+import NewsDetails from "../Pages/NewsDetails/NewsDetails";
 import WriterAddNews from "../Pages/Writer/News/WriterAddNews";
 import WriterEditNews from "../Pages/Writer/News/WriterEditNews";
 import WriterNewsesList from "../Pages/Writer/News/WriterNewses";
@@ -43,7 +41,8 @@ import WriterProfile from "../Pages/Writer/Profile/WriterProfile";
 import WriterDashboard from "../Pages/Writer/WriterDashboard/WriterDashboard";
 import AdminRoute from "../PrivateRoute/AdminRoute";
 import WriterRoute from "../PrivateRoute/WriterRoute";
-import AdminNewses from "../Pages/Admin/News/AdminNewsws";
+import AdminNewses from "../Pages/Admin/News/AdminNewses";
+
 
 export const routes = createBrowserRouter([
   {
@@ -163,14 +162,6 @@ export const routes = createBrowserRouter([
       {
         path: "/admin/front-end/logo",
         element: <Logo />,
-      },
-      {
-        path: "/admin/front-end/contact-us",
-        element: <ContactUs />,
-      },
-      {
-        path: "/admin/front-end/about-us",
-        element: <AboutUs />,
       },
       {
         path: "/admin/front-end/theme",

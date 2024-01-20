@@ -14,6 +14,8 @@ export default function Advertises() {
   const { data, isLoading } = useGetAllAdvertiseQuery();
   const advertises = data?.data;
 
+  console.log(advertises);
+
   const [deleteAdvertise, { isSuccess: deleteSuccess, isError: deleteError }] =
     useDeleteAdvertiseMutation();
 
@@ -59,6 +61,7 @@ export default function Advertises() {
             <tr>
               <th>SL</th>
               <th>Image</th>
+              <th>Showing Place</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -67,14 +70,17 @@ export default function Advertises() {
               <tr key={advertise?._id}>
                 <td>{i + 1}</td>
                 <td>
-                  <img
-                    src={`${import.meta.env.VITE_BACKEND_URL}/advertise/${
-                      advertise?.image
-                    }`}
-                    alt=""
-                    className="h-12"
-                  />
+                  <Link to={advertise?.link} target="_blank">
+                    <img
+                      src={`${import.meta.env.VITE_BACKEND_URL}/advertise/${
+                        advertise?.image
+                      }`}
+                      alt=""
+                      className="w-60 h-12"
+                    />
+                  </Link>
                 </td>
+                <td>{advertise?.showingPlace}</td>
                 <td>
                   <div className="flex items-center gap-2">
                     <Link

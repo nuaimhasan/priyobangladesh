@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function MobileFooterAdd() {
   const query = {};
-  query["showingPlace"] = "footer";
+  query["showingPlace"] = "header";
   const { data } = useGetAllAdvertiseQuery({ ...query });
   const add = data?.data[0];
 
@@ -21,7 +21,7 @@ export default function MobileFooterAdd() {
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}/advertise/${add?.image}`}
             alt=""
-            className="w-[95%] h-14 mx-auto"
+            className="w-full h-14 mx-auto"
           />
         </Link>
 

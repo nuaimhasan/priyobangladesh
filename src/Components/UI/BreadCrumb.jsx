@@ -6,7 +6,6 @@ import { Link, useLocation } from "react-router-dom";
 export default function BreadCrumb({ maxSegmentsToShow }) {
   const { pathname } = useLocation();
   const segments = pathname.split("/").filter((segment) => segment);
-  // console.log(segments);
 
   if (!segments || segments.length === 0) {
     return (
@@ -29,9 +28,9 @@ export default function BreadCrumb({ maxSegmentsToShow }) {
     : segments;
 
   return (
-    <div className="py-2 text-gray-800 text-sm">
+    <div className="py-2 text-gray-800 text-sm hidden sm:block">
       <nav aria-label="breadcrumb" className="">
-        <ol className="flex items-center">
+        <ol className="sm:flex items-center">
           <li className="flex items-center">
             {segments[0] === "admin" ? (
               <Link to="/admin/dashboard" className="capitalize">

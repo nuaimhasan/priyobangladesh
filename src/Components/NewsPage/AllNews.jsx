@@ -10,6 +10,7 @@ import RecentNews from "../UI/RecentNews/RecentNews";
 import SectionHeader from "../UI/SectionHeader";
 import CategoryLength from "./CategoryLength";
 import Spinner from "../Spinner/Spinner";
+import SidebarAdd from './../Advertises/SidebarAdd';
 
 export default function AllNews() {
   const { category } = useParams();
@@ -65,9 +66,11 @@ export default function AllNews() {
           <RecentNews />
           <div className="w-full bg-white p-4 rounded-md mt-5">
             <SectionHeader title="Category" />
-
             <CategoryLength />
           </div>
+          <div className="mt-4">
+              <SidebarAdd />
+            </div>
         </div>
       </div>
     </div>

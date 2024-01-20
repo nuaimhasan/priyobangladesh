@@ -65,25 +65,17 @@ export default function AdminSidebar() {
           path: "/admin/front-end/logo",
         },
         {
-          title: "About Us",
-          path: "/admin/front-end/about-us",
-        },
-        {
-          title: "Contact Us",
-          path: "/admin/front-end/contact-us",
-        },
-        {
           title: "Advertise",
           path: "/admin/front-end/advertise",
-        },
-        {
-          title: "Theme",
-          path: "/admin/front-end/theme",
         },
         {
           title: "Breaking News",
           path: "/admin/front-end/breaking-news",
         },
+        {
+          title: "Theme",
+          path: "/admin/front-end/theme",
+        }
       ],
     },
   ];

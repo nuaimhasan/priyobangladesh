@@ -104,11 +104,12 @@ export default function AddAdvertise() {
               <label htmlFor="showingPlace">Showing Place</label>
               <select
                 name="showingPlace"
-                className="border border-gray-400 rounded-md p-2 text-sm focus:outline-none focus:border-primary"
+                className="border rounded-md p-2 text-sm focus:outline-none focus:border-primary"
               >
                 <option value="header">Header</option>
-                <option value="footer">Footer</option>
-                <option value="content">Content</option>
+                <option value="section">Between Section</option>
+                <option value="sidebar">Sidebar</option>
+                <option value="details">Between News Details</option>
               </select>
             </div>
 
