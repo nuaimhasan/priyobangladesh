@@ -14,7 +14,20 @@ import { useEffect } from "react";
 import { useGetAllAdvertiseQuery } from "../../redux/advertise/advertiseApi";
 import SidebarAdd from "../../Components/Advertises/SidebarAdd";
 
-import { ShareSocial } from "react-share-social";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  TelegramShareButton,
+  LinkedinShareButton,
+  WhatsappShareButton,
+} from "react-share";
+import {
+  FaFacebook,
+  FaTelegram,
+  FaLinkedin,
+  FaWhatsappSquare,
+} from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 export default function NewsDetails() {
   useEffect(() => {
@@ -57,27 +70,50 @@ export default function NewsDetails() {
               alt=""
               className="w-full md:h-96 rounded-md"
             />
-            <div className="sm:flex items-center justify-between mb-2 mt-2 sm:mt-0">
+            <div className="sm:flex items-center justify-between my-2">
               <p className="text-neutral-content text-sm">
                 Writer: {news?.writer?.name} - {news?.createdAt.slice(0, 10)}
               </p>
 
-              <div>
-                <ShareSocial
+              <div className="mt-2 sm:mt-0">
+                <FacebookShareButton
                   url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
                     news?.category?.category
                   }/${news?.slug}`}
-                  socialTypes={[
-                    "facebook",
-                    "twitter",
-                    "linkedin",
-                    "reddit",
-                    "whatsapp",
-                  ]}
-                />
+                >
+                  <FaFacebook className="text-xl text-blue-600" />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
+                    news?.category?.category
+                  }/${news?.slug}`}
+                >
+                  <FaSquareXTwitter className="text-xl" />
+                </TwitterShareButton>
+                <TelegramShareButton
+                  url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
+                    news?.category?.category
+                  }/${news?.slug}`}
+                >
+                  <FaTelegram className="text-xl text-sky-500" />
+                </TelegramShareButton>
+                <LinkedinShareButton
+                  url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
+                    news?.category?.category
+                  }/${news?.slug}`}
+                >
+                  <FaLinkedin className="text-xl text-sky-400" />
+                </LinkedinShareButton>
+                <WhatsappShareButton
+                  url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
+                    news?.category?.category
+                  }/${news?.slug}`}
+                >
+                  <FaWhatsappSquare className="text-xl text-green-500" />
+                </WhatsappShareButton>
               </div>
             </div>
-            <h1 className="text-2xl font-medium mb-2">{news?.title}</h1>
+            <h1 className="text-2xl font-medium mt-4 mb-2">{news?.title}</h1>
             <div className="text-neutral-content">
               <p>{news?.shortDescription}</p>
               <div className="w-[90%] md:w-1/2 mx-auto">

@@ -165,11 +165,13 @@ body {
 }
 
 /*  */
-.makeStyles-copyContainer-5 {
+.makeStyles-copyContainer-5,
+.jss5 {
   display: none !important;
 }
 
-.makeStyles-container-1 {
+.makeStyles-container-1,
+.jss1 {
   padding: 0 !important;
   background: transparent !important;
   max-width: max-content !important;
@@ -179,7 +181,8 @@ button.react-share__ShareButton svg {
   width: 25px !important;
 }
 
-.makeStyles-iconContainer-3 {
+.makeStyles-iconContainer-3,
+.jss3 {
   padding: 0 !important;
   text-align: end !important;
 }
@@ -189,7 +192,8 @@ button.react-share__ShareButton {
 }
 
 @media only screen and (max-width: 640px) {
-  .makeStyles-iconContainer-3 {
+  .makeStyles-iconContainer-3,
+  .jss3 {
     text-align: start !important;
   }
 }
