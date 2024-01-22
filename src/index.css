@@ -122,7 +122,6 @@ body {
   }
 }
 
-
 /* ---------------Pagination-------------------- */
 .pagination-container {
   align-items: center;
@@ -162,5 +161,35 @@ body {
 @media only screen and (max-width: 640px) {
   .pagination-container button {
     margin: 4px;
+  }
+}
+
+/*  */
+.makeStyles-copyContainer-5 {
+  display: none !important;
+}
+
+.makeStyles-container-1 {
+  padding: 0 !important;
+  background: transparent !important;
+  max-width: max-content !important;
+}
+
+button.react-share__ShareButton svg {
+  width: 25px !important;
+}
+
+.makeStyles-iconContainer-3 {
+  padding: 0 !important;
+  text-align: end !important;
+}
+
+button.react-share__ShareButton {
+  margin: 0px 4px !important;
+}
+
+@media only screen and (max-width: 640px) {
+  .makeStyles-iconContainer-3 {
+    text-align: start !important;
   }
 }

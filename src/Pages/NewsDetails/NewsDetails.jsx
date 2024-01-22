@@ -14,6 +14,8 @@ import { useEffect } from "react";
 import { useGetAllAdvertiseQuery } from "../../redux/advertise/advertiseApi";
 import SidebarAdd from "../../Components/Advertises/SidebarAdd";
 
+import { ShareSocial } from "react-share-social";
+
 export default function NewsDetails() {
   useEffect(() => {
     window.scroll(0, 0);
@@ -34,9 +36,10 @@ export default function NewsDetails() {
 
   const detailsAddQuery = {};
   detailsAddQuery["showingPlace"] = "details";
-  const { data: detailsAddData } = useGetAllAdvertiseQuery({ ...detailsAddQuery });
+  const { data: detailsAddData } = useGetAllAdvertiseQuery({
+    ...detailsAddQuery,
+  });
   const detailsAdd = detailsAddData?.data[0];
-
 
   if (isLoading || allLoading) return <Spinner />;
 
@@ -46,7 +49,7 @@ export default function NewsDetails() {
         <BreadCrumb />
       </div>
 
-      <div className="container py-4 sm:py-10 ">
+      <div className="container pt-2 pb-4">
         <div className="flex md:flex-row flex-col items-start gap-5">
           <div className="w-full text-gray-800">
             <img
@@ -54,15 +57,27 @@ export default function NewsDetails() {
               alt=""
               className="w-full md:h-96 rounded-md"
             />
-            <div className="flex items-center justify-between mt-5 mb-2">
-              <p className="text-primary font-semibold uppercase">
-                {news?.category?.category}
+            <div className="sm:flex items-center justify-between mb-2 mt-2 sm:mt-0">
+              <p className="text-neutral-content text-sm">
+                Writer: {news?.writer?.name} - {news?.createdAt.slice(0, 10)}
               </p>
-              <p className="text-sm">{news?.writer?.name}</p>
-            </div>
-            <h1 className="text-xl font-medium">{news?.title}</h1>
-            <p className=" text-sm mb-2">{news?.createdAt.slice(0, 10)}</p>
 
+              <div>
+                <ShareSocial
+                  url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
+                    news?.category?.category
+                  }/${news?.slug}`}
+                  socialTypes={[
+                    "facebook",
+                    "twitter",
+                    "linkedin",
+                    "reddit",
+                    "whatsapp",
+                  ]}
+                />
+              </div>
+            </div>
+            <h1 className="text-2xl font-medium mb-2">{news?.title}</h1>
             <div className="text-neutral-content">
               <p>{news?.shortDescription}</p>
               <div className="w-[90%] md:w-1/2 mx-auto">

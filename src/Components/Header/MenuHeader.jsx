@@ -47,7 +47,7 @@ export default function MenuHeader() {
               `py-3 px-3 ${isActive ? "bg-secondary" : ""}`
             }
           >
-            News
+            সংবাদ
           </NavLink>
 
           {categories?.map((category) => (
