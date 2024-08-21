@@ -14,7 +14,7 @@ export const userApi = baseApi.injectEndpoints({
         try {
           const result = await queryFulfilled;
 
-          localStorage.setItem("news_token", result?.data?.token);
+          localStorage.setItem("pb_jwt", result?.data?.token);
 
           dispatch(
             userLoggedIn({

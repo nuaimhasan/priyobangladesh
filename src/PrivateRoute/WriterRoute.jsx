@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 const WriterRoute = ({ children }) => {
   const { loggedUser } = useSelector((state) => state.user);
   const location = useLocation();
-  const token = localStorage.getItem("news_token");
+  const token = localStorage.getItem("pb_jwt");
   const role = loggedUser?.data?.role;
 
   if (!loggedUser?.success && !token) {

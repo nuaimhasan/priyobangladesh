@@ -79,7 +79,7 @@ export default function Footer() {
 
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-[15px] ">
-            © 2024 <strong>newsportal</strong>. All Rights Reserved. Powered by
+            © 2024 priyobangladesh. All Rights Reserved. Powered by
             <Link
               to="https://emanagerit.com"
               target="blank"

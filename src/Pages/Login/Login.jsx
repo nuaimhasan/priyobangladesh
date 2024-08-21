@@ -22,9 +22,11 @@ export default function Login() {
     }
   }, [isError]);
 
-  if (loggedUser?.success && !isError) {
-    navigate(from, { replace: true });
-  }
+  useEffect(() => {
+    if (loggedUser?.success && !isError) {
+      navigate(from, { replace: true });
+    }
+  }, [navigate, loggedUser, isError, from]);
 
   const handleLogin = async (e) => {
     e.preventDefault();

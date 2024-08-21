@@ -1,53 +1,102 @@
 import { createBrowserRouter } from "react-router-dom";
-import AdminLayout from "../Layout/AdminLayout/AdminLayout";
-import MainLayout from "../Layout/MainLayout";
-import WriterLayout from "../Layout/WriterLayout/WriterLayout";
-import AddAdmin from "../Pages/Admin/Admins/AddAdmin";
-import AllAdmins from "../Pages/Admin/Admins/AllAdmins";
-import EditAdmin from "../Pages/Admin/Admins/EditAdmin";
-import Dashboard from "../Pages/Admin/Dashboard/Dashboard";
-import AddAdvertise from "../Pages/Admin/FrontendSettings/Advertise/AddAdvertise";
-import Advertises from "../Pages/Admin/FrontendSettings/Advertise/Advertises";
-import EditAdvertise from "../Pages/Admin/FrontendSettings/Advertise/EditAdvertise";
-import AddBreakingNews from "../Pages/Admin/FrontendSettings/BreakingNews/AddBreakingNews";
-import BreakingNews from "../Pages/Admin/FrontendSettings/BreakingNews/BreakingNews";
-import Logo from "../Pages/Admin/FrontendSettings/Logo";
-import Theme from "../Pages/Admin/FrontendSettings/Theme";
-import AddNews from "../Pages/Admin/News/AddNews";
-import AdminViewNews from "../Pages/Admin/News/AdminViewNews";
-import EditNews from "../Pages/Admin/News/EditNews";
-import NewsesList from "../Pages/Admin/News/NewsesList";
-import AddNewsCategories from "../Pages/Admin/NewsCategories/AddNewsCategories";
-import EditNewsCategories from "../Pages/Admin/NewsCategories/EditNewsCategories";
-import NewsCategories from "../Pages/Admin/NewsCategories/NewsCategories";
-import Profile from "../Pages/Admin/Profile/Profile";
-import UpdatePassword from "../Pages/Admin/Profile/UpdatePassword";
-import UpdateProfile from "../Pages/Admin/Profile/UpdateProfile";
-import AddWriter from "../Pages/Admin/WriterSetting/AddWriter";
-import AllWriters from "../Pages/Admin/WriterSetting/AllWriters";
-import EditWriter from "../Pages/Admin/WriterSetting/EditWriter";
-import ViewWriter from "../Pages/Admin/WriterSetting/ViewWriter";
-import Home from "../Pages/Home/Home";
-import Login from "../Pages/Login/Login";
-import News from "../Pages/News/News";
-import NewsDetails from "../Pages/NewsDetails/NewsDetails";
-import WriterAddNews from "../Pages/Writer/News/WriterAddNews";
-import WriterEditNews from "../Pages/Writer/News/WriterEditNews";
-import WriterNewsesList from "../Pages/Writer/News/WriterNewses";
-import WriterViewNews from "../Pages/Writer/News/WriterViewNews";
-import UpdateWriterPassword from "../Pages/Writer/Profile/UpdateWriterPassword";
-import UpdateWriterProfile from "../Pages/Writer/Profile/UpdateWriterProfile";
-import WriterProfile from "../Pages/Writer/Profile/WriterProfile";
-import WriterDashboard from "../Pages/Writer/WriterDashboard/WriterDashboard";
-import AdminRoute from "../PrivateRoute/AdminRoute";
-import WriterRoute from "../PrivateRoute/WriterRoute";
-import AdminNewses from "../Pages/Admin/News/AdminNewses";
+import { lazy, Suspense } from "react";
 
+import MainLayout from "../Layout/MainLayout";
+import Home from "../Pages/Home/Home";
+
+import Spinner from "../Components/Spinner/Spinner";
+
+const AdminLayout = lazy(() => import("../Layout/AdminLayout/AdminLayout"));
+const WriterLayout = lazy(() => import("../Layout/WriterLayout/WriterLayout"));
+const AddAdmin = lazy(() => import("../Pages/Admin/Admins/AddAdmin"));
+const AllAdmins = lazy(() => import("../Pages/Admin/Admins/AllAdmins"));
+const EditAdmin = lazy(() => import("../Pages/Admin/Admins/EditAdmin"));
+const Dashboard = lazy(() => import("../Pages/Admin/Dashboard/Dashboard"));
+const AddAdvertise = lazy(() =>
+  import("../Pages/Admin/FrontendSettings/Advertise/AddAdvertise")
+);
+const Advertises = lazy(() =>
+  import("../Pages/Admin/FrontendSettings/Advertise/Advertises")
+);
+const EditAdvertise = lazy(() =>
+  import("../Pages/Admin/FrontendSettings/Advertise/EditAdvertise")
+);
+const AddBreakingNews = lazy(() =>
+  import("../Pages/Admin/FrontendSettings/BreakingNews/AddBreakingNews")
+);
+const BreakingNews = lazy(() =>
+  import("../Pages/Admin/FrontendSettings/BreakingNews/BreakingNews")
+);
+const Logo = lazy(() => import("../Pages/Admin/FrontendSettings/Logo"));
+const Theme = lazy(() => import("../Pages/Admin/FrontendSettings/Theme"));
+const AddNews = lazy(() => import("../Pages/Admin/News/AddNews"));
+const AdminViewNews = lazy(() => import("../Pages/Admin/News/AdminViewNews"));
+const EditNews = lazy(() => import("../Pages/Admin/News/EditNews"));
+const NewsesList = lazy(() => import("../Pages/Admin/News/NewsesList"));
+const AddNewsCategories = lazy(() =>
+  import("../Pages/Admin/NewsCategories/AddNewsCategories")
+);
+const EditNewsCategories = lazy(() =>
+  import("../Pages/Admin/NewsCategories/EditNewsCategories")
+);
+const NewsCategories = lazy(() =>
+  import("../Pages/Admin/NewsCategories/NewsCategories")
+);
+const Profile = lazy(() => import("../Pages/Admin/Profile/Profile"));
+const UpdatePassword = lazy(() =>
+  import("../Pages/Admin/Profile/UpdatePassword")
+);
+const UpdateProfile = lazy(() =>
+  import("../Pages/Admin/Profile/UpdateProfile")
+);
+const AddWriter = lazy(() => import("../Pages/Admin/WriterSetting/AddWriter"));
+const AllWriters = lazy(() =>
+  import("../Pages/Admin/WriterSetting/AllWriters")
+);
+const EditWriter = lazy(() =>
+  import("../Pages/Admin/WriterSetting/EditWriter")
+);
+const ViewWriter = lazy(() =>
+  import("../Pages/Admin/WriterSetting/ViewWriter")
+);
+
+const Login = lazy(() => import("../Pages/Login/Login"));
+const News = lazy(() => import("../Pages/News/News"));
+const NewsDetails = lazy(() => import("../Pages/NewsDetails/NewsDetails"));
+const WriterAddNews = lazy(() => import("../Pages/Writer/News/WriterAddNews"));
+const WriterEditNews = lazy(() =>
+  import("../Pages/Writer/News/WriterEditNews")
+);
+const WriterNewsesList = lazy(() =>
+  import("../Pages/Writer/News/WriterNewses")
+);
+const WriterViewNews = lazy(() =>
+  import("../Pages/Writer/News/WriterViewNews")
+);
+const UpdateWriterPassword = lazy(() =>
+  import("../Pages/Writer/Profile/UpdateWriterPassword")
+);
+const UpdateWriterProfile = lazy(() =>
+  import("../Pages/Writer/Profile/UpdateWriterProfile")
+);
+const WriterProfile = lazy(() =>
+  import("../Pages/Writer/Profile/WriterProfile")
+);
+const WriterDashboard = lazy(() =>
+  import("../Pages/Writer/WriterDashboard/WriterDashboard")
+);
+const AdminRoute = lazy(() => import("../PrivateRoute/AdminRoute"));
+const WriterRoute = lazy(() => import("../PrivateRoute/WriterRoute"));
+const AdminNewses = lazy(() => import("../Pages/Admin/News/AdminNewses"));
 
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <Suspense fallback={<Spinner />}>
+        <MainLayout />
+      </Suspense>
+    ),
     children: [
       {
         path: "/",
@@ -69,14 +118,20 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <Suspense fallback={<Spinner />}>
+        <Login />
+      </Suspense>
+    ),
   },
   {
     path: "/admin",
     element: (
-      <AdminRoute>
-        <AdminLayout />
-      </AdminRoute>
+      <Suspense fallback={<Spinner />}>
+        <AdminRoute>
+          <AdminLayout />
+        </AdminRoute>
+      </Suspense>
     ),
     children: [
       {
@@ -193,9 +248,11 @@ export const routes = createBrowserRouter([
   {
     path: "/writer",
     element: (
-      <WriterRoute>
-        <WriterLayout />
-      </WriterRoute>
+      <Suspense fallback={<Spinner />}>
+        <WriterRoute>
+          <WriterLayout />
+        </WriterRoute>
+      </Suspense>
     ),
     children: [
       {
