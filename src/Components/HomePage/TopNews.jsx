@@ -59,8 +59,6 @@ export default function TopNews() {
 
   return (
     <div>
-      <SectionHeader title="Top News" />
-
       <div className="grid sm:grid-cols-2 grid-cols-1 gap-3">{content}</div>
     </div>
   );

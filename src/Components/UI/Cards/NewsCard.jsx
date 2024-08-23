@@ -4,7 +4,7 @@ export default function NewsCard({ news }) {
   return (
     <Link
       to={`/news/${news?.category?.slug}/${news?.slug}`}
-      className="bg-white rounded-md hover:scale-105 transition ease-in-out delay-75 duration-300"
+      className="bg-white shadow rounded-md hover:scale-105 transition ease-in-out delay-75 duration-300"
     >
       <div className="w-full h-40 relative">
         <img

@@ -8,7 +8,7 @@ export default function BigNewsCard({ news }) {
         to={`/news/${news?.category?.slug}/${news.slug}`}
         className="group"
       >
-        <div className="bg-white rounded-md overflow-hidden group-hover:shadow-md transition-all duration-300">
+        <div className="bg-white shadow rounded-md overflow-hidden group-hover:shadow-md transition-all duration-300">
           <div className="relative">
             <img
               src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}

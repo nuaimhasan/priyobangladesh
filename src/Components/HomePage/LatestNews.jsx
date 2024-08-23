@@ -2,8 +2,7 @@ import SectionHeader from "../UI/SectionHeader";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Autoplay, Navigation } from "swiper/modules";
-import "swiper/css/navigation";
+import { Autoplay } from "swiper/modules";
 import { useGetAllNewsQuery } from "../../redux/news/newsApi";
 
 export default function LatestNews() {
@@ -27,21 +26,16 @@ export default function LatestNews() {
   if (!isLoading && data?.data?.length > 0) {
     content = (
       <div className="rounded-md relative">
-        <div className="absolute top-0 left-0">
-          <SectionHeader title="Latest News" />
-        </div>
-
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
           loop={true}
-          navigation={true}
           autoplay={{
             delay: 3500,
             disableOnInteraction: false,
           }}
-          modules={[Autoplay, Navigation]}
-          className="w-full sm:h-[385px] pt-10 sm:pt-[52px]"
+          modules={[Autoplay]}
+          className="w-full sm:h-[334px]"
         >
           {newses?.map((news) => (
             <SwiperSlide key={news._id}>

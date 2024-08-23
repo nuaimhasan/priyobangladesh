@@ -3,8 +3,9 @@ import { BsFacebook, BsYoutube } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useGetAllCategoryQuery } from "../../redux/category/categoryApi";
 import { useGetAllContactUsQuery } from "../../redux/contactUs/contactUsApi";
-import SectionHeader from "../UI/SectionHeader";
 import { useGetAllLogoQuery } from "../../redux/logo/logoApi";
+import { IoLocationOutline } from "react-icons/io5";
+import { MdOutlinePhone, MdOutlineMail } from "react-icons/md";
 
 export default function Footer() {
   const { data } = useGetAllContactUsQuery();
@@ -13,10 +14,10 @@ export default function Footer() {
 
   const { data: categories } = useGetAllCategoryQuery();
   return (
-    <footer className="border-t pt-8 pb-4 bg-secondary text-gray-400">
+    <footer className="border-t pt-8 pb-4 bg-base-100">
       <div className="container">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
-          <div className="md:col-span-2">
+          <div>
             <div className="w-max">
               <Link to="/">
                 <img
@@ -24,23 +25,17 @@ export default function Footer() {
                     logo?.data[0]?.logo
                   }`}
                   alt=""
-                  className="w-40 sm:w-48 mx-auto"
+                  className="w-40 sm:w-48"
                 />
               </Link>
+
+              <h2 className="text-xl font-medium">Priyo Bangladesh</h2>
             </div>
 
-            <div className="mt-2 text-sm ">
-              <p>
-                Here you can find all the latest news and updates from the
-                world. We are a team of dedicated journalists who are working
-                hard to provide you with the latest news from all over the
-                world.
-              </p>
-            </div>
+            <div className="mt-2"></div>
           </div>
 
           <div>
-            <SectionHeader title="Categories" />
             <ul className="text-[15px]">
               {categories?.data?.map((category) => (
                 <li key={category._id}>
@@ -56,29 +51,50 @@ export default function Footer() {
           </div>
 
           <div>
-            <SectionHeader title="Get In Touch" />
             <ul className="text-[15px]">
               <li className="mb-1">
-                <p className="italic">{contactUs?.address}</p>
+                <p className="font-semibold mb-1">প্রধান সম্পাদক</p>
+                <p className="text-neutral-content">জাহিদ আলামিন</p>
               </li>
               <li className="mb-1">
-                <a
-                  href={`mailto:${contactUs?.email}`}
-                  className="hover:text-primary"
-                >
-                  {contactUs?.email}
-                </a>
+                <p className="font-semibold mb-1">সম্পাদক</p>
+                <p className="text-neutral-content">মিজানুর রহমান</p>
               </li>
-              <li>
-                <p>{contactUs?.phone}</p>
+              <li className="mb-1">
+                <p className="font-semibold">রেজি নম্বর</p>
+                <p className="text-neutral-content">১৭৮</p>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <ul className="text-[15px]">
+              <li className="mb-1 flex items-start gap-1">
+                <p>
+                  <IoLocationOutline className="text-lg mt-1.5" />
+                </p>
+                <p>২৭০-বি,(৩য় তলা),তেজগাঁও শিল্প এলাকা,ঢাকা-১২০৪</p>
+              </li>
+              <li className="mb-1 flex items-start gap-1">
+                <p>
+                  <MdOutlinePhone className="text-lg mt-1" />
+                </p>
+                <p>০১৯১১-৪৯৫৯০৯</p>
+              </li>
+              <li className="mb-1 flex items-start gap-1">
+                <p>
+                  <MdOutlineMail className="text-lg mt-1" />
+                </p>
+                <p>priyobangladesh@gmail.com</p>
               </li>
             </ul>
           </div>
         </div>
+
         <hr className="my-4 border-gray-200 sm:mx-auto" />
 
         <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-[15px] ">
+          <span className="text-[13px] text-neutral-content">
             © 2024 priyobangladesh. All Rights Reserved. Powered by
             <Link
               to="https://emanagerit.com"
@@ -90,19 +106,19 @@ export default function Footer() {
           </span>
           <ul className="flex items-center gap-2 mt-3 sm:mt-0">
             <li>
-              <a href={contactUs?.facebook} target="_blank" rel="noreferrer">
-                <BsFacebook className="text-lg hover:-mt-2 duration-300" />
-              </a>
+              <Link to={contactUs?.facebook} target="_blank">
+                <BsFacebook className="text-base hover:-mt-1 duration-300" />
+              </Link>
             </li>
             <li>
-              <a href={contactUs?.instagram} target="_blank" rel="noreferrer">
-                <AiFillInstagram className="text-xl hover:-mt-2 duration-300" />
-              </a>
+              <Link to={contactUs?.instagram} target="_blank">
+                <AiFillInstagram className="text-xl hover:-mt-1 duration-300" />
+              </Link>
             </li>
             <li>
-              <a href={contactUs?.youtube} target="_blank" rel="noreferrer">
-                <BsYoutube className="text-xl hover:-mt-2 duration-300" />
-              </a>
+              <Link to={contactUs?.youtube} target="_blank">
+                <BsYoutube className="text-[19px] hover:-mt-1 duration-300" />
+              </Link>
             </li>
           </ul>
         </div>

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useGetAllCategoryQuery } from "../../redux/category/categoryApi";
+import { useParams } from "react-router-dom";
+// import { useGetAllCategoryQuery } from "../../redux/category/categoryApi";
 import { useGetAllNewsQuery } from "../../redux/news/newsApi";
 import BreadCrumb from "../UI/BreadCrumb";
 import NewsCard from "../UI/Cards/NewsCard";
@@ -9,7 +9,7 @@ import RecentNews from "../UI/RecentNews/RecentNews";
 import SectionHeader from "../UI/SectionHeader";
 import CategoryLength from "./CategoryLength";
 import Spinner from "../Spinner/Spinner";
-import SidebarAdd from './../Advertises/SidebarAdd';
+import SidebarAdd from "./../Advertises/SidebarAdd";
 import Pagination from "../Pagination/Pagination";
 
 export default function AllNews() {
@@ -27,7 +27,9 @@ export default function AllNews() {
 
   const { data, isLoading } = useGetAllNewsQuery({ ...query });
   const newses = data?.data;
-  const pages = Math.ceil(parseInt( data?.meta?.total) / parseInt( data?.meta?.limit));
+  const pages = Math.ceil(
+    parseInt(data?.meta?.total) / parseInt(data?.meta?.limit)
+  );
 
   if (isLoading) return <Spinner />;
 
@@ -45,10 +47,10 @@ export default function AllNews() {
 
           {/* pagination */}
           <Pagination
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          pages={pages}
-        />
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pages={pages}
+          />
         </div>
 
         <div className="w-full sm:w-1/2 lg:w-full">
@@ -58,8 +60,8 @@ export default function AllNews() {
             <CategoryLength />
           </div>
           <div className="mt-4">
-              <SidebarAdd />
-            </div>
+            <SidebarAdd />
+          </div>
         </div>
       </div>
     </div>

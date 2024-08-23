@@ -22,7 +22,7 @@ export default function Header() {
                   data?.data[0]?.logo
                 }`}
                 alt=""
-                className="w-40 sm:w-48 mx-auto"
+                className="w-52 sm:w-72 mx-auto"
               />
             </Link>
 

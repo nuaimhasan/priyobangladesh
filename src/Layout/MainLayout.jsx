@@ -3,7 +3,7 @@ import Footer from "../Components/Footer/Footer";
 import Header from "../Components/Header/Header";
 import { FaArrowUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import MobileFooterAdd from './../Components/Advertises/MobileFooterAdd';
+import MobileFooterAdd from "./../Components/Advertises/MobileFooterAdd";
 
 export default function MainLayout() {
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -47,7 +47,7 @@ export default function MainLayout() {
         </div>
       )}
 
-<MobileFooterAdd />
+      <MobileFooterAdd />
     </>
   );
 }
