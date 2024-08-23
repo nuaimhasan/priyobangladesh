@@ -3,14 +3,14 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit3 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import BreadCrumb from "../../../Components/UI/BreadCrumb";
+import BreadCrumb from "../../../../Components/UI/BreadCrumb";
 import {
   useDeleteCategoryMutation,
   useGetAllCategoryQuery,
-} from "../../../redux/category/categoryApi";
-import Spinner from "../../../Components/Spinner/Spinner";
+} from "../../../../redux/category/categoryApi";
+import Spinner from "../../../../Components/Spinner/Spinner";
 
-export default function NewsCategories() {
+export default function SubCategories() {
   const { data, isLoading } = useGetAllCategoryQuery();
   const categories = data?.data;
   const [deleteCategory, { isSuccess, isError }] = useDeleteCategoryMutation();
@@ -42,12 +42,12 @@ export default function NewsCategories() {
       </div>
 
       <div className="bg-white shadow-lg py-3 px-5 rounded-md flex items-center justify-between">
-        <h1 className="md:text-xl text-base font-semibold">News Categories</h1>
+        <h1 className="md:text-xl text-base font-semibold">Sub Categories</h1>
         <Link
-          to="/admin/categories/add-category"
+          to="/admin/subCategories/add"
           className="bg-secondary text-white md:px-3 px-2 py-1 rounded-md hover:bg-primary transition hover:scale-105 duration-300 text-xs md:text-sm"
         >
-          Add Category
+          Add New
         </Link>
       </div>
       <div className="overflow-x-auto bg-white rounded-md shadow-lg mt-1">
@@ -55,6 +55,7 @@ export default function NewsCategories() {
           <thead className="bg-white">
             <tr>
               <th>SL</th>
+              <th>Sub Category</th>
               <th>Category</th>
               <th>Action</th>
             </tr>
@@ -63,6 +64,7 @@ export default function NewsCategories() {
             {categories?.map((category, i) => (
               <tr key={category?._id}>
                 <td>{i + 1}</td>
+                <td>{category?.category}</td>
                 <td>{category?.category}</td>
                 <td>
                   <div className="flex items-center gap-2">

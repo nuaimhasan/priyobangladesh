@@ -33,15 +33,29 @@ const AddNews = lazy(() => import("../Pages/Admin/News/AddNews"));
 const AdminViewNews = lazy(() => import("../Pages/Admin/News/AdminViewNews"));
 const EditNews = lazy(() => import("../Pages/Admin/News/EditNews"));
 const NewsesList = lazy(() => import("../Pages/Admin/News/NewsesList"));
+
+//------------Category
+const NewsCategories = lazy(() =>
+  import("../Pages/Admin/Category/NewsCategories/NewsCategories")
+);
 const AddNewsCategories = lazy(() =>
-  import("../Pages/Admin/NewsCategories/AddNewsCategories")
+  import("../Pages/Admin/Category/NewsCategories/AddNewsCategories")
 );
 const EditNewsCategories = lazy(() =>
-  import("../Pages/Admin/NewsCategories/EditNewsCategories")
+  import("../Pages/Admin/Category/NewsCategories/EditNewsCategories")
 );
-const NewsCategories = lazy(() =>
-  import("../Pages/Admin/NewsCategories/NewsCategories")
+
+//------------SubCategory
+const SubCategories = lazy(() =>
+  import("../Pages/Admin/Category/SubCategory/SubCategories")
 );
+const AddSubCategory = lazy(() =>
+  import("../Pages/Admin/Category/SubCategory/AddSubCategory")
+);
+const EditSubCategory = lazy(() =>
+  import("../Pages/Admin/Category/SubCategory/EditSubCategory")
+);
+
 const Profile = lazy(() => import("../Pages/Admin/Profile/Profile"));
 const UpdatePassword = lazy(() =>
   import("../Pages/Admin/Profile/UpdatePassword")
@@ -142,6 +156,8 @@ export const routes = createBrowserRouter([
         path: "/admin/dashboard",
         element: <Dashboard />,
       },
+
+      //------------------category
       {
         path: "/admin/categories",
         element: <NewsCategories />,
@@ -154,6 +170,20 @@ export const routes = createBrowserRouter([
         path: "/admin/categories/edit-category/:id",
         element: <EditNewsCategories />,
       },
+      //------------------sub category
+      {
+        path: "/admin/subCategories",
+        element: <SubCategories />,
+      },
+      {
+        path: "/admin/subCategories/add",
+        element: <AddSubCategory />,
+      },
+      {
+        path: "/admin/subCategories/edit/:id",
+        element: <EditSubCategory />,
+      },
+      //------------------news
       {
         path: "/admin/news",
         element: <NewsesList />,

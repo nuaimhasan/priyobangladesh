@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { RiMenu2Fill } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useGetAllCategoryQuery } from "../../redux/category/categoryApi";
 import MobileMenuSidebar from "./MobileMenuSidebar";
 import SearchBox from "./SearchBox";
+
+import { IoIosArrowDown } from "react-icons/io";
 
 export default function MenuHeader() {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -32,22 +34,14 @@ export default function MenuHeader() {
   return (
     <div className="bg-primary uppercase">
       <div className="container flex items-center justify-between relative">
-        <div className="hidden lg:flex items-center gap-1 text-white text-sm overflow-x-clip">
+        <div className="hidden lg:flex items-center gap-1 text-white text-sm">
           <NavLink
             to="/"
             className={({ isActive }) =>
               `py-3 px-3 ${isActive ? "bg-secondary" : ""}`
             }
           >
-            Home
-          </NavLink>
-          <NavLink
-            to="/news"
-            className={({ isActive }) =>
-              `py-3 px-3 ${isActive ? "bg-secondary" : ""}`
-            }
-          >
-            সংবাদ
+            সর্বশেষ
           </NavLink>
 
           {categories?.map((category) => (
@@ -55,10 +49,47 @@ export default function MenuHeader() {
               key={category?._id}
               to={`/news/${category?.slug}`}
               className={({ isActive }) =>
-                `py-3 px-3 ${isActive ? "bg-secondary" : ""}`
+                `py-3 px-3 relative hover:bg-secondary hover:text-base-100 duration-300 ${
+                  isActive ? "bg-secondary" : ""
+                }`
               }
             >
-              {category?.category}
+              <div className="flex items-center gap-1 font-semibold">
+                {category?.category}
+
+                <IoIosArrowDown />
+              </div>
+
+              {category?.subCategory && (
+                <div className="absolute top-11 left-0 z-10">
+                  <ol className="bg-base-100 min-w-48 shadow text-neutral overflow-hidden">
+                    <li>
+                      <Link
+                        to=""
+                        className="px-3 py-2 block hover:bg-secondary hover:text-base-100 duration-300 border-b"
+                      >
+                        রাজনিতি
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to=""
+                        className="px-3 py-2 block hover:bg-secondary hover:text-base-100 duration-300 border-b"
+                      >
+                        রাজনিতি
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to=""
+                        className="px-3 py-2 block hover:bg-secondary hover:text-base-100 duration-300 border-b"
+                      >
+                        রাজনিতি
+                      </Link>
+                    </li>
+                  </ol>
+                </div>
+              )}
             </NavLink>
           ))}
         </div>

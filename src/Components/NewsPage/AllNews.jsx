@@ -17,13 +17,11 @@ export default function AllNews() {
 
   const query = {};
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(9);
-  const [status, setStatus] = useState("active");
 
   query["page"] = currentPage;
-  query["limit"] = limit;
+  query["limit"] = 9;
   query["category"] = category;
-  query["status"] = status;
+  query["status"] = "active";
 
   const { data, isLoading } = useGetAllNewsQuery({ ...query });
   const newses = data?.data;
@@ -40,17 +38,21 @@ export default function AllNews() {
       <div className="py-5 grid lg:grid-cols-4 gap-4">
         <div className="lg:col-span-3">
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3">
-            {newses?.map((news) => (
-              <NewsCard key={news?._id} news={news} />
-            ))}
+            {newses?.length > 0 ? (
+              newses?.map((news) => <NewsCard key={news?._id} news={news} />)
+            ) : (
+              <p className="text-xs text-red-500">No News Available</p>
+            )}
           </div>
 
           {/* pagination */}
-          <Pagination
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            pages={pages}
-          />
+          {newses?.length > 9 && (
+            <Pagination
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              pages={pages}
+            />
+          )}
         </div>
 
         <div className="w-full sm:w-1/2 lg:w-full">

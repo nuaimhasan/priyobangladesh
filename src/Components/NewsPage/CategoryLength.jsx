@@ -7,6 +7,7 @@ export default function CategoryLength() {
 
   const { data } = useGetAllNewsQuery();
   const newses = data?.data;
+
   return (
     <ul className="flex flex-col gap-2 text-sm">
       {categoryData?.data?.map((category) => (

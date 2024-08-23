@@ -28,8 +28,17 @@ export default function AdminSidebar() {
       title: "News",
       subMenu: [
         {
-          title: "Categories",
-          path: "/admin/categories",
+          title: "Category",
+          subSubMenu: [
+            {
+              title: "Categories",
+              path: "/admin/categories",
+            },
+            {
+              title: "Sub Categories",
+              path: "/admin/subCategories",
+            },
+          ],
         },
         {
           title: "All Newses",
@@ -75,7 +84,7 @@ export default function AdminSidebar() {
         {
           title: "Theme",
           path: "/admin/front-end/theme",
-        }
+        },
       ],
     },
   ];

@@ -1,25 +1,30 @@
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import BreadCrumb from "../../../Components/UI/BreadCrumb";
+import BreadCrumb from "../../../../Components/UI/BreadCrumb";
 import {
-  useGetCategoryByIdQuery,
-  useUpdateCategoryMutation,
-} from "../../../redux/category/categoryApi";
+  useCreateCategoryMutation,
+  useGetAllCategoryQuery,
+} from "../../../../redux/category/categoryApi";
 
-export default function EditNewsCategories() {
-  const { id } = useParams();
+export default function AddNewsCategories() {
   const navigate = useNavigate();
+  const [order, setOrder] = useState(1);
 
-  const { data } = useGetCategoryByIdQuery(id);
-  const category = data?.data;
+  const { data } = useGetAllCategoryQuery();
 
-  const [updateCategory, { isLoading, isSuccess, isError }] =
-    useUpdateCategoryMutation();
+  useEffect(() => {
+    if (data?.data?.length > 0) {
+      setOrder(data?.data?.length + 1);
+    }
+  }, [data]);
+
+  const [addNewsCategory, { isLoading, isSuccess, isError }] =
+    useCreateCategoryMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      Swal.fire("", "Categories Updated Successfully", "success");
+      Swal.fire("", "Categories Added Successfully", "success");
       navigate("/admin/categories");
     }
     if (isError) {
@@ -37,7 +42,7 @@ export default function EditNewsCategories() {
       order,
     };
 
-    await updateCategory({ id, data });
+    await addNewsCategory(data);
   };
 
   return (
@@ -49,7 +54,7 @@ export default function EditNewsCategories() {
       <div className="bg-white rounded-md shadow-lg md:w-1/2 w-full">
         <div className="p-5">
           <h1 className="text-xl font-semibold text-center">
-            Edit News Category
+            Add News Category
           </h1>
 
           <div className=" py-10">
@@ -62,19 +67,17 @@ export default function EditNewsCategories() {
                     id="category"
                     name="category"
                     placeholder="Enter Category"
-                    defaultValue={category?.category}
-                    className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="border px-3 py-2 rounded-md focus:outline-none "
                   />
                 </div>
                 <div className="flex flex-col gap-1">
                   <label htmlFor="name">Order</label>
                   <input
                     type="number"
-                    id="order"
                     name="order"
-                    placeholder="Enter Order"
-                    defaultValue={category?.order}
-                    className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                    value={order}
+                    onChange={(e) => setOrder(e.target.value)}
+                    className="border px-3 py-2 rounded-md focus:outline-none"
                   />
                 </div>
 
@@ -84,7 +87,7 @@ export default function EditNewsCategories() {
                     disabled={isLoading && "disabled"}
                     className="bg-primary text-white px-3 py-2 rounded-md uppercase"
                   >
-                    {isLoading ? "Loading..." : "Update Category"}
+                    {isLoading ? "Loading..." : "Add Category"}
                   </button>
                 </div>
               </div>

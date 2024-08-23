@@ -1,4 +1,3 @@
-import SectionHeader from "../UI/SectionHeader";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -16,7 +15,6 @@ export default function LatestNews() {
   if (isLoading) {
     content = (
       <div>
-        <SectionHeader title="Latest News" />
         <div className="animate-pulse">
           <div className="bg-base-100 h-[320px] rounded"></div>
         </div>

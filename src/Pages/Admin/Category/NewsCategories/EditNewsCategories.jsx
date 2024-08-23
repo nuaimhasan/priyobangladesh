@@ -1,23 +1,25 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import BreadCrumb from "../../../Components/UI/BreadCrumb";
+import BreadCrumb from "../../../../Components/UI/BreadCrumb";
 import {
-  useCreateCategoryMutation,
-  useGetAllCategoryQuery,
-} from "../../../redux/category/categoryApi";
+  useGetCategoryByIdQuery,
+  useUpdateCategoryMutation,
+} from "../../../../redux/category/categoryApi";
 
-export default function AddNewsCategories() {
+export default function EditNewsCategories() {
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useGetAllCategoryQuery();
+  const { data } = useGetCategoryByIdQuery(id);
+  const category = data?.data;
 
-  const [addNewsCategory, { isLoading, isSuccess, isError }] =
-    useCreateCategoryMutation();
+  const [updateCategory, { isLoading, isSuccess, isError }] =
+    useUpdateCategoryMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      Swal.fire("", "Categories Added Successfully", "success");
+      Swal.fire("", "Categories Updated Successfully", "success");
       navigate("/admin/categories");
     }
     if (isError) {
@@ -35,7 +37,7 @@ export default function AddNewsCategories() {
       order,
     };
 
-    await addNewsCategory(data);
+    await updateCategory({ id, data });
   };
 
   return (
@@ -47,7 +49,7 @@ export default function AddNewsCategories() {
       <div className="bg-white rounded-md shadow-lg md:w-1/2 w-full">
         <div className="p-5">
           <h1 className="text-xl font-semibold text-center">
-            Add News Category
+            Edit News Category
           </h1>
 
           <div className=" py-10">
@@ -60,6 +62,7 @@ export default function AddNewsCategories() {
                     id="category"
                     name="category"
                     placeholder="Enter Category"
+                    defaultValue={category?.category}
                     className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
                   />
                 </div>
@@ -70,7 +73,7 @@ export default function AddNewsCategories() {
                     id="order"
                     name="order"
                     placeholder="Enter Order"
-                    defaultValue={data?.data?.length + 1}
+                    defaultValue={category?.order}
                     className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
                   />
                 </div>
@@ -81,7 +84,7 @@ export default function AddNewsCategories() {
                     disabled={isLoading && "disabled"}
                     className="bg-primary text-white px-3 py-2 rounded-md uppercase"
                   >
-                    {isLoading ? "Loading..." : "Add Category"}
+                    {isLoading ? "Loading..." : "Update Category"}
                   </button>
                 </div>
               </div>
