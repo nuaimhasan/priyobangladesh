@@ -29,7 +29,10 @@ export const subCategoryApi = baseApi.injectEndpoints({
     }),
 
     getAllSubCategory: builder.query({
-      query: () => `/subCategory/all`,
+      query: (query) => ({
+        url: `/subCategory/all`,
+        params: query,
+      }),
       providesTags: ["subCategory"],
     }),
 

@@ -4,16 +4,18 @@ import { FiEdit3 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import BreadCrumb from "../../../../Components/UI/BreadCrumb";
-import {
-  useDeleteCategoryMutation,
-  useGetAllCategoryQuery,
-} from "../../../../redux/category/categoryApi";
 import Spinner from "../../../../Components/Spinner/Spinner";
+import {
+  useDeleteSubCategoryMutation,
+  useGetAllSubCategoryQuery,
+} from "../../../../redux/subCategoryApi/subCategoryApi";
 
 export default function SubCategories() {
-  const { data, isLoading } = useGetAllCategoryQuery();
+  const { data, isLoading } = useGetAllSubCategoryQuery();
   const categories = data?.data;
-  const [deleteCategory, { isSuccess, isError }] = useDeleteCategoryMutation();
+
+  const [deleteCategory, { isSuccess, isError }] =
+    useDeleteSubCategoryMutation();
 
   useEffect(() => {
     if (isSuccess) {
@@ -61,29 +63,37 @@ export default function SubCategories() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {categories?.map((category, i) => (
-              <tr key={category?._id}>
-                <td>{i + 1}</td>
-                <td>{category?.category}</td>
-                <td>{category?.category}</td>
-                <td>
-                  <div className="flex items-center gap-2">
-                    <Link
-                      to={`/admin/categories/edit-category/${category?._id}`}
-                      className="hover:text-primary text-lg"
-                    >
-                      <FiEdit3 />
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(category?._id)}
-                      className="hover:text-primary text-lg"
-                    >
-                      <AiOutlineDelete />
-                    </button>
-                  </div>
+            {categories?.length > 0 ? (
+              categories?.map((category, i) => (
+                <tr key={category?._id}>
+                  <td>{i + 1}</td>
+                  <td>{category?.name}</td>
+                  <td>{category?.category?.category}</td>
+                  <td>
+                    <div className="flex items-center gap-2">
+                      <Link
+                        to={`/admin/categories/edit-category/${category?._id}`}
+                        className="hover:text-primary text-lg"
+                      >
+                        <FiEdit3 />
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(category?._id)}
+                        className="hover:text-primary text-lg"
+                      >
+                        <AiOutlineDelete />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td className="text-red-500 text-xs p-2">
+                  Sub Category Not Found!
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

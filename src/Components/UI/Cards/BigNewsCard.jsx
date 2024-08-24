@@ -3,11 +3,7 @@ import { Link } from "react-router-dom";
 export default function BigNewsCard({ news }) {
   return (
     <>
-      <Link
-        key={news._id}
-        to={`/news/${news?.category?.slug}/${news.slug}`}
-        className="group"
-      >
+      <Link key={news._id} to={`/news/details/${news.slug}`} className="group">
         <div className="bg-white shadow rounded-md overflow-hidden group-hover:shadow-md transition-all duration-300">
           <div className="relative">
             <img

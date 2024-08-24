@@ -1,43 +1,48 @@
-import { useNavigate } from "react-router-dom";
-import BreadCrumb from "../../../../Components/UI/BreadCrumb";
-import {
-  useCreateCategoryMutation,
-  useGetAllCategoryQuery,
-} from "../../../../redux/category/categoryApi";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import BreadCrumb from "../../../../Components/UI/BreadCrumb";
+import { useGetAllCategoryQuery } from "../../../../redux/category/categoryApi";
+import {
+  useAddSubCategoryMutation,
+  useGetAllSubCategoryQuery,
+} from "../../../../redux/subCategoryApi/subCategoryApi";
 
 export default function AddSubCategory() {
   const navigate = useNavigate();
-
   const [order, setOrder] = useState(1);
+  const { data } = useGetAllSubCategoryQuery();
 
-  const { data } = useGetAllCategoryQuery();
-  const categories = data?.data;
+  const { data: categoryData } = useGetAllCategoryQuery();
+  const categories = categoryData?.data;
 
   useEffect(() => {
-    if (categories?.length > 0) {
-      setOrder(categories?.length + 1);
+    if (data?.data?.length > 0) {
+      setOrder(data?.data?.length + 1);
     }
-  }, [categories]);
+  }, [data]);
 
-  const [addNewsCategory, { isLoading }] = useCreateCategoryMutation();
+  const [addSubCategory, { isLoading }] = useAddSubCategoryMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const subCategory = e.target.subCategory.value;
+    const name = e.target.subCategory.value;
     const category = e.target.category.value;
     const order = e.target.order.value;
 
     const data = {
-      subCategory,
+      name,
       category,
       order,
     };
 
-    let res = await addNewsCategory(data);
+    let res = await addSubCategory(data);
+
     if (res?.data?.success) {
+      Swal.fire("", "sub category add success", "success");
       navigate("/admin/subCategories");
     } else {
+      Swal.fire("", "something went wrong!", "error");
       console.log(res);
     }
   };

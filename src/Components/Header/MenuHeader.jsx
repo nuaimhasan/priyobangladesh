@@ -49,7 +49,7 @@ export default function MenuHeader() {
               key={category?._id}
               to={`/news/${category?.slug}`}
               className={({ isActive }) =>
-                `py-3 px-3 relative hover:bg-secondary hover:text-base-100 duration-300 ${
+                `category py-3 px-3 relative hover:bg-secondary hover:text-base-100 duration-300 ${
                   isActive ? "bg-secondary" : ""
                 }`
               }
@@ -57,36 +57,22 @@ export default function MenuHeader() {
               <div className="flex items-center gap-1 font-semibold">
                 {category?.category}
 
-                <IoIosArrowDown />
+                {category?.subCategories?.length > 0 && <IoIosArrowDown />}
               </div>
 
-              {category?.subCategory && (
-                <div className="absolute top-11 left-0 z-10">
+              {category?.subCategories && (
+                <div className="category_dropdown absolute top-11 left-0 z-10">
                   <ol className="bg-base-100 min-w-48 shadow text-neutral overflow-hidden">
-                    <li>
-                      <Link
-                        to=""
-                        className="px-3 py-2 block hover:bg-secondary hover:text-base-100 duration-300 border-b"
-                      >
-                        রাজনিতি
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to=""
-                        className="px-3 py-2 block hover:bg-secondary hover:text-base-100 duration-300 border-b"
-                      >
-                        রাজনিতি
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to=""
-                        className="px-3 py-2 block hover:bg-secondary hover:text-base-100 duration-300 border-b"
-                      >
-                        রাজনিতি
-                      </Link>
-                    </li>
+                    {category?.subCategories?.map((subCategory) => (
+                      <li key={subCategory?._id}>
+                        <Link
+                          to={`/news/${category?.slug}/${subCategory?.slug}`}
+                          className="px-3 py-2 block hover:bg-secondary hover:text-base-100 duration-300 border-b"
+                        >
+                          {subCategory?.name}
+                        </Link>
+                      </li>
+                    ))}
                   </ol>
                 </div>
               )}

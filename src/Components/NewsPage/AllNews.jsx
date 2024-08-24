@@ -25,6 +25,7 @@ export default function AllNews() {
 
   const { data, isLoading } = useGetAllNewsQuery({ ...query });
   const newses = data?.data;
+
   const pages = Math.ceil(
     parseInt(data?.meta?.total) / parseInt(data?.meta?.limit)
   );

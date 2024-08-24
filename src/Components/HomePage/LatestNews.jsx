@@ -21,6 +21,7 @@ export default function LatestNews() {
       </div>
     );
   }
+
   if (!isLoading && data?.data?.length > 0) {
     content = (
       <div className="rounded-md relative">
@@ -37,7 +38,7 @@ export default function LatestNews() {
         >
           {newses?.map((news) => (
             <SwiperSlide key={news._id}>
-              <Link to={`/news/${news?.category?.slug}/${news.slug}`}>
+              <Link to={`/news/details/${news.slug}`}>
                 <div className="relative w-full h-full">
                   <img
                     src={`${import.meta.env.VITE_BACKEND_URL}/news/${

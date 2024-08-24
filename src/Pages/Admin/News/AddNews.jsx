@@ -14,9 +14,16 @@ export default function AddNews() {
   const editor = useRef(null);
   const [logos, setLogos] = useState([]);
   const [details, setDetails] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState({});
+  const [subCategories, setSubCategories] = useState([]);
+
+  useEffect(() => {
+    setSubCategories(selectedCategory?.subCategories);
+  }, [selectedCategory]);
 
   const { loggedUser } = useSelector((state) => state.user);
   const { data: categoryData } = useGetAllCategoryQuery();
+
   const [addNews, { isLoading, isSuccess, isError }] = useCreateNewsMutation();
 
   const handleSubmit = async (e) => {
@@ -34,13 +41,14 @@ export default function AddNews() {
 
     const formData = new FormData();
     formData.append("title", e.target.title.value);
-    formData.append("category", e.target.category.value);
-    formData.append("shortDescription", e.target.short_description.value);
+    formData.append("category", selectedCategory?._id);
+    formData.append("subCategory", e.target.subCategory.value);
     formData.append("details", details);
     formData.append("image", logos[0].file);
     formData.append("writer", loggedUser?.data?._id);
 
-    await addNews(formData);
+    let res = await addNews(formData);
+    console.log(res);
   };
 
   useEffect(() => {
@@ -63,120 +71,124 @@ export default function AddNews() {
         <div className="p-5">
           <h1 className="text-xl font-semibold">Add News</h1>
 
-          <div className="py-10">
+          <div className="py-5">
             <form onSubmit={handleSubmit}>
-              <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
-                <div className="flex flex-col gap-5">
-                  <div className="flex flex-col gap-1">
-                    <label htmlFor="title">Title</label>
-                    <input
-                      type="text"
-                      id="title"
-                      name="title"
-                      placeholder="Enter Title"
-                      className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:border-primary placeholder:text-sm"
-                    />
-                  </div>
+              <div className="flex flex-col gap-1 mb-2">
+                <label htmlFor="title">Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Enter Title"
+                  className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:border-primary placeholder:text-sm"
+                />
+              </div>
 
-                  <div className="">
-                    <p className="mb-1">Image</p>
-                    <div className="p-4 sm:flex items-center gap-4 border rounded-md">
-                      <ImageUploading
-                        value={logos}
-                        onChange={(file) => setLogos(file)}
-                        dataURLKey="data_url"
+              <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="category">Category</label>
+                  <select
+                    name="category"
+                    className="border rounded-md p-2 text-sm"
+                    onChange={(e) =>
+                      setSelectedCategory(JSON.parse(e.target.value))
+                    }
+                  >
+                    <option value="">--Select Category--</option>
+                    {categoryData?.data?.map((category) => (
+                      <option
+                        key={category?._id}
+                        value={JSON.stringify(category)}
                       >
-                        {({ onImageUpload, onImageRemove, dragProps }) => (
-                          <div
-                            className="border rounded border-dashed p-4 w-max flex items-center xl:flex-row flex-col gap-3"
-                            {...dragProps}
-                          >
-                            <div className="flex items-center gap-2">
-                              <span
-                                onClick={onImageUpload}
-                                className="px-4 py-1.5 rounded-2xl text-white bg-secondary cursor-pointer text-sm"
-                              >
-                                Choose Image
-                              </span>
-
-                              <p className="text-neutral-content">
-                                or Drop here
-                              </p>
-                            </div>
-
-                            <div className={`${logos?.length > 0 && "mt-4"} `}>
-                              {logos?.map((img, index) => (
-                                <div
-                                  key={index}
-                                  className="image-item relative"
-                                >
-                                  <img
-                                    src={img["data_url"]}
-                                    alt=""
-                                    className="w-40"
-                                  />
-                                  <div
-                                    onClick={() => onImageRemove(index)}
-                                    className="w-7 h-7 bg-secondary rounded-full flex justify-center items-center text-white absolute top-0 right-0 cursor-pointer"
-                                  >
-                                    <AiFillDelete />
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </ImageUploading>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-1">
-                    <label htmlFor="title">Short Description</label>
-                    <textarea
-                      name="short_description"
-                      rows="4"
-                      className="border rounded w-full p-3 outline-none focus:border-red-500"
-                    ></textarea>
-                  </div>
+                        {category?.category}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="flex flex-col gap-5">
                   <div className="flex flex-col gap-1">
-                    <label htmlFor="category">Category</label>
+                    <label htmlFor="subCategory">Sub Category</label>
                     <select
-                      name="category"
-                      className="border border-gray-400 rounded-md p-2 text-sm focus:outline-none focus:border-primary"
+                      name="subCategory"
+                      className="border rounded-md p-2 text-sm"
                     >
-                      <option disabled>--Select Category--</option>
-                      {categoryData?.data?.map((category) => (
-                        <option key={category._id} value={category._id}>
-                          {category.category}
+                      <option value="">--Select Sub Category--</option>
+                      {subCategories?.map((category) => (
+                        <option key={category?._id} value={category?._id}>
+                          {category?.name}
                         </option>
                       ))}
                     </select>
                   </div>
+                </div>
 
-                  <div className="flex flex-col gap-1">
-                    <p>Description</p>
-                    <div className="mt-1 border rounded p-4">
-                      <JoditEditor
-                        ref={editor}
-                        value={details}
-                        onBlur={(text) => setDetails(text)}
-                      />
-                    </div>
+                <div>
+                  <p className="mb-1">Image</p>
+                  <div className="sm:flex items-center gap-4">
+                    <ImageUploading
+                      value={logos}
+                      onChange={(file) => setLogos(file)}
+                      dataURLKey="data_url"
+                    >
+                      {({ onImageUpload, onImageRemove, dragProps }) => (
+                        <div
+                          className="border rounded border-dashed p-4 w-max flex items-center xl:flex-row flex-col gap-3"
+                          {...dragProps}
+                        >
+                          <div className="flex items-center gap-2">
+                            <span
+                              onClick={onImageUpload}
+                              className="px-4 py-1.5 rounded-2xl text-white bg-secondary cursor-pointer text-sm"
+                            >
+                              Choose Image
+                            </span>
+
+                            <p className="text-neutral-content">or Drop here</p>
+                          </div>
+
+                          <div className={`${logos?.length > 0 && "mt-4"} `}>
+                            {logos?.map((img, index) => (
+                              <div key={index} className="image-item relative">
+                                <img
+                                  src={img["data_url"]}
+                                  alt=""
+                                  className="w-40"
+                                />
+                                <div
+                                  onClick={() => onImageRemove(index)}
+                                  className="w-7 h-7 bg-secondary rounded-full flex justify-center items-center text-white absolute top-0 right-0 cursor-pointer"
+                                >
+                                  <AiFillDelete />
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </ImageUploading>
                   </div>
                 </div>
+              </div>
 
-                <div className="flex flex-col gap-1 mt-2">
-                  <button
-                    type="submit"
-                    disabled={isLoading && "disabled"}
-                    className="bg-primary text-white px-3 py-2 rounded-md uppercase"
-                  >
-                    {isLoading ? "Loading..." : "Add News"}
-                  </button>
+              <div className="mt-2 flex flex-col gap-1">
+                <p>Description</p>
+                <div className="mt-px">
+                  <JoditEditor
+                    ref={editor}
+                    value={details}
+                    onBlur={(text) => setDetails(text)}
+                  />
                 </div>
+              </div>
+
+              <div className="flex flex-col gap-1 mt-2">
+                <button
+                  type="submit"
+                  disabled={isLoading && "disabled"}
+                  className="bg-primary text-white px-3 py-2 rounded-md uppercase"
+                >
+                  {isLoading ? "Loading..." : "Add News"}
+                </button>
               </div>
             </form>
           </div>

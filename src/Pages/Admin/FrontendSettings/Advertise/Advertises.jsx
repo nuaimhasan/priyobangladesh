@@ -14,8 +14,6 @@ export default function Advertises() {
   const { data, isLoading } = useGetAllAdvertiseQuery();
   const advertises = data?.data;
 
-  console.log(advertises);
-
   const [deleteAdvertise, { isSuccess: deleteSuccess, isError: deleteError }] =
     useDeleteAdvertiseMutation();
 

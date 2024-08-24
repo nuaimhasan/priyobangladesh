@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetAllNewsQuery } from "../../redux/news/newsApi";
-import SectionHeader from "../UI/SectionHeader";
 
 export default function TopNews() {
   const query = {};
@@ -34,7 +31,7 @@ export default function TopNews() {
 
   if (!isLoading && data?.data?.length > 0) {
     content = newses?.map((news) => (
-      <Link key={news._id} to={`/news/${news?.category?.slug}/${news.slug}`}>
+      <Link key={news?._id} to={`/news/details/${news?.slug}`}>
         <div className="w-full h-40 rounded-md relative">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}

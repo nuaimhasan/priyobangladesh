@@ -1,18 +1,18 @@
-import { AiFillInstagram } from "react-icons/ai";
 import { BsFacebook, BsYoutube } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useGetAllCategoryQuery } from "../../redux/category/categoryApi";
-import { useGetAllContactUsQuery } from "../../redux/contactUs/contactUsApi";
 import { useGetAllLogoQuery } from "../../redux/logo/logoApi";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone, MdOutlineMail } from "react-icons/md";
+import { useGetSocialQuery } from "../../redux/socialApi";
+import { FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
-  const { data } = useGetAllContactUsQuery();
   const { data: logo } = useGetAllLogoQuery();
-  const contactUs = data?.data[0];
 
   const { data: categories } = useGetAllCategoryQuery();
+  const { data: social } = useGetSocialQuery();
+
   return (
     <footer className="border-t pt-8 pb-4 bg-base-100">
       <div className="container">
@@ -106,17 +106,17 @@ export default function Footer() {
           </span>
           <ul className="flex items-center gap-2 mt-3 sm:mt-0">
             <li>
-              <Link to={contactUs?.facebook} target="_blank">
+              <Link to={social?.data?.facebook} target="_blank">
                 <BsFacebook className="text-base hover:-mt-1 duration-300" />
               </Link>
             </li>
             <li>
-              <Link to={contactUs?.instagram} target="_blank">
-                <AiFillInstagram className="text-xl hover:-mt-1 duration-300" />
+              <Link to={social?.data?.twitter} target="_blank">
+                <FaTwitter />
               </Link>
             </li>
             <li>
-              <Link to={contactUs?.youtube} target="_blank">
+              <Link to={social?.data?.youtube} target="_blank">
                 <BsYoutube className="text-[19px] hover:-mt-1 duration-300" />
               </Link>
             </li>

@@ -12,10 +12,10 @@ export default function CategoryLength() {
     <ul className="flex flex-col gap-2 text-sm">
       {categoryData?.data?.map((category) => (
         <li key={category?._id} className="hover:text-primary">
-          <Link to={`/news/${category.slug}`}>
-            {category.category} (
+          <Link to={`/news/${category?.slug}`}>
+            {category?.category} (
             {
-              newses?.filter((news) => news.category._id === category._id)
+              newses?.filter((news) => news.category?._id === category?._id)
                 .length
             }
             )

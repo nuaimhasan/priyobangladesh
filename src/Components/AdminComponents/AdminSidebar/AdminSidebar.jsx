@@ -78,12 +78,8 @@ export default function AdminSidebar() {
           path: "/admin/front-end/advertise",
         },
         {
-          title: "Breaking News",
-          path: "/admin/front-end/breaking-news",
-        },
-        {
-          title: "Theme",
-          path: "/admin/front-end/theme",
+          title: "Social",
+          path: "/admin/front-end/social",
         },
       ],
     },
@@ -115,21 +111,16 @@ export default function AdminSidebar() {
             ))}
           </ul>
         </nav>
+      </div>
 
+      <div className="p-2 ">
         <button
-          className="p-3 flex items-center gap-1 text-sm"
+          className="w-full p-3 flex items-center justify-center text-primary gap-1 text-sm hover:bg-primary hover:text-base-100 duration-300"
           onClick={handelLogout}
         >
           <IoIosLogOut className="text-lg" />
           Log Out
         </button>
-      </div>
-
-      <div className="p-2 flex justify-between items-center font-light">
-        <p>Visit Front-End :</p>
-        <Link to="/" className="text-primary font-medium hover:underline">
-          Daily News
-        </Link>
       </div>
     </div>
   );

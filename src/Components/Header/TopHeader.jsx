@@ -1,5 +1,6 @@
 import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
-import { useGetAllContactUsQuery } from "../../redux/contactUs/contactUsApi";
+import { useGetSocialQuery } from "../../redux/socialApi";
+import { Link } from "react-router-dom";
 
 export default function TopHeader() {
   const date = new Date();
@@ -15,8 +16,7 @@ export default function TopHeader() {
     hour12: true,
   });
 
-  const { data } = useGetAllContactUsQuery();
-  const contactUs = data?.data[0];
+  const { data: social } = useGetSocialQuery();
 
   return (
     <div className="bg-secondary hidden sm:flex">
@@ -25,15 +25,17 @@ export default function TopHeader() {
           {today} - {time}
         </p>
         <div className="flex items-center gap-x-4 text-white text-sm">
-          <a href={contactUs?.facebook}>
+          <Link to={social?.data?.facebook} target="_blank">
             <FaFacebookF />
-          </a>
-          <a href={contactUs?.twitter}>
+          </Link>
+
+          <Link to={social?.data?.twitter} target="_blank">
             <FaTwitter />
-          </a>
-          <a href={contactUs?.youtube}>
+          </Link>
+
+          <Link to={social?.data?.youtube} target="_blank">
             <FaYoutube />
-          </a>
+          </Link>
         </div>
       </div>
     </div>

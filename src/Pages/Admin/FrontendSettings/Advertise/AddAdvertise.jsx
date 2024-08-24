@@ -36,7 +36,8 @@ export default function AddAdvertise() {
     formData.append("link", link);
     formData.append("showingPlace", showingPlace);
 
-    await addAdvertise(formData);
+    let res = await addAdvertise(formData);
+    console.log(res);
   };
 
   return (

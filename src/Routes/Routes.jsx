@@ -18,17 +18,16 @@ const AddAdvertise = lazy(() =>
 const Advertises = lazy(() =>
   import("../Pages/Admin/FrontendSettings/Advertise/Advertises")
 );
+
 const EditAdvertise = lazy(() =>
   import("../Pages/Admin/FrontendSettings/Advertise/EditAdvertise")
 );
-const AddBreakingNews = lazy(() =>
-  import("../Pages/Admin/FrontendSettings/BreakingNews/AddBreakingNews")
+
+const Social = lazy(() =>
+  import("../Pages/Admin/FrontendSettings/Social/Social")
 );
-const BreakingNews = lazy(() =>
-  import("../Pages/Admin/FrontendSettings/BreakingNews/BreakingNews")
-);
+
 const Logo = lazy(() => import("../Pages/Admin/FrontendSettings/Logo"));
-const Theme = lazy(() => import("../Pages/Admin/FrontendSettings/Theme"));
 const AddNews = lazy(() => import("../Pages/Admin/News/AddNews"));
 const AdminViewNews = lazy(() => import("../Pages/Admin/News/AdminViewNews"));
 const EditNews = lazy(() => import("../Pages/Admin/News/EditNews"));
@@ -125,7 +124,11 @@ export const routes = createBrowserRouter([
         element: <News />,
       },
       {
-        path: "/news/:category/:slug",
+        path: "/news/:category/:subCategory",
+        element: <News />,
+      },
+      {
+        path: "/news/details/:slug",
         element: <NewsDetails />,
       },
     ],
@@ -249,10 +252,6 @@ export const routes = createBrowserRouter([
         element: <Logo />,
       },
       {
-        path: "/admin/front-end/theme",
-        element: <Theme />,
-      },
-      {
         path: "/admin/front-end/advertise",
         element: <Advertises />,
       },
@@ -265,12 +264,8 @@ export const routes = createBrowserRouter([
         element: <EditAdvertise />,
       },
       {
-        path: "/admin/front-end/breaking-news",
-        element: <BreakingNews />,
-      },
-      {
-        path: "/admin/front-end/breaking-news/add-breaking-news",
-        element: <AddBreakingNews />,
+        path: "/admin/front-end/social",
+        element: <Social />,
       },
     ],
   },

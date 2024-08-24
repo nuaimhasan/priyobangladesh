@@ -2,7 +2,7 @@ import { FaHome } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 
 export default function BreadCrumb() {
-  const { category, slug } = useParams();
+  const { category, subCategory, slug } = useParams();
 
   return (
     <div className="py-2 text-gray-800 text-sm hidden sm:block">
@@ -16,32 +16,20 @@ export default function BreadCrumb() {
           <li>
             <span className="mx-2">/</span>
           </li>
-          {category ? (
-            <li>
-              <Link to="/news">সংবাদ</Link>
-            </li>
-          ) : (
-            <li>সংবাদ</li>
-          )}
-          {slug ? (
+          {slug && "news / details/" + slug}
+          {subCategory ? (
             <>
-              <li>
-                <span className="mx-2">/</span>
-              </li>
               <li>
                 <Link to={`/news/${category}`}>{category}</Link>
               </li>
               <li>
                 <span className="mx-2">/</span>
               </li>
-              <li>{slug}</li>
+              <li>{subCategory}</li>
             </>
           ) : (
             category && (
               <>
-                <li>
-                  <span className="mx-2">/</span>
-                </li>
                 <li>{category}</li>
               </>
             )

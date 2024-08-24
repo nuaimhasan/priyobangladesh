@@ -26,12 +26,12 @@ export default function EditSubCategory() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const subCategory = e.target.subCategory.value;
+    const name = e.target.subCategory.value;
     const category = e.target.category.value;
     const order = e.target.order.value;
 
     const data = {
-      subCategory,
+      name,
       category,
       order,
     };
