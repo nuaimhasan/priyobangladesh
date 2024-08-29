@@ -62,7 +62,7 @@ export default function Footer() {
               </li>
               <li className="mb-1">
                 <p className="font-semibold">রেজি নম্বর</p>
-                <p className="text-neutral-content">১৭৮</p>
+                <p className="text-neutral-content">১৭৪</p>
               </li>
             </ul>
           </div>
