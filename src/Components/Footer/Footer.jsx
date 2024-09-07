@@ -85,7 +85,7 @@ export default function Footer() {
                 <p>
                   <MdOutlineMail className="text-lg mt-1" />
                 </p>
-                <p>priyobangladesh@gmail.com</p>
+                <p>editorpriyobangladesh@outlook.com</p>
               </li>
             </ul>
           </div>
