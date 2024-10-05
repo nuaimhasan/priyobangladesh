@@ -4,8 +4,9 @@ import {
   useGetContactQuery,
   useUpdateContactMutation,
 } from "../../../../redux/contact/contactApi";
-import Spinner from "../../../../components/Spinner/Spinner";
+
 import { toast } from "react-hot-toast";
+import Spinner from "../../../../Components/Spinner/Spinner";
 
 export default function Contact() {
   const { data, isLoading, isError, error } = useGetContactQuery();
