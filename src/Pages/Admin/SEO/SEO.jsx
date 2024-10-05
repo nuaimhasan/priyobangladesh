@@ -1,4 +1,4 @@
-import { useGetSEOQuery } from "../../../Redux/seo/seoapi";
+import { useGetSEOQuery } from "../../../redux/seo/seoapi";
 import Form from "./Form";
 
 export default function SEO() {

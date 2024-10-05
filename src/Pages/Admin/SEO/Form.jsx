@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import {
   useAddSEOMutation,
   useUpdateSEOMutation,
-} from "../../../Redux/seo/seoapi";
+} from "../../../redux/seo/seoapi";
 import toast from "react-hot-toast";
 
 export default function Form({ seo }) {
