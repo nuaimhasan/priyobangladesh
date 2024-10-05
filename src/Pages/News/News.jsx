@@ -1,7 +1,11 @@
+import { useEffect } from "react";
 import AllNews from "../../Components/NewsPage/AllNews";
 
 export default function News() {
-  window.scroll(0, 0);
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
   return (
     <>
       <AllNews />

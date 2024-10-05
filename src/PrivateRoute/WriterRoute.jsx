@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Spinner from "../Components/Spinner/Spinner";
-import Swal from "sweetalert2";
+
 
 const WriterRoute = ({ children }) => {
   const { loggedUser } = useSelector((state) => state.user);
@@ -14,7 +14,6 @@ const WriterRoute = ({ children }) => {
   }
 
   if (loggedUser?.success && role !== "writer") {
-    Swal.fire("", "you can't access this page", "error");
     return <Navigate to="/login" replace />;
   }
 

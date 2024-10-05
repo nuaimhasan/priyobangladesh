@@ -95,7 +95,7 @@ export default function Footer() {
 
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-[13px] text-neutral-content">
-            © 2024 priyobangladesh. All Rights Reserved. Powered by
+            © 2024 priyobangladesh. All Rights Reserved. Develop by
             <Link
               to="https://emanagerit.com"
               target="blank"

@@ -38,7 +38,7 @@ export default function LatestNews() {
         >
           {newses?.map((news) => (
             <SwiperSlide key={news._id}>
-              <Link to={`/news/details/${news.slug}`}>
+              <Link to={`/news/${news.slug}`}>
                 <div className="relative w-full h-full">
                   <img
                     src={`${import.meta.env.VITE_BACKEND_URL}/news/${
@@ -56,9 +56,6 @@ export default function LatestNews() {
                         ? news?.title?.substring(0, 50) + "..."
                         : news?.title}
                     </h1>
-                    <p className="text-white text-xs">
-                      {news?.createdAt.split("T")[0]} | {news?.writer?.name}
-                    </p>
                   </div>
                 </div>
               </Link>

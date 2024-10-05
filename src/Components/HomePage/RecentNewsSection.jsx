@@ -13,11 +13,11 @@ export default function RecentNewsSection() {
 
   return (
     <div className="lg:col-span-1 col-span-2 pt-10 lg:pt-0">
-      <SectionHeader title="Recent News" />
+      <SectionHeader title="সর্বশেষ সংবাদ" />
       <div className=" w-full bg-white p-4 rounded-md">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-4">
           {newses?.map((news) => (
-            <Link key={news?._id} to={`/news/details/${news?.slug}`}>
+            <Link key={news?._id} to={`/news/${news?.slug}`}>
               <div className="flex items-center gap-3">
                 <img
                   src={`${import.meta.env.VITE_BACKEND_URL}/news/${
@@ -35,9 +35,6 @@ export default function RecentNewsSection() {
                       ? news?.title.slice(0, 30) + "..."
                       : news?.title}
                   </h1>
-                  <p className="text-xs">
-                    {news?.createdAt.slice(0, 10)} , {news?.writer?.name}
-                  </p>
                 </div>
               </div>
             </Link>

@@ -68,10 +68,10 @@ export default function WriterDashboard() {
         </div>
       </div>
 
-      {/* recent news */}
+      {/* সর্বশেষ সংবাদ */}
 
       <div className="bg-white shadow-lg py-3 px-5 rounded-md flex items-center justify-between mt-14">
-        <h1 className="md:text-xl text-base font-semibold">Recent News</h1>
+        <h1 className="md:text-xl text-base font-semibold">সর্বশেষ সংবাদ</h1>
         <Link
           to="/writer/news"
           className="bg-secondary text-white md:px-3 px-2 py-1 rounded-md hover:bg-primary transition hover:scale-105 duration-300 text-xs md:text-sm"

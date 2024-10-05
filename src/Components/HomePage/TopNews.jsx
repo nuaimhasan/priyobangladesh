@@ -31,7 +31,7 @@ export default function TopNews() {
 
   if (!isLoading && data?.data?.length > 0) {
     content = newses?.map((news) => (
-      <Link key={news?._id} to={`/news/details/${news?.slug}`}>
+      <Link key={news?._id} to={`/news/${news?.slug}`}>
         <div className="w-full h-40 rounded-md relative">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}
@@ -47,7 +47,6 @@ export default function TopNews() {
                 ? news?.title?.slice(0, 22) + "..."
                 : news?.title?.length}
             </h3>
-            <p className="text-xs">{news.createdAt.slice(0, 10)}</p>
           </div>
         </div>
       </Link>

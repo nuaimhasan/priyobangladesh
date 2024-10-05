@@ -13,14 +13,16 @@ import SidebarAdd from "./../Advertises/SidebarAdd";
 import Pagination from "../Pagination/Pagination";
 
 export default function AllNews() {
-  const { category } = useParams();
+  const { category, subCategory } = useParams();
 
   const query = {};
   const [currentPage, setCurrentPage] = useState(1);
+  let limit = 9;
 
   query["page"] = currentPage;
-  query["limit"] = 9;
+  query["limit"] = limit;
   query["category"] = category;
+  query["subCategory"] = subCategory;
   query["status"] = "active";
 
   const { data, isLoading } = useGetAllNewsQuery({ ...query });
@@ -47,7 +49,7 @@ export default function AllNews() {
           </div>
 
           {/* pagination */}
-          {newses?.length > 9 && (
+          {data?.meta?.total > limit && (
             <Pagination
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
@@ -59,7 +61,7 @@ export default function AllNews() {
         <div className="w-full sm:w-1/2 lg:w-full">
           <RecentNews />
           <div className="w-full bg-white p-4 rounded-md mt-5">
-            <SectionHeader title="Category" />
+            <SectionHeader title="ক্যাটাগরি" />
             <CategoryLength />
           </div>
           <div className="mt-4">

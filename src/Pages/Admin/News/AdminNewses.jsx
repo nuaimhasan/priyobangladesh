@@ -4,7 +4,6 @@ import { FaRegEye } from "react-icons/fa6";
 import { FiEdit3 } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
 import {
   useDeleteNewsMutation,
@@ -12,6 +11,7 @@ import {
 } from "../../../redux/news/newsApi";
 import Spinner from "../../../Components/Spinner/Spinner";
 import Pagination from "../../../Components/Pagination/Pagination";
+import toast from "react-hot-toast";
 
 export default function AdminNewses() {
   const { loggedUser } = useSelector((state) => state.user);
@@ -30,17 +30,18 @@ export default function AdminNewses() {
   query["limit"] = 5;
   const { data, isLoading } = useGetNewsByWriterQuery({ writerId, ...query });
   const newses = data?.data;
-  const pages = Math.ceil(parseInt( data?.meta?.total) / parseInt( data?.meta?.limit));
+  const pages = Math.ceil(
+    parseInt(data?.meta?.total) / parseInt(data?.meta?.limit)
+  );
 
   useEffect(() => {
     if (isSuccess) {
-      Swal.fire("", "News Deleted Successfully", "success");
+      toast.success("News Deleted Successfully");
     }
     if (isError) {
-      Swal.fire("", "An error occured when deleting", "error");
+      toast.error("Failed to delete news");
     }
   }, [isSuccess, isError]);
-
 
   // Delete News
   const handleDelete = async (id) => {
@@ -52,9 +53,8 @@ export default function AdminNewses() {
     await deleteNews(id);
   };
 
-// Loading
+  // Loading
   if (isLoading) return <Spinner />;
-
 
   return (
     <div>
@@ -66,7 +66,7 @@ export default function AdminNewses() {
         <div className="flex items-center justify-between">
           <h1 className="md:text-xl text-base font-semibold">All News</h1>
           <Link
-            to="/writer/news/add-news"
+            to="/admin/news/add-news"
             className="bg-secondary text-white md:px-3 px-2 py-1 rounded-md hover:bg-primary transition hover:scale-105 duration-300 text-xs md:text-sm"
           >
             Add News

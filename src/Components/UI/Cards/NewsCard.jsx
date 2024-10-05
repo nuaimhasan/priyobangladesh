@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function NewsCard({ news }) {
   return (
     <Link
-      to={`/news/details/${news?.slug}`}
+      to={`/news/${news?.slug}`}
       className="bg-white shadow rounded-md hover:scale-105 transition ease-in-out delay-75 duration-300"
     >
       <div className="w-full h-40 relative">

@@ -10,8 +10,6 @@ export default function Social() {
   const social = data?.data;
   const id = social?.data?._id;
 
-  console.log(data);
-
   const [addSocial, { isLoading }] = useAddSocialMutation();
   const [updateSocial, { isLoading: uIsLoading }] = useUpdateSocialMutation();
 

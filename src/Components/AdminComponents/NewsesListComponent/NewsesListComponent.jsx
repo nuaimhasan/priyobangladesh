@@ -9,8 +9,8 @@ import {
   useGetAllNewsQuery,
   useUpdateStatusMutation,
 } from "../../../redux/news/newsApi";
-import Swal from "sweetalert2";
 import Spinner from "../../Spinner/Spinner";
+import toast from "react-hot-toast";
 
 export default function NewsesListComponent() {
   const [updateStatus, { isLoading: statusLoading }] =
@@ -53,10 +53,10 @@ export default function NewsesListComponent() {
 
   useEffect(() => {
     if (isSuccess) {
-      Swal.fire("", "News Deleted Successfully", "success");
+      toast.success("News Deleted Successfully");
     }
     if (isError) {
-      Swal.fire("", "An error occured when deleting", "error");
+      toast.error("Failed to delete news");
     }
   }, [isSuccess, isError]);
 

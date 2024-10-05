@@ -5,7 +5,7 @@ export default function SecondaryNewsCard({ news }) {
     <>
       <Link
         key={news._id}
-        to={`/news/details/${news.slug}`}
+        to={`/news/${news.slug}`}
         className="group hover:scale-105 delay-150 duration-300 transition-all"
       >
         <div className="bg-white flex gap-x-4 rounded-md h-[84px] overflow-hidden group-hover:shadow-lg transition-all duration-300">
@@ -23,9 +23,6 @@ export default function SecondaryNewsCard({ news }) {
                 ? news?.title.slice(0, 30) + "..."
                 : news?.title}
             </h1>
-            <p className="text-xs">
-              {news?.createdAt.slice(0, 10)} | {news?.writer?.name}
-            </p>
           </div>
         </div>
       </Link>

@@ -1,6 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
 import Spinner from "../Components/Spinner/Spinner";
 
 const AdminRoute = ({ children }) => {
@@ -14,7 +13,6 @@ const AdminRoute = ({ children }) => {
   }
 
   if (loggedUser?.success && role !== "admin") {
-    Swal.fire("", "you can't access this page", "error");
     return <Navigate to="/login" replace />;
   }
 

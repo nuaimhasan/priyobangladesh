@@ -116,19 +116,19 @@ export const routes = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/news",
+        path: "/",
         element: <News />,
       },
       {
-        path: "/news/:category",
+        path: "/:category",
         element: <News />,
       },
       {
-        path: "/news/:category/:subCategory",
+        path: "/:category/:subCategory",
         element: <News />,
       },
       {
-        path: "/news/details/:slug",
+        path: "/news/:slug",
         element: <NewsDetails />,
       },
     ],
@@ -192,7 +192,7 @@ export const routes = createBrowserRouter([
         element: <NewsesList />,
       },
       {
-        path: "/admin/admin-news",
+        path: "/admin/my-news",
         element: <AdminNewses />,
       },
       {

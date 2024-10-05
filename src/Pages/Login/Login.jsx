@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { useLoginMutation } from "../../redux/user/userApi";
+import { toast } from "react-hot-toast";
 
 export default function Login() {
   const { loggedUser } = useSelector((store) => store.user);
@@ -14,13 +14,9 @@ export default function Login() {
     ? "/admin"
     : "/writer";
 
-  const [login, { isLoading, isError }] = useLoginMutation();
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (isError) {
-      Swal.fire("", "An error occured when login", "error");
-    }
-  }, [isError]);
+  const [login, { isLoading, isError }] = useLoginMutation();
 
   useEffect(() => {
     if (loggedUser?.success && !isError) {
@@ -39,7 +35,19 @@ export default function Login() {
       password,
     };
 
-    await login(info);
+    const res = await login(info);
+
+    if (res?.error) {
+      setError(res?.error?.data?.error);
+    } else {
+      setError(null);
+    }
+
+    if (res?.data?.success) {
+      navigate(from, { replace: true });
+      toast.success("Login Success");
+      form.reset();
+    }
   };
 
   return (
@@ -60,6 +68,7 @@ export default function Login() {
               className="border border-gray-300 rounded-md p-2"
               placeholder="Password"
             />
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
               type="submit"
               disabled={isLoading && "disabled"}

@@ -31,9 +31,6 @@ export default function MobileMenuSidebar({ mobileMenu, setMobileMenu }) {
             <li>
               <NavLink to="/">Home</NavLink>
             </li>
-            <li>
-              <NavLink to="/news">News</NavLink>
-            </li>
             {categories?.map((category) => (
               <li key={category?._id}>
                 <Link to={`/news/${category?.slug}`}>{category?.category}</Link>

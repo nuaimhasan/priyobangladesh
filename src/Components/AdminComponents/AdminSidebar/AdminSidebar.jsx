@@ -7,9 +7,8 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { userLogout } from "../../../redux/user/userSlice";
 import SidebarItems from "./SidebarItems";
-
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { toast } from "react-hot-toast";
 import { useGetAllLogoQuery } from "../../../redux/logo/logoApi";
 
 export default function AdminSidebar() {
@@ -45,8 +44,8 @@ export default function AdminSidebar() {
           path: "/admin/news",
         },
         {
-          title: "Admin Newses",
-          path: "/admin/admin-news",
+          title: "My Newses",
+          path: "/admin/my-news",
         },
       ],
     },
@@ -86,8 +85,10 @@ export default function AdminSidebar() {
   ];
 
   const handelLogout = () => {
+    let isConfirm = window.confirm("Are you sure you want to logout?");
+    if (!isConfirm) return;
     dispatch(userLogout());
-    Swal.fire("", "Logout Successfully", "success");
+    toast.success("Logout Success");
     navigate("/login");
   };
 
@@ -115,7 +116,7 @@ export default function AdminSidebar() {
 
       <div className="p-2 ">
         <button
-          className="w-full p-3 flex items-center justify-center text-primary gap-1 text-sm hover:bg-primary hover:text-base-100 duration-300"
+          className="w-full p-3 flex items-center justify-center gap-1 text-sm bg-primary text-base-100"
           onClick={handelLogout}
         >
           <IoIosLogOut className="text-lg" />

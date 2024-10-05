@@ -24,6 +24,12 @@ export default function AddNews() {
   const { loggedUser } = useSelector((state) => state.user);
   const { data: categoryData } = useGetAllCategoryQuery();
 
+  const config = {
+    uploader: {
+      url: "https://xdsoft.net/jodit/finder/?action=fileUpload",
+    },
+  };
+
   const [addNews, { isLoading, isSuccess, isError }] = useCreateNewsMutation();
 
   const handleSubmit = async (e) => {
@@ -177,6 +183,7 @@ export default function AddNews() {
                     ref={editor}
                     value={details}
                     onBlur={(text) => setDetails(text)}
+                    config={config}
                   />
                 </div>
               </div>

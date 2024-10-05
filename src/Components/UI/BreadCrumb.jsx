@@ -16,7 +16,7 @@ export default function BreadCrumb() {
           <li>
             <span className="mx-2">/</span>
           </li>
-          {slug && "news / details/" + slug}
+          {slug && "news /" + slug}
           {subCategory ? (
             <>
               <li>

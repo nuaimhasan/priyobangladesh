@@ -47,7 +47,7 @@ export default function MenuHeader() {
           {categories?.map((category) => (
             <NavLink
               key={category?._id}
-              to={`/news/${category?.slug}`}
+              to={`/${category?.slug}`}
               className={({ isActive }) =>
                 `category py-3 px-3 relative hover:bg-secondary hover:text-base-100 duration-300 ${
                   isActive ? "bg-secondary" : ""
@@ -66,7 +66,7 @@ export default function MenuHeader() {
                     {category?.subCategories?.map((subCategory) => (
                       <li key={subCategory?._id}>
                         <Link
-                          to={`/news/${category?.slug}/${subCategory?.slug}`}
+                          to={`/${category?.slug}/${subCategory?.slug}`}
                           className="px-3 py-2 block hover:bg-secondary hover:text-base-100 duration-300 border-b"
                         >
                           {subCategory?.name}
