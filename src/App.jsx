@@ -4,7 +4,7 @@ import useAuthCheck from "./Hooks/useAuthCheck";
 import Spinner from "./Components/Spinner/Spinner";
 import { Toaster } from "react-hot-toast";
 import { Helmet } from "react-helmet";
-import { useGetSEOQuery } from "./Redux/seo/seoapi";
+import { useGetSEOQuery } from "./redux/seo/seoapi";
 
 function App() {
   const authChecked = useAuthCheck();
