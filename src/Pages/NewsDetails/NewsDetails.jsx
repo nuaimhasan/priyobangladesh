@@ -26,6 +26,7 @@ import {
   FaWhatsappSquare,
 } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
+
 import moment from "moment";
 import { Helmet } from "react-helmet";
 
@@ -53,45 +54,33 @@ export default function NewsDetails() {
   });
   const detailsAdd = detailsAddData?.data[0];
 
+  const imageUrl = `${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`;
+  const url = `${import.meta.env.VITE_FRONT_END_URL}/news/${news?.slug}`;
+  const title = news?.title;
+
   if (isLoading || allLoading) return <Spinner />;
 
   return (
     <>
       <Helmet>
-        <title>{news?.title}</title>
-        <meta property="og:title" content={news?.title} />
-        <meta property="og:description" content={news?.description} />
-        <meta
-          property="og:image"
-          content={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}
-        />
-        <meta
-          property="og:url"
-          content={`${import.meta.env.VITE_FRONT_END_URL}/news/${
-            news?.category?.category
-          }/${news?.slug}`}
-        />
+        <title>{title}</title>
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={perserDescription} />
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:url" content={url} />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={news?.title} />
-        <meta name="twitter:description" content={news?.description} />
-        <meta
-          name="twitter:image"
-          content={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}
-        />
-        <meta
-          name="twitter:url"
-          content={`${import.meta.env.VITE_FRONT_END_URL}/news/${
-            news?.category?.category
-          }/${news?.slug}`}
-        />
+        <meta name="twitter:description" content={perserDescription} />
+        <meta name="twitter:image" content={imageUrl} />
+        <meta name="twitter:url" content={url} />
       </Helmet>
       <section>
         <div className="container pt-2 pb-4">
           <div className="flex md:flex-row flex-col items-start gap-5">
             <div className="w-full text-gray-800">
               <img
-                src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}
+                src={imageUrl}
                 alt={news?.title}
                 className="w-full md:max-h-[400px] rounded-md"
               />
@@ -102,45 +91,38 @@ export default function NewsDetails() {
 
                 <div className="mt-2 sm:mt-0">
                   <FacebookShareButton
-                    url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
-                      news?.category?.category
-                    }/${news?.slug}`}
+                    url={url}
+                    title={title}
+                    quote={title}
+                    hashtag="#priyoBangladesh"
                   >
                     <FaFacebook className="text-xl text-blue-600" />
                   </FacebookShareButton>
                   <TwitterShareButton
-                    url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
-                      news?.category?.category
-                    }/${news?.slug}`}
+                    url={url}
+                    title={title}
+                    via="YourTwitterHandle"
                   >
                     <FaSquareXTwitter className="text-xl" />
                   </TwitterShareButton>
-                  <TelegramShareButton
-                    url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
-                      news?.category?.category
-                    }/${news?.slug}`}
-                  >
+                  <TelegramShareButton url={url} title={title}>
                     <FaTelegram className="text-xl text-sky-500" />
                   </TelegramShareButton>
                   <LinkedinShareButton
-                    url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
-                      news?.category?.category
-                    }/${news?.slug}`}
+                    url={url}
+                    title={title}
+                    summary="Check out this amazing website!"
+                    source="Website Source"
                   >
                     <FaLinkedin className="text-xl text-sky-400" />
                   </LinkedinShareButton>
-                  <WhatsappShareButton
-                    url={`${import.meta.env.VITE_FRONT_END_URL}/news/${
-                      news?.category?.category
-                    }/${news?.slug}`}
-                  >
+                  <WhatsappShareButton url={url} title={title}>
                     <FaWhatsappSquare className="text-xl text-green-500" />
                   </WhatsappShareButton>
                 </div>
               </div>
               <h1 className="text-2xl font-medium mt-4 mb-2">{news?.title}</h1>
               <div className="text-neutral-content">
-                <p>{news?.shortDescription}</p>
                 <div className="w-[90%] md:w-1/2 mx-auto">
                   <Link to={detailsAdd?.link} target="_blank">
                     <img
@@ -152,6 +134,7 @@ export default function NewsDetails() {
                     />
                   </Link>
                 </div>
+
                 <p>{perserDescription}</p>
               </div>
             </div>

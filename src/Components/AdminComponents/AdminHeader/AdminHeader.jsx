@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { useSelector } from "react-redux";
-import BreadCrumb from "../../UI/BreadCrumb";
+import { Link } from "react-router-dom";
+import { TbWorldWww } from "react-icons/tb";
 
 export default function AdminHeader({ setSidebar }) {
   const { loggedUser } = useSelector((state) => state.user);
@@ -16,9 +17,9 @@ export default function AdminHeader({ setSidebar }) {
           >
             <HiOutlineMenuAlt2 className="text-xl" />
           </button>
-          <div className="hidden lg:block">
-            <BreadCrumb maxSegmentsToShow={3} />
-          </div>
+          <Link to="/" title="Visit Front-End" target="_blank">
+            <TbWorldWww className="text-xl" />
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">

@@ -6,12 +6,16 @@ import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone, MdOutlineMail } from "react-icons/md";
 import { useGetSocialQuery } from "../../redux/socialApi";
 import { FaTwitter } from "react-icons/fa";
+import { useGetContactQuery } from "../../redux/contact/contactApi";
 
 export default function Footer() {
   const { data: logo } = useGetAllLogoQuery();
 
   const { data: categories } = useGetAllCategoryQuery();
   const { data: social } = useGetSocialQuery();
+
+  const { data } = useGetContactQuery();
+  const contact = data?.data[0];
 
   return (
     <footer className="border-t pt-8 pb-4 bg-base-100">
@@ -32,18 +36,20 @@ export default function Footer() {
               <h2 className="text-xl font-medium">Priyo Bangladesh</h2>
             </div>
 
-            <div className="mt-2"></div>
+            <div className="mt-2">
+              <p>{contact?.bio}</p>
+            </div>
           </div>
 
           <div>
             <ul className="text-[15px]">
               {categories?.data?.map((category) => (
-                <li key={category._id}>
+                <li key={category?._id}>
                   <Link
                     to={`/news/${category.slug}`}
                     className="hover:text-primary"
                   >
-                    {category.category}
+                    {category?.category}
                   </Link>
                 </li>
               ))}
@@ -54,15 +60,15 @@ export default function Footer() {
             <ul className="text-[15px]">
               <li className="mb-1">
                 <p className="font-semibold mb-1">প্রধান সম্পাদক</p>
-                <p className="text-neutral-content">জাহিদ আলামিন</p>
+                <p className="text-neutral-content">{contact?.cheifEditor}</p>
               </li>
               <li className="mb-1">
                 <p className="font-semibold mb-1">সম্পাদক</p>
-                <p className="text-neutral-content">মিজানুর রহমান</p>
+                <p className="text-neutral-content">{contact?.editor}</p>
               </li>
               <li className="mb-1">
                 <p className="font-semibold">রেজি নম্বর</p>
-                <p className="text-neutral-content">১৭৪</p>
+                <p className="text-neutral-content">{contact?.regiNumber}</p>
               </li>
             </ul>
           </div>
@@ -73,19 +79,19 @@ export default function Footer() {
                 <p>
                   <IoLocationOutline className="text-lg mt-1.5" />
                 </p>
-                <p>২৭০-বি,(৩য় তলা),তেজগাঁও শিল্প এলাকা,ঢাকা-১২০৪</p>
+                <p>{contact?.address}</p>
               </li>
               <li className="mb-1 flex items-start gap-1">
                 <p>
                   <MdOutlinePhone className="text-lg mt-1" />
                 </p>
-                <p>০১৯১১-৪৯৫৯০৯</p>
+                <p>{contact?.phone}</p>
               </li>
               <li className="mb-1 flex items-start gap-1">
                 <p>
                   <MdOutlineMail className="text-lg mt-1" />
                 </p>
-                <p>editorpriyobangladesh@outlook.com</p>
+                <p>{contact?.email}</p>
               </li>
             </ul>
           </div>

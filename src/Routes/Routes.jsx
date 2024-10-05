@@ -5,6 +5,8 @@ import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Home/Home";
 
 import Spinner from "../Components/Spinner/Spinner";
+import SEO from "../Pages/Admin/SEO/SEO";
+import Contact from "../Pages/Admin/FrontendSettings/Contact/Contact";
 
 const AdminLayout = lazy(() => import("../Layout/AdminLayout/AdminLayout"));
 const WriterLayout = lazy(() => import("../Layout/WriterLayout/WriterLayout"));
@@ -266,6 +268,16 @@ export const routes = createBrowserRouter([
       {
         path: "/admin/front-end/social",
         element: <Social />,
+      },
+      {
+        path: "/admin/front-end/contact",
+        element: <Contact />,
+      },
+
+      // seo
+      {
+        path: "/admin/seo",
+        element: <SEO />,
       },
     ],
   },

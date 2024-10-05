@@ -1,4 +1,4 @@
-import { FaUsers } from "react-icons/fa";
+import { FaChartLine, FaUsers } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { IoIosLogOut } from "react-icons/io";
 import { LuNewspaper } from "react-icons/lu";
@@ -80,7 +80,16 @@ export default function AdminSidebar() {
           title: "Social",
           path: "/admin/front-end/social",
         },
+        {
+          title: "Contact",
+          path: "/admin/front-end/contact",
+        },
       ],
+    },
+    {
+      icon: <FaChartLine />,
+      title: "SEO Setting",
+      path: "/admin/seo",
     },
   ];
 
