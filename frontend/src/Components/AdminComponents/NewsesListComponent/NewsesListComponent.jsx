@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 export default function NewsesListComponent() {
   const [updateStatus, { isLoading: statusLoading }] =
     useUpdateStatusMutation();
-  const [deleteNews, { isSuccess, isError }] = useDeleteNewsMutation();
+  const [deleteNews] = useDeleteNewsMutation();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [status, setStatus] = useState("");
@@ -29,9 +29,6 @@ export default function NewsesListComponent() {
 
   const { data, isLoading } = useGetAllNewsQuery({ ...query });
   const newses = data?.data;
-  const pages = Math.ceil(
-    parseInt(data?.meta?.total) / parseInt(data?.meta?.limit)
-  );
 
   const handleDelete = async (id) => {
     const confirm = window.confirm(
@@ -39,7 +36,13 @@ export default function NewsesListComponent() {
     );
     if (!confirm) return;
 
-    await deleteNews(id);
+    const res = await deleteNews(id);
+    if (res?.data) {
+      toast.success("News Deleted Successfully");
+    } else {
+      toast.error(res?.error?.message || "Failed to delete news");
+      console.log(res);
+    }
   };
 
   const handleStatus = async (id) => {
@@ -48,17 +51,15 @@ export default function NewsesListComponent() {
     );
     if (!confirm) return;
 
-    await updateStatus(id);
-  };
+    const res = await updateStatus(id);
 
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("News Deleted Successfully");
+    if (res?.data?.success) {
+      toast.success("Status Updated Successfully");
+    } else {
+      toast.error(res?.error?.message || "Failed to update status");
+      console.log(res);
     }
-    if (isError) {
-      toast.error("Failed to delete news");
-    }
-  }, [isSuccess, isError]);
+  };
 
   if (isLoading) return <Spinner />;
 
@@ -99,7 +100,7 @@ export default function NewsesListComponent() {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody>
             {newses?.map((data) => (
               <tr key={data?._id}>
                 <td>
@@ -165,13 +166,13 @@ export default function NewsesListComponent() {
         </table>
       </div>
 
-      <div className="bg-base-100 p-4 rounded-b-md">
+      {data?.meta?.pages > 1 && (
         <Pagination
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
-          pages={pages}
+          pages={data?.meta?.pages}
         />
-      </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const News = require("./newsModel");
 
 const subCategorySchema = new mongoose.Schema(
   {
@@ -14,7 +15,6 @@ const subCategorySchema = new mongoose.Schema(
     slug: {
       type: String,
       required: true,
-      unique: true,
     },
     order: {
       type: Number,
@@ -23,6 +23,21 @@ const subCategorySchema = new mongoose.Schema(
   },
   { timestamps: false }
 );
+
+subCategorySchema.pre("findOneAndDelete", async function (next) {
+  const subCategoryId = this.getQuery()._id;
+  const newsCount = await News.countDocuments({ subCategory: subCategoryId });
+
+  if (newsCount > 0) {
+    const error = new Error(
+      "Cannot delete category with associated news articles."
+    );
+
+    return next(error);
+  }
+
+  next();
+});
 
 const SubCategory = mongoose.model("SubCategory", subCategorySchema);
 

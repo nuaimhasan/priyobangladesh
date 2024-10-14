@@ -2,6 +2,7 @@ const router = require("express").Router();
 const multer = require("multer");
 const verifyAdmin = require("../middleware/verifyAdmin");
 const verifyToken = require("../middleware/verifyToken");
+const verifyWriter = require("../middleware/verifyWriter");
 const {
   addAdmin,
   login,
@@ -16,7 +17,6 @@ const {
   updateStatus,
   getUserBySlug,
 } = require("../controllers/userController");
-const verifyWriter = require("../middleware/verifyWriter");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

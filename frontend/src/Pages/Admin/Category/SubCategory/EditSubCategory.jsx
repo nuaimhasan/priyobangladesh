@@ -1,28 +1,31 @@
 import { useNavigate, useParams } from "react-router-dom";
 import BreadCrumb from "../../../../Components/UI/BreadCrumb";
-import {
-  useCreateCategoryMutation,
-  useGetAllCategoryQuery,
-} from "../../../../redux/category/categoryApi";
+import { useGetAllCategoryQuery } from "../../../../redux/category/categoryApi";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import {
+  useGetSubCategoryByIdQuery,
+  useUpdateSubCategoryMutation,
+} from "../../../../redux/subCategoryApi/subCategoryApi";
 
 export default function EditSubCategory() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [order, setOrder] = useState(1);
+  const { data } = useGetSubCategoryByIdQuery(id);
+  const subCategory = data?.data;
+
   const [category, setCategory] = useState("");
-
-  const { data } = useGetAllCategoryQuery();
-  const categories = data?.data;
-
   useEffect(() => {
-    if (categories?.length > 0) {
-      setOrder(categories?.length + 1);
+    if (subCategory) {
+      setCategory(subCategory?.category?._id);
     }
-  }, [categories]);
+  }, [subCategory]);
 
-  const [addNewsCategory, { isLoading }] = useCreateCategoryMutation();
+  const { data: cData } = useGetAllCategoryQuery();
+  const categories = cData?.data;
+
+  const [updateSubCategory, { isLoading }] = useUpdateSubCategoryMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,11 +39,14 @@ export default function EditSubCategory() {
       order,
     };
 
-    let res = await addNewsCategory(data);
+    let res = await updateSubCategory({ id, data });
+
     if (res?.data?.success) {
+      toast.success("Sub Category Updated Successfully");
       navigate("/admin/subCategories");
     } else {
       console.log(res);
+      toast.error(res?.data?.message || "Something went wrong");
     }
   };
 
@@ -53,7 +59,7 @@ export default function EditSubCategory() {
       <div className="bg-white rounded-md shadow-lg lg:w-1/2 w-full">
         <div className="p-5">
           <h1 className="text-xl font-semibold text-center">
-            Add Sub Category
+            Edit Sub Category
           </h1>
 
           <div className=" py-10">
@@ -65,6 +71,7 @@ export default function EditSubCategory() {
                     type="text"
                     name="subCategory"
                     className="border px-2 py-1.5 rounded-md focus:outline-none"
+                    defaultValue={subCategory?.name}
                   />
                 </div>
 
@@ -89,9 +96,8 @@ export default function EditSubCategory() {
                   <input
                     type="number"
                     name="order"
-                    value={order}
-                    onChange={(e) => setOrder(e.target.value)}
                     className="border px-2.5 py-1.5 rounded-md focus:outline-none"
+                    defaultValue={subCategory?.order}
                   />
                 </div>
 

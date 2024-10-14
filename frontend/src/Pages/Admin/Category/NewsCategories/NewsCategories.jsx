@@ -1,30 +1,18 @@
-import { useEffect } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit3 } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 import BreadCrumb from "../../../../Components/UI/BreadCrumb";
 import {
   useDeleteCategoryMutation,
   useGetAllCategoryQuery,
 } from "../../../../redux/category/categoryApi";
 import Spinner from "../../../../Components/Spinner/Spinner";
+import { toast } from "react-hot-toast";
 
 export default function NewsCategories() {
   const { data, isLoading } = useGetAllCategoryQuery();
   const categories = data?.data;
-  const [deleteCategory, { isSuccess, isError }] = useDeleteCategoryMutation();
-
-  useEffect(() => {
-    if (isSuccess) {
-      Swal.fire("", "Category Deleted Successfully", "success");
-    }
-    if (isError) {
-      Swal.fire("", "An error occured when deleting", "error");
-    }
-  }, [isSuccess, isError]);
-
-  if (isLoading) return <Spinner />;
+  const [deleteCategory] = useDeleteCategoryMutation();
 
   const handleDelete = async (id) => {
     const confirm = window.confirm(
@@ -32,8 +20,16 @@ export default function NewsCategories() {
     );
     if (!confirm) return;
 
-    await deleteCategory(id);
+    const res = await deleteCategory(id);
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+    } else {
+      toast.error(res?.data?.message || "Failed to delete category");
+      console.log(res);
+    }
   };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div>

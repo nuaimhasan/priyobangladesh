@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa6";
 import { FiEdit3 } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
 import Pagination from "../../../Components/UI/Pagination";
 import {
@@ -13,36 +11,26 @@ import {
   useGetNewsByWriterQuery,
 } from "../../../redux/news/newsApi";
 import Spinner from "../../../Components/Spinner/Spinner";
+import toast from "react-hot-toast";
 
 export default function WriterNewsesList() {
   const { loggedUser } = useSelector((state) => state.user);
   const writerId = loggedUser?.data?._id;
 
-  const [deleteNews, { isSuccess, isError }] = useDeleteNewsMutation();
+  const [deleteNews] = useDeleteNewsMutation();
 
   const query = {};
   const [status, setStatus] = useState("");
   const [title, setTitle] = useState("");
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   query["status"] = status;
   query["title"] = title;
-  query["page"] = page;
-  query["limit"] = limit;
+  query["page"] = currentPage;
+  query["limit"] = 5;
   const { data, isLoading } = useGetNewsByWriterQuery({ writerId, ...query });
   const newses = data?.data;
-
-  useEffect(() => {
-    if (isSuccess) {
-      Swal.fire("", "News Deleted Successfully", "success");
-    }
-    if (isError) {
-      Swal.fire("", "An error occured when deleting", "error");
-    }
-  }, [isSuccess, isError]);
-
-  if (isLoading) return <Spinner />;
 
   const handleDelete = async (id) => {
     const confirm = window.confirm(
@@ -50,15 +38,17 @@ export default function WriterNewsesList() {
     );
     if (!confirm) return;
 
-    await deleteNews(id);
+    const res = await deleteNews(id);
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+    } else {
+      toast.error(res?.data?.message || "Failed to delete news");
+      console.log(res);
+    }
   };
 
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber < 1) return;
-    if (pageNumber > data?.meta?.total / limit) return;
+  if (isLoading) return <Spinner />;
 
-    setPage(pageNumber);
-  };
   return (
     <div>
       <div className="lg:hidden block">
@@ -172,17 +162,15 @@ export default function WriterNewsesList() {
             ))}
           </tbody>
         </table>
-
-        {/* pagination */}
-        {newses?.length > 5 && (
-          <Pagination
-            handlePageChange={handlePageChange}
-            limit={limit}
-            total={data?.meta?.total}
-            page={page}
-          />
-        )}
       </div>
+
+      {data?.meta?.pages > 1 && (
+        <Pagination
+          pages={data?.meta?.pages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 }

@@ -26,16 +26,16 @@ exports.add = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
 
 exports.get = async (req, res) => {
+  const { category } = req.query;
   try {
-    const { category } = req.query;
     let query = {};
     if (category && category != "undefined" && category != "null")
       query.category = category;
@@ -50,9 +50,9 @@ exports.get = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -60,17 +60,18 @@ exports.get = async (req, res) => {
 exports.getSingle = async (req, res) => {
   try {
     const { id } = req.params;
-    const category = await Categories.findOne({ _id: id }).populate("category");
+
+    const category = await SubCategory.findById(id).populate("category");
 
     res.status(200).json({
       success: true,
-      message: "Category found successfully",
+      message: "Sub Category found successfully",
       data: category,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -79,45 +80,42 @@ exports.update = async (req, res) => {
   try {
     const { id } = req?.params;
     const data = req?.body;
-    const oldCategoryId = data?.oldCategory;
-    const newCategoryId = data?.newCategory;
+    const category = data?.category;
 
-    if (oldCategoryId) {
-      await Categories.findByIdAndUpdate(
-        oldCategoryId,
-        { $pull: { subCategories: id } },
-        { new: true }
-      );
+    const isExit = await SubCategory.findById(id);
+    if (!isExit) {
+      return res.json({
+        success: false,
+        message: "Sub Category not found",
+      });
     }
 
-    if (newCategoryId) {
-      await Categories.findByIdAndUpdate(
-        newCategoryId,
-        { $push: { subCategories: id } },
-        { new: true }
-      );
+    if (category && isExit.category.toString() !== category) {
+      await Categories.findByIdAndUpdate(isExit.category, {
+        $pull: { subCategories: id },
+      });
+
+      await Categories.findByIdAndUpdate(category, {
+        $addToSet: { subCategories: id },
+      });
+
+      isExit.category = category;
     }
 
-    let info = {
-      category: newCategoryId,
-      name: data?.name,
-      order: data?.order,
-      slug: data?.name?.split(" ").join("-"),
-    };
+    isExit.name = data?.name;
+    isExit.slug = data?.name?.split(" ").join("-");
+    isExit.order = data?.order;
 
-    const result = await SubCategory.findByIdAndUpdate(id, info, {
-      new: true,
-    });
+    await isExit.save();
 
     res.status(200).json({
       success: true,
       message: "update success",
-      data: result,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -128,9 +126,9 @@ exports.destroy = async (req, res) => {
     const subCategory = await SubCategory.findById(id);
 
     if (!subCategory) {
-      return res.status(400).json({
+      return res.json({
         success: false,
-        error: "Sub Category not found",
+        message: "Sub Category not found",
       });
     }
 
@@ -140,18 +138,16 @@ exports.destroy = async (req, res) => {
       { new: true }
     );
 
-    let result = await SubCategory.deleteOne({ _id: id });
+    await SubCategory.findByIdAndDelete(id);
 
-    if (result) {
-      res.status(200).json({
-        success: true,
-        message: "Delete success",
-      });
-    }
+    res.status(200).json({
+      success: true,
+      message: "Delete success",
+    });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };

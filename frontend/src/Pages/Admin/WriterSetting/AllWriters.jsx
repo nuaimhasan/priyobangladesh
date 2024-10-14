@@ -4,10 +4,12 @@ import { FaRegEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
 import {
+  useDeleteUserMutation,
   useGetWritersQuery,
   useUpdateWriterStatusMutation,
 } from "../../../redux/user/userApi";
 import Spinner from "../../../Components/Spinner/Spinner";
+import toast from "react-hot-toast";
 
 export default function AllWriters() {
   const query = {};
@@ -21,20 +23,41 @@ export default function AllWriters() {
   const [updateStatus, { isLoading: statusLoading }] =
     useUpdateWriterStatusMutation();
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   const writers = data?.data;
 
   const handleStatus = async (id) => {
     const confirm = window.confirm(
-      "Are you sure you want to change the status of this news?"
+      "Are you sure you want to change the status of this writter?"
     );
     if (!confirm) return;
 
-    await updateStatus(id);
+    const res = await updateStatus(id);
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+    } else {
+      toast.error(res?.data?.message || "Failed to update status");
+      console.log(res);
+    }
   };
+
+  const [deleteUser] = useDeleteUserMutation();
+
+  const handleDelete = async (id) => {
+    const isConfirm = window.confirm("Are you sure you want to delete this?");
+
+    if (isConfirm) {
+      const res = await deleteUser(id);
+
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+      } else {
+        toast.error(res?.data?.message || "Failed to delete user");
+        console.log(res);
+      }
+    }
+  };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div>
@@ -130,7 +153,10 @@ export default function AllWriters() {
                     >
                       <FaRegEye />
                     </Link>
-                    <button className="hover:text-primary text-lg">
+                    <button
+                      onClick={() => handleDelete(writer?._id)}
+                      className="hover:text-primary text-lg"
+                    >
                       <AiOutlineDelete />
                     </button>
                   </div>

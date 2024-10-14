@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa6";
 import { FiEdit3 } from "react-icons/fi";
@@ -17,7 +17,7 @@ export default function AdminNewses() {
   const { loggedUser } = useSelector((state) => state.user);
   const writerId = loggedUser?.data?._id;
 
-  const [deleteNews, { isSuccess, isError }] = useDeleteNewsMutation();
+  const [deleteNews] = useDeleteNewsMutation();
 
   const query = {};
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,18 +30,6 @@ export default function AdminNewses() {
   query["limit"] = 5;
   const { data, isLoading } = useGetNewsByWriterQuery({ writerId, ...query });
   const newses = data?.data;
-  const pages = Math.ceil(
-    parseInt(data?.meta?.total) / parseInt(data?.meta?.limit)
-  );
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("News Deleted Successfully");
-    }
-    if (isError) {
-      toast.error("Failed to delete news");
-    }
-  }, [isSuccess, isError]);
 
   // Delete News
   const handleDelete = async (id) => {
@@ -50,7 +38,13 @@ export default function AdminNewses() {
     );
     if (!confirm) return;
 
-    await deleteNews(id);
+    const res = await deleteNews(id);
+    if (res?.data) {
+      toast.success("News Deleted Successfully");
+    } else {
+      toast.error(res?.error?.message || "Failed to delete news");
+      console.log(res);
+    }
   };
 
   // Loading
@@ -98,7 +92,7 @@ export default function AdminNewses() {
 
       {/* all news */}
       <div className="mt-1 bg-base-100 p-4 rounded">
-        <div className="overflow-x-auto min-h-[60vh]">
+        <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 dashboard_table">
             <thead className="bg-white">
               <tr>
@@ -111,7 +105,7 @@ export default function AdminNewses() {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody>
               {newses?.map((data) => (
                 <tr key={data?._id}>
                   <td>
@@ -171,13 +165,15 @@ export default function AdminNewses() {
             </tbody>
           </table>
         </div>
+      </div>
 
+      {data?.meta?.pages > 1 && (
         <Pagination
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
-          pages={pages}
+          pages={data?.meta?.pages}
         />
-      </div>
+      )}
     </div>
   );
 }

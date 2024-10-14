@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { FaRegEye } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
@@ -7,6 +6,9 @@ import {
   useUpdateStatusMutation,
 } from "../../../redux/news/newsApi";
 import { useGetUserBySlugQuery } from "../../../redux/user/userApi";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import Pagination from "../../../Components/Pagination/Pagination";
 
 export default function ViewWriter() {
   const { userName } = useParams();
@@ -14,7 +16,12 @@ export default function ViewWriter() {
   const user = userData?.data;
   const writerId = user?._id;
 
-  const { data: newsData } = useGetNewsByWriterQuery(writerId);
+  const [currentPage, setCurrentPage] = useState(1);
+  const query = {};
+  query["limit"] = 5;
+  query["page"] = currentPage;
+
+  const { data: newsData } = useGetNewsByWriterQuery({ writerId, ...query });
   const data = newsData?.data;
 
   const [updateStatus, { isLoading: statusLoading }] =
@@ -26,7 +33,13 @@ export default function ViewWriter() {
     );
     if (!confirm) return;
 
-    await updateStatus(id);
+    const res = await updateStatus(id);
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+    } else {
+      toast.error(res?.data?.message || "Failed to update status");
+      console.log(res);
+    }
   };
 
   return (
@@ -118,6 +131,14 @@ export default function ViewWriter() {
           </tbody>
         </table>
       </div>
+
+      {newsData?.meta?.pages > 1 && (
+        <Pagination
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          pages={newsData?.meta?.pages}
+        />
+      )}
     </div>
   );
 }

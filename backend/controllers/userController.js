@@ -15,7 +15,7 @@ exports.login = async (req, res) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        error: "User not found",
+        message: "User not found",
       });
     }
 
@@ -25,7 +25,7 @@ exports.login = async (req, res) => {
     if (!isMatch) {
       return res.status(404).json({
         success: false,
-        error: "User-Name or password is incorrect",
+        message: "User-Name or password is incorrect",
       });
     }
 
@@ -41,9 +41,9 @@ exports.login = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -57,7 +57,7 @@ exports.getUserById = async (req, res) => {
     if (!admin) {
       return res.status(404).json({
         success: false,
-        error: "Admin not found",
+        message: "Admin not found",
       });
     }
 
@@ -66,9 +66,9 @@ exports.getUserById = async (req, res) => {
       data: admin,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -82,7 +82,7 @@ exports.getUserBySlug = async (req, res) => {
     if (!admin) {
       return res.status(404).json({
         success: false,
-        error: "Admin not found",
+        message: "Admin not found",
       });
     }
 
@@ -91,9 +91,9 @@ exports.getUserBySlug = async (req, res) => {
       data: admin,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -110,13 +110,13 @@ exports.getMe = async (req, res) => {
     } else {
       res.status(404).json({
         success: false,
-        error: "user not found",
+        message: "user not found",
       });
     }
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -133,7 +133,7 @@ exports.updateInfo = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        error: "User not found",
+        message: "User not found",
       });
     }
 
@@ -167,9 +167,9 @@ exports.updateInfo = async (req, res) => {
       message: "Update success",
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -177,7 +177,6 @@ exports.updateInfo = async (req, res) => {
 exports.updatePassword = async (req, res) => {
   const id = req.params.id;
   const { oldPassword, newPassword } = req.body;
-  console.log(req.body);
 
   try {
     const user = await User.findById(id);
@@ -186,7 +185,7 @@ exports.updatePassword = async (req, res) => {
     if (!isMatch) {
       return res.status(404).json({
         success: false,
-        error: "Password is incorrect",
+        message: "Password is incorrect",
       });
     }
 
@@ -204,9 +203,9 @@ exports.updatePassword = async (req, res) => {
       message: "Password update success",
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -217,9 +216,9 @@ exports.deleteUser = async (req, res) => {
 
     const isExist = await User.findById(id);
     if (!isExist) {
-      return res.status(404).json({
+      return res.json({
         success: false,
-        error: "User not found",
+        message: "User not found",
       });
     }
 
@@ -238,9 +237,9 @@ exports.deleteUser = async (req, res) => {
       message: "user delete success",
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -264,9 +263,9 @@ exports.addWriter = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -308,9 +307,9 @@ exports.getAllWriters = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -343,9 +342,9 @@ exports.updateStatus = async (req, res) => {
       message: "user status updated successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -369,9 +368,9 @@ exports.addAdmin = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -385,9 +384,9 @@ exports.getAllAdmins = async (req, res) => {
       data: admins,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };

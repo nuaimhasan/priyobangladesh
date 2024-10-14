@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
+import { toast } from "react-hot-toast";
 import BreadCrumb from "../../../../Components/UI/BreadCrumb";
 import {
   useGetCategoryByIdQuery,
@@ -14,18 +13,7 @@ export default function EditNewsCategories() {
   const { data } = useGetCategoryByIdQuery(id);
   const category = data?.data;
 
-  const [updateCategory, { isLoading, isSuccess, isError }] =
-    useUpdateCategoryMutation();
-
-  useEffect(() => {
-    if (isSuccess) {
-      Swal.fire("", "Categories Updated Successfully", "success");
-      navigate("/admin/categories");
-    }
-    if (isError) {
-      Swal.fire("", "An error occured when adding", "error");
-    }
-  }, [isSuccess, isError, navigate]);
+  const [updateCategory, { isLoading }] = useUpdateCategoryMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +25,14 @@ export default function EditNewsCategories() {
       order,
     };
 
-    await updateCategory({ id, data });
+    const res = await updateCategory({ id, data });
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+      navigate("/admin/categories");
+    } else {
+      toast.error(res?.data?.message || "Failed to update category");
+      console.log(res);
+    }
   };
 
   return (

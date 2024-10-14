@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { toast } from "react-hot-toast";
 import BreadCrumb from "../../../../Components/UI/BreadCrumb";
 import {
   useCreateCategoryMutation,
@@ -19,18 +19,7 @@ export default function AddNewsCategories() {
     }
   }, [data]);
 
-  const [addNewsCategory, { isLoading, isSuccess, isError }] =
-    useCreateCategoryMutation();
-
-  useEffect(() => {
-    if (isSuccess) {
-      Swal.fire("", "Categories Added Successfully", "success");
-      navigate("/admin/categories");
-    }
-    if (isError) {
-      Swal.fire("", "An error occured when adding", "error");
-    }
-  }, [isSuccess, isError, navigate]);
+  const [addNewsCategory, { isLoading }] = useCreateCategoryMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +31,14 @@ export default function AddNewsCategories() {
       order,
     };
 
-    await addNewsCategory(data);
+    const res = await addNewsCategory(data);
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+      navigate("/admin/categories");
+    } else {
+      toast.error(res?.data?.message || "Failed to add category");
+      console.log(res);
+    }
   };
 
   return (

@@ -1,4 +1,3 @@
-const fs = require("fs");
 const slugify = require("slugify");
 const Categories = require("../models/categoriesModel");
 
@@ -6,13 +5,13 @@ exports.addCategory = async (req, res) => {
   try {
     const { category, order } = req.body;
 
-    const categoryData = {
+    const data = {
       category,
       order,
       slug: category.split(" ").join("-"),
     };
 
-    const result = await Categories.create(categoryData);
+    const result = await Categories.create(data);
 
     res.status(200).json({
       success: true,
@@ -20,9 +19,9 @@ exports.addCategory = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -39,9 +38,9 @@ exports.getCategories = async (req, res) => {
       data: categories,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -61,7 +60,7 @@ exports.getCategory = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -88,7 +87,7 @@ exports.updateCategory = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -99,22 +98,29 @@ exports.deleteCategory = async (req, res) => {
     const category = await Categories.findById(id);
 
     if (!category) {
-      return res.status(400).json({
+      return res.json({
         success: false,
-        error: "Category not found",
+        message: "Category not found",
       });
     }
 
-    await Categories.deleteOne({ _id: id });
+    if (category.subCategories.length > 0) {
+      return res.json({
+        success: false,
+        message: "Category has subcategories, can not delete",
+      });
+    }
+
+    await Categories.findByIdAndDelete(id);
 
     res.status(200).json({
       success: true,
       message: "Delete success",
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };

@@ -1,31 +1,20 @@
-import { useEffect } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import { toast } from "react-hot-toast";
 import BreadCrumb from "../../../Components/UI/BreadCrumb";
 import {
   useDeleteUserMutation,
   useGetAdminsQuery,
 } from "../../../redux/user/userApi";
 import Spinner from "../../../Components/Spinner/Spinner";
+import { useSelector } from "react-redux";
 
 export default function AllAdmins() {
+  const { loggedUser } = useSelector((state) => state.user);
   const { data, isLoading } = useGetAdminsQuery();
-  const [deleteAdmin, { isSuccess: deleteSuccess, isError: deleteError }] =
-    useDeleteUserMutation();
+  const [deleteAdmin] = useDeleteUserMutation();
 
-  useEffect(() => {
-    if (deleteSuccess) {
-      Swal.fire("", "Admin Deleted Successfully", "success");
-    }
-    if (deleteError) {
-      Swal.fire("", "An error occured when deleting", "error");
-    }
-  }, [deleteSuccess, deleteError]);
-
-  if (isLoading) {
-    return <Spinner />;
-  }
+  if (isLoading) return <Spinner />;
 
   const admins = data?.data;
 
@@ -36,11 +25,22 @@ export default function AllAdmins() {
     if (!confirm) return;
 
     if (admins?.length === 1) {
-      Swal.fire("", "There must be at least one admin!", "error");
+      toast.error("You can't delete the last admin");
       return;
     }
 
-    await deleteAdmin(id);
+    if (loggedUser?.data?._id === id) {
+      toast.error("You can't delete yourself");
+      return;
+    }
+
+    const res = await deleteAdmin(id);
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+    } else {
+      toast.error(res?.data?.message || "Failed to delete admin");
+      console.log(res);
+    }
   };
 
   return (

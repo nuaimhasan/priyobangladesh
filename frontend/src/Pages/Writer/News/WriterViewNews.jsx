@@ -7,10 +7,9 @@ import Spinner from "../../../Components/Spinner/Spinner";
 export default function WriterViewNews() {
   const { id } = useParams();
   const { data, isLoading } = useGetNewsByIdQuery(id);
+  const news = data?.data;
 
   if (isLoading) return <Spinner />;
-
-  const news = data?.data;
 
   return (
     <div>

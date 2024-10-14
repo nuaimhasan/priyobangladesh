@@ -13,7 +13,7 @@ exports.addNews = async (req, res) => {
   const status = user?.role == "admin" ? "active" : "pending";
 
   if (!image) {
-    return res.status(400).json({
+    return res.json({
       success: false,
       message: "Image is required",
     });
@@ -38,9 +38,9 @@ exports.addNews = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
 
     fs.unlink(`./uploads/news/${image}`, (err) => {
@@ -60,7 +60,7 @@ exports.updateNews = async (req, res) => {
     const news = await News.findById(id);
     const uploadedImage = news?.image;
     if (!news) {
-      return res.status(404).json({
+      return res.json({
         success: false,
         message: "News not found",
       });
@@ -96,9 +96,9 @@ exports.updateNews = async (req, res) => {
       message: "News updated successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
 
     fs.unlink(`./uploads/news/${image}`, (err) => {
@@ -116,7 +116,7 @@ exports.deleteNews = async (req, res) => {
     const news = await News.findById(id);
 
     if (!news) {
-      return res.status(404).json({
+      return res.json({
         success: false,
         message: "News not found",
       });
@@ -135,9 +135,9 @@ exports.deleteNews = async (req, res) => {
       message: "News deleted successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -151,7 +151,7 @@ exports.getNewsById = async (req, res) => {
       .populate("writer");
 
     if (!news) {
-      return res.status(404).json({
+      return res.json({
         success: false,
         message: "News not found",
       });
@@ -163,9 +163,9 @@ exports.getNewsById = async (req, res) => {
       data: news,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -179,7 +179,7 @@ exports.getNewsBySlug = async (req, res) => {
       .populate("writer");
 
     if (!news) {
-      return res.status(404).json({
+      return res.json({
         success: false,
         message: "News not found",
       });
@@ -191,9 +191,9 @@ exports.getNewsBySlug = async (req, res) => {
       data: news,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -245,22 +245,24 @@ exports.getAllNews = async (req, res) => {
       .limit(limit)
       .sort({ createdAt: -1 });
 
-    const totalNews = await News.countDocuments(whereConditions);
+    const total = await News.countDocuments(whereConditions);
+    const pages = Math.ceil(total / limit);
 
     res.status(200).json({
       success: true,
       message: "News found successfully",
-      data: newses,
       meta: {
-        total: totalNews,
-        page: page,
-        limit: limit,
+        total,
+        page,
+        limit,
+        pages,
       },
+      data: newses,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -272,7 +274,7 @@ exports.updateStatus = async (req, res) => {
     const news = await News.findById(id);
 
     if (!news) {
-      return res.status(404).json({
+      return res.json({
         success: false,
         message: "News not found",
       });
@@ -300,9 +302,9 @@ exports.updateStatus = async (req, res) => {
       message: "News status updated successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
@@ -314,8 +316,6 @@ exports.getNewsesByWriter = async (req, res) => {
 
   const { title, status } = filters;
   const { page, limit, skip } = calculatePagination(paginationOptions);
-
-  // console.log( status, page, limit, skip);
 
   try {
     const andConditions = [];
@@ -338,32 +338,28 @@ exports.getNewsesByWriter = async (req, res) => {
       .limit(limit)
       .sort({ createdAt: -1 });
 
-    const totalNews = await News.countDocuments({
+    const total = await News.countDocuments({
       writer: writerId,
       ...whereConditions,
     });
 
-    if (!newses) {
-      return res.status(404).json({
-        success: false,
-        message: "News not found",
-      });
-    }
+    const pages = Math.ceil(total / limit);
 
     res.status(200).json({
       success: true,
       message: "News found successfully",
-      data: newses,
       meta: {
-        total: totalNews,
-        page: page,
-        limit: limit,
+        total,
+        page,
+        limit,
+        pages,
       },
+      data: newses,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
