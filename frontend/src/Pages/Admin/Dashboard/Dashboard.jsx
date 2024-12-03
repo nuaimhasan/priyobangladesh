@@ -7,8 +7,7 @@ import NewsesListComponent from "../../../Components/AdminComponents/NewsesListC
 export default function Dashboard() {
   const { data: writerData } = useGetWritersQuery();
   const writers = writerData?.data;
-  const { data, isLoading } = useGetAllNewsQuery();
-  const newses = data?.data;
+  const { data, isLoading } = useGetAllNewsQuery({ limit: 0 });
 
   if (isLoading) return <Spinner />;
 
@@ -17,33 +16,9 @@ export default function Dashboard() {
       <div className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-2 sm:gap-5">
         <div className="flex flex-col items-center justify-center py-5 sm:py-10 bg-white shadow-lg rounded-md">
           <h1 className="text-xl font-medium mb-2">
-            {newses?.length > 0 ? data?.meta?.total : 0}
+            {data?.success ? data?.meta?.total : 0}
           </h1>
           <p>Total News</p>
-        </div>
-        <div className="flex flex-col items-center justify-center py-5 sm:py-10 bg-white shadow-lg rounded-md">
-          <h1 className="text-xl font-medium mb-2">
-            {newses?.filter((news) => news.status === "pending").length > 0
-              ? newses?.filter((news) => news.status === "pending").length
-              : 0}
-          </h1>
-          <p>Pending News</p>
-        </div>
-        <div className="flex flex-col items-center justify-center py-5 sm:py-10 bg-white shadow-lg rounded-md">
-          <h1 className="text-xl font-medium mb-2">
-            {newses?.filter((news) => news.status === "active").length > 0
-              ? newses?.filter((news) => news.status === "active").length
-              : 0}
-          </h1>
-          <p>Active News</p>
-        </div>
-        <div className="flex flex-col items-center justify-center py-5 sm:py-10 bg-white shadow-lg rounded-md">
-          <h1 className="text-xl font-medium mb-2">
-            {newses?.filter((news) => news.status === "inactive").length > 0
-              ? newses?.filter((news) => news.status === "inactive").length
-              : 0}
-          </h1>
-          <p>Inactive News</p>
         </div>
         <div className="flex flex-col items-center justify-center py-5 sm:py-10 bg-white shadow-lg rounded-md">
           <h1 className="text-xl font-medium mb-2">

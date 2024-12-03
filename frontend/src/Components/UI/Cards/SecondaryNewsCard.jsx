@@ -12,8 +12,9 @@ export default function SecondaryNewsCard({ news }) {
           <div className="w-1/3">
             <img
               src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}
-              alt=""
-              className="w-full h-full object-cover rounded-l-md "
+              alt="news"
+              className="w-full h-full object-cover rounded-l-md"
+              loading="lazy"
             />
           </div>
           <div className="flex items-start justify-center flex-col gap-x-1">

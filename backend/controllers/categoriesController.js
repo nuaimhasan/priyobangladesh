@@ -1,5 +1,6 @@
 const slugify = require("slugify");
 const Categories = require("../models/categoriesModel");
+const makeSlug = require("../utils/makeSlug");
 
 exports.addCategory = async (req, res) => {
   try {
@@ -8,7 +9,7 @@ exports.addCategory = async (req, res) => {
     const data = {
       category,
       order,
-      slug: category.split(" ").join("-"),
+      slug: makeSlug(category),
     };
 
     const result = await Categories.create(data);
@@ -72,7 +73,7 @@ exports.updateCategory = async (req, res) => {
 
     let categoryData = {
       ...data,
-      slug: slugify(data?.category),
+      slug: makeSlug(data?.category),
     };
 
     const result = await Categories.findByIdAndUpdate(id, categoryData, {

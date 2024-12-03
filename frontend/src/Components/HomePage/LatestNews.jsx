@@ -44,8 +44,9 @@ export default function LatestNews() {
                     src={`${import.meta.env.VITE_BACKEND_URL}/news/${
                       news?.image
                     }`}
-                    alt=""
-                    className="w-full h-full rounded-md"
+                    alt="news"
+                    className="w-full h-full rounded-md object-cover"
+                    loading="lazy"
                   />
                   <div className="bg-[#0000002d] rounded w-full h-full absolute top-0 left-0 text-white flex flex-col justify-end px-4 pb-2">
                     <span className="w-max bg-primary text-white px-3 py-1 rounded-md text-xs">

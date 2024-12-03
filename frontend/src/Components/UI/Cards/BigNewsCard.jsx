@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 export default function BigNewsCard({ news }) {
   return (
@@ -21,8 +22,8 @@ export default function BigNewsCard({ news }) {
                 ? news?.title.slice(0, 50) + "..."
                 : news?.title}
             </h1>
-            <p className="text-sm text-gray-500">
-              {news?.createdAt.slice(0, 10)} | {news?.writer?.name}
+            <p className="text-xs text-gray-500">
+              {moment(news?.createdAt).format("DD MMM YYYY")}
             </p>
             <p className="text-neutral-content">
               {news?.shortDescription?.length > 100

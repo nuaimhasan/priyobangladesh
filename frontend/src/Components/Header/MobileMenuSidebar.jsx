@@ -29,7 +29,7 @@ export default function MobileMenuSidebar({ mobileMenu, setMobileMenu }) {
         <div className="mt-4">
           <ul className="px-4 flex flex-col gap-2">
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/">হোম</NavLink>
             </li>
             {categories?.map((category) => (
               <li key={category?._id}>

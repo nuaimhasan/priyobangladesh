@@ -1,3 +1,4 @@
+import moment from "moment";
 import { Link } from "react-router-dom";
 
 export default function NewsCard({ news }) {
@@ -30,7 +31,7 @@ export default function NewsCard({ news }) {
             : news?.title}
         </h1>
         <p className="text-xs">
-          {news?.createdAt.slice(0, 10)} , {news?.writer?.name}
+          {moment(news?.createdAt).format("DD MMM YYYY")}
         </p>
         <p className="text-[15px] text-neutral-content">
           {news?.shortDescription?.length > 100

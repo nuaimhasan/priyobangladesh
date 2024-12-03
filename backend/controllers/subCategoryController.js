@@ -1,5 +1,6 @@
 const Categories = require("../models/categoriesModel");
 const SubCategory = require("../models/subCategoryModel");
+const makeSlug = require("../utils/makeSlug");
 
 exports.add = async (req, res) => {
   try {
@@ -7,7 +8,7 @@ exports.add = async (req, res) => {
 
     const info = {
       ...data,
-      slug: data?.name?.split(" ").join("-"),
+      slug: makeSlug(data?.name),
     };
 
     const result = await SubCategory.create(info);
@@ -103,7 +104,7 @@ exports.update = async (req, res) => {
     }
 
     isExit.name = data?.name;
-    isExit.slug = data?.name?.split(" ").join("-");
+    isExit.slug = makeSlug(data?.name);
     isExit.order = data?.order;
 
     await isExit.save();

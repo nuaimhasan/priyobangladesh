@@ -35,8 +35,9 @@ export default function TopNews() {
         <div className="w-full h-40 rounded-md relative">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}
-            alt=""
+            alt="news"
             className="w-full h-full object-cover rounded-md"
+            loading="lazy"
           />
           <div className="bg-[#00000054] rounded w-full h-full absolute top-0 left-0 text-white flex flex-col justify-end px-4 pb-2">
             <span className="w-max text-xs bg-primary py-1 px-3 rounded-md">

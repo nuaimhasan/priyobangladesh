@@ -39,18 +39,18 @@ export default function SearchBox({
         type="text"
         onChange={(e) => setSearchText(e.target.value)}
         onClick={() => setSearchDropdown(true)}
-        placeholder="search Product..."
-        className="searchInput border w-full px-3 py-1.5 outline-none rounded-l-md"
+        placeholder="search news..."
+        className="searchInput border w-full px-3 py-1.5 outline-none rounded-l-md placeholder:text-xs"
       />
       <div
-        className="searchIcon px-3 text-lg text-base-100 bg-primary flex justify-center items-center rounded-r-md text-white"
+        className="searchIcon px-3 text-lg text-base-100 bg-primary flex justify-center items-center rounded-r-md"
         onClick={() => setIsSearch(!isSearch)}
       >
         <BsSearch />
       </div>
 
       {searchDropdown && (
-        <div className="searchDropdown absolute w-full bg-base-100 p-4 shadow-lg max-h-96 overflow-y-auto top-full z-50 bg-white">
+        <div className="searchDropdown absolute w-full bg-base-100 p-4 shadow-lg max-h-96 overflow-y-auto top-full z-50">
           <ul>
             {newses?.map((news) => (
               <li
