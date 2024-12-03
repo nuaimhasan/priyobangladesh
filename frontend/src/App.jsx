@@ -3,7 +3,7 @@ import { routes } from "./Routes/Routes";
 import useAuthCheck from "./Hooks/useAuthCheck";
 import Spinner from "./Components/Spinner/Spinner";
 import { Toaster } from "react-hot-toast";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useGetSEOQuery } from "./redux/seo/seoapi";
 
 function App() {
