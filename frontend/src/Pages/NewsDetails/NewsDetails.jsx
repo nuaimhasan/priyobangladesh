@@ -68,6 +68,8 @@ export default function NewsDetails() {
         <meta property="og:description" content={perserDescription} />
         <meta property="og:image" content={imageUrl} />
         <meta property="og:url" content={url} />
+        <link rel="canonical" href={url} />
+        <meta property="og:type" content="website" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={news?.title} />
