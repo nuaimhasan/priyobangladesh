@@ -28,7 +28,7 @@ import {
 import { FaSquareXTwitter } from "react-icons/fa6";
 
 import moment from "moment";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function NewsDetails() {
   window.scroll(0, 0);
