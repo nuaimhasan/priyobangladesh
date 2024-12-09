@@ -6,6 +6,10 @@ exports.addCategory = async (req, res) => {
   try {
     const { category, order } = req.body;
 
+    const slug = makeSlug(category);
+
+    console.log(slug);
+
     const data = {
       category,
       order,

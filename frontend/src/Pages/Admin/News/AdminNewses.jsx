@@ -27,7 +27,7 @@ export default function AdminNewses() {
   query["status"] = status;
   query["title"] = title;
   query["page"] = currentPage;
-  query["limit"] = 5;
+  query["limit"] = 10;
   const { data, isLoading } = useGetNewsByWriterQuery({ writerId, ...query });
   const newses = data?.data;
 

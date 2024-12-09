@@ -26,6 +26,7 @@ export default function NewsesListComponent() {
   query["status"] = status;
   query["title"] = title;
   query["page"] = currentPage;
+  query["limit"] = 10;
 
   const { data, isLoading } = useGetAllNewsQuery({ ...query });
   const newses = data?.data;
