@@ -185,10 +185,15 @@ exports.getNewsBySlug = async (req, res) => {
       });
     }
 
+    const formateNews = {
+      ...news._doc,
+      imgurl: `${process.env.BASE_URL}/news/${news?.image}`,
+    };
+
     res.status(200).json({
       success: true,
       message: "News found successfully",
-      data: news,
+      data: formateNews,
     });
   } catch (error) {
     res.json({

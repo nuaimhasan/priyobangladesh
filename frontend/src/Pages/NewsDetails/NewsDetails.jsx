@@ -58,8 +58,7 @@ export default function NewsDetails() {
     ...detailsAddQuery,
   });
   const detailsAdd = detailsAddData?.data[0];
-
-  const imageUrl = `${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`;
+  const imgUrl = news?.imgurl;
   const url = `${import.meta.env.VITE_FRONT_END_URL}/news/details/${
     news?.slug
   }`;
@@ -73,7 +72,7 @@ export default function NewsDetails() {
         <title>{title}</title>
         <meta property="og:title" content={title} />
         <meta property="og:description" content={perserDescription} />
-        <meta property="og:image" content={imageUrl} />
+        <meta property="og:image" content={imgUrl} />
         <meta property="og:image:width" content="400" />
         <meta property="og:url" content={url} />
         <link rel="canonical" href={url} />
@@ -84,7 +83,7 @@ export default function NewsDetails() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={news?.title} />
         <meta name="twitter:description" content={perserDescription} />
-        <meta name="twitter:image" content={imageUrl} />
+        <meta name="twitter:image" content={imgUrl} />
         <meta name="twitter:url" content={url} />
       </Helmet>
 
@@ -93,7 +92,7 @@ export default function NewsDetails() {
           <div className="flex md:flex-row flex-col items-start gap-5">
             <div className="w-full text-gray-800">
               <img
-                src={imageUrl}
+                src={imgUrl}
                 alt={news?.title}
                 className="w-full md:max-h-[400px] rounded-md"
               />
