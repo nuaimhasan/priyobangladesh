@@ -6,6 +6,7 @@ import TopNews from "../../Components/HomePage/TopNews";
 
 export default function Home() {
   window.scroll(0, 0);
+
   return (
     <>
       <Helmet>
@@ -17,7 +18,11 @@ export default function Home() {
           property="og:description"
           content={`প্রিয় বাংলাদেশ | বিশ্বজুড়ে বাঙালির`}
         />
-        <meta property="og:image" content="/images/favicon.png" />
+        <meta
+          property="og:image"
+          content="https://www.priyobangladesh.com/images/favicon.png"
+        />
+        <meta property="og:image:width" content="400" />
         <meta property="og:url" content="https://www.priyobangladesh.com" />
         <link rel="canonical" href="https://www.priyobangladesh.com" />
         <meta property="og:type" content="website" />

@@ -74,9 +74,12 @@ export default function NewsDetails() {
         <meta property="og:title" content={title} />
         <meta property="og:description" content={perserDescription} />
         <meta property="og:image" content={imageUrl} />
+        <meta property="og:image:width" content="400" />
         <meta property="og:url" content={url} />
         <link rel="canonical" href={url} />
         <meta property="og:type" content="artical" />
+        <meta property="og:site_name" content="প্রিয় বাংলাদেশ" />
+        <meta property="og:locale" content="bn_BD" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={news?.title} />
