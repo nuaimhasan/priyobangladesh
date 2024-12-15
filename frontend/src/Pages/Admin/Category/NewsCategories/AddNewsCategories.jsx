@@ -24,16 +24,18 @@ export default function AddNewsCategories() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const category = e.target.category.value;
+    const categoryEN = e.target.categoryEN.value;
     const order = e.target.order.value;
 
     const data = {
       category,
+      categoryEN,
       order,
     };
 
     const res = await addNewsCategory(data);
     if (res?.data?.success) {
-      toast.success(res?.data?.message);
+      toast.success("Category added successfully");
       navigate("/admin/categories");
     } else {
       toast.error(res?.data?.message || "Failed to add category");
@@ -57,11 +59,19 @@ export default function AddNewsCategories() {
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="name">Category</label>
+                  <label htmlFor="name">Category BN</label>
                   <input
                     type="text"
-                    id="category"
                     name="category"
+                    placeholder="Enter Category"
+                    className="border px-3 py-2 rounded-md focus:outline-none "
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="name">Category EN</label>
+                  <input
+                    type="text"
+                    name="categoryEN"
                     placeholder="Enter Category"
                     className="border px-3 py-2 rounded-md focus:outline-none "
                   />

@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
-import moment from "moment";
+import dayjs from "dayjs";
+import "dayjs/locale/bn";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+dayjs.extend(localizedFormat);
+dayjs.locale("bn");
 
 export default function BigNewsCard({ news }) {
   return (
     <>
-      <Link key={news._id} to={`/news/${news.slug}`} className="group">
+      <Link key={news._id} to={`/news/details/${news?.slug}`} className="group">
         <div className="bg-white shadow rounded-md overflow-hidden group-hover:shadow-md transition-all duration-300">
           <div className="relative">
             <img
@@ -23,7 +28,7 @@ export default function BigNewsCard({ news }) {
                 : news?.title}
             </h1>
             <p className="text-xs text-gray-500">
-              {moment(news?.createdAt).format("DD MMM YYYY")}
+              {dayjs(news?.createdAt).format("DD MMMM YYYY")}
             </p>
             <p className="text-neutral-content">
               {news?.shortDescription?.length > 100

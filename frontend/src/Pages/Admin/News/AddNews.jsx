@@ -30,7 +30,7 @@ export default function AddNews() {
     },
   };
 
-  const [addNews, { isLoading, isSuccess, isError }] = useCreateNewsMutation();
+  const [addNews, { isLoading }] = useCreateNewsMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +47,7 @@ export default function AddNews() {
 
     const formData = new FormData();
     formData.append("title", e.target.title.value);
+    formData.append("titleEN", e.target.titleEN.value);
     formData.append("category", selectedCategory?._id);
     formData.append("subCategory", e.target.subCategory.value);
     formData.append("details", details);
@@ -54,18 +55,15 @@ export default function AddNews() {
     formData.append("writer", loggedUser?.data?._id);
 
     let res = await addNews(formData);
-    console.log(res);
-  };
 
-  useEffect(() => {
-    if (isSuccess) {
+    if (res?.data?.success) {
       Swal.fire("", "News Added Successfully", "success");
       navigate("/admin/news");
-    }
-    if (isError) {
+    } else {
       Swal.fire("", "An error occured when adding this news", "error");
+      console.log(res);
     }
-  }, [isSuccess, isError, navigate]);
+  };
 
   return (
     <div>
@@ -80,10 +78,20 @@ export default function AddNews() {
           <div className="py-5">
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col gap-1 mb-2">
-                <label htmlFor="title">Title</label>
+                <label htmlFor="title">Title BN</label>
                 <input
                   type="text"
                   name="title"
+                  placeholder="Enter Title"
+                  className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:border-primary placeholder:text-sm"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1 mb-2">
+                <label htmlFor="title">Title EN</label>
+                <input
+                  type="text"
+                  name="titleEN"
                   placeholder="Enter Title"
                   className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:border-primary placeholder:text-sm"
                 />
@@ -191,7 +199,7 @@ export default function AddNews() {
               <div className="flex flex-col gap-1 mt-2">
                 <button
                   type="submit"
-                  disabled={isLoading && "disabled"}
+                  disabled={isLoading}
                   className="bg-primary text-white px-3 py-2 rounded-md uppercase"
                 >
                   {isLoading ? "Loading..." : "Add News"}

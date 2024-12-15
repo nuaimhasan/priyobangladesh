@@ -1,14 +1,15 @@
+const slugify = require("slugify");
 const Categories = require("../models/categoriesModel");
 const SubCategory = require("../models/subCategoryModel");
-const makeSlug = require("../utils/makeSlug");
 
 exports.add = async (req, res) => {
   try {
     const data = req.body;
+    const slug = slugify(data?.nameEN);
 
     const info = {
       ...data,
-      slug: makeSlug(data?.name),
+      slug,
     };
 
     const result = await SubCategory.create(info);
@@ -83,6 +84,8 @@ exports.update = async (req, res) => {
     const data = req?.body;
     const category = data?.category;
 
+    console.log(data);
+
     const isExit = await SubCategory.findById(id);
     if (!isExit) {
       return res.json({
@@ -104,7 +107,8 @@ exports.update = async (req, res) => {
     }
 
     isExit.name = data?.name;
-    isExit.slug = makeSlug(data?.name);
+    isExit.nameEN = data?.nameEN;
+    isExit.slug = slugify(data?.nameEN);
     isExit.order = data?.order;
 
     await isExit.save();

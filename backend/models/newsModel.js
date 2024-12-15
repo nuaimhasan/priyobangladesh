@@ -5,13 +5,19 @@ const newsSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
+      unique: true,
+    },
+    titleEN: {
+      type: String,
+      required: true,
+      unique: true,
     },
     slug: {
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
     },
-
     details: {
       type: String,
       required: true,

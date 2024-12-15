@@ -39,26 +39,20 @@ export default function EditNews() {
 
   const { data: categoryData } = useGetAllCategoryQuery();
 
-  const [updateNews, { isLoading: updateLoding, isSuccess, isError }] =
-    useUpdateNewsMutation();
+  const [updateNews, { isLoading: updateLoding }] = useUpdateNewsMutation();
 
-  useEffect(() => {
-    if (isSuccess) {
-      Swal.fire("", "News Updated Successfully", "success");
-      navigate("/admin/news");
-    }
-    if (isError) {
-      Swal.fire("", "An error occured when updating this news", "error");
-    }
-  }, [isSuccess, isError, navigate]);
-
-  if (isLoading) return <Spinner />;
+  const config = {
+    uploader: {
+      url: "https://xdsoft.net/jodit/finder/?action=fileUpload",
+    },
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("title", e.target.title.value);
+    formData.append("titleEN", e.target.titleEN.value);
     formData.append("category", e.target.category.value);
     formData.append("subCategory", e.target.subCategory.value);
     if (details) {
@@ -70,8 +64,18 @@ export default function EditNews() {
       formData.append("image", images[0].file);
     }
 
-    await updateNews({ id, formData });
+    const res = await updateNews({ id, formData });
+
+    if (res?.data?.success) {
+      Swal.fire("", "News Updated Successfully", "success");
+      navigate("/admin/news");
+    } else {
+      Swal.fire("", "An error occured when updating this news", "error");
+      console.log(res);
+    }
   };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div>
@@ -86,13 +90,24 @@ export default function EditNews() {
           <div className="py-5">
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col gap-1 mb-2">
-                <label htmlFor="title">Title</label>
+                <label htmlFor="title">Title BN</label>
                 <input
                   type="text"
                   name="title"
                   placeholder="Enter Title"
                   className="border px-3 py-2 rounded-md focus:outline-none"
                   defaultValue={data?.data?.title}
+                />
+              </div>
+
+              <div className="flex flex-col gap-1 mb-2">
+                <label htmlFor="title">Title EN</label>
+                <input
+                  type="text"
+                  name="titleEN"
+                  placeholder="Enter Title"
+                  className="border px-3 py-2 rounded-md focus:outline-none"
+                  defaultValue={data?.data?.titleEN}
                 />
               </div>
 
@@ -196,6 +211,7 @@ export default function EditNews() {
                     ref={editor}
                     value={data?.data?.details}
                     onBlur={(text) => setDetails(text)}
+                    config={config}
                   />
                 </div>
               </div>
@@ -203,10 +219,10 @@ export default function EditNews() {
               <div className="flex flex-col gap-1 mt-2">
                 <button
                   type="submit"
-                  disabled={updateLoding && "disabled"}
+                  disabled={updateLoding}
                   className="bg-primary text-white px-3 py-2 rounded-md uppercase"
                 >
-                  {updateLoding ? "Updating..." : "Update"}
+                  {updateLoding ? "Updating..." : "Update News"}
                 </button>
               </div>
             </form>

@@ -1,22 +1,18 @@
 const slugify = require("slugify");
 const Categories = require("../models/categoriesModel");
-const makeSlug = require("../utils/makeSlug");
 
 exports.addCategory = async (req, res) => {
   try {
-    const { category, order } = req.body;
+    const data = req.body;
+    const slug = slugify(data?.categoryEN);
 
-    const slug = makeSlug(category);
-
-    console.log(slug);
-
-    const data = {
+    const newData = {
       category,
       order,
-      slug: makeSlug(category),
+      slug,
     };
 
-    const result = await Categories.create(data);
+    const result = await Categories.create(newData);
 
     res.status(200).json({
       success: true,
@@ -53,9 +49,7 @@ exports.getCategories = async (req, res) => {
 exports.getCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const category = await Categories.findOne({ _id: id }).populate(
-      "subCategories"
-    );
+    const category = await Categories.findById(id).populate("subCategories");
 
     res.status(200).json({
       success: true,
@@ -74,13 +68,14 @@ exports.updateCategory = async (req, res) => {
   try {
     const { id } = req?.params;
     const data = req?.body;
+    const slug = slugify(data?.categoryEN);
 
-    let categoryData = {
+    let newData = {
       ...data,
-      slug: makeSlug(data?.category),
+      slug,
     };
 
-    const result = await Categories.findByIdAndUpdate(id, categoryData, {
+    const result = await Categories.findByIdAndUpdate(id, newData, {
       new: true,
     });
 

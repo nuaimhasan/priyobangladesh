@@ -30,11 +30,13 @@ export default function EditSubCategory() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const name = e.target.subCategory.value;
+    const nameEN = e.target.subCategoryEN.value;
     const category = e.target.category.value;
     const order = e.target.order.value;
 
     const data = {
       name,
+      nameEN,
       category,
       order,
     };
@@ -66,12 +68,26 @@ export default function EditSubCategory() {
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-1">
-                  <p className="text-sm text-neutral-content">Sub Category</p>
+                  <p className="text-sm text-neutral-content">
+                    Sub Category BN
+                  </p>
                   <input
                     type="text"
                     name="subCategory"
                     className="border px-2 py-1.5 rounded-md focus:outline-none"
                     defaultValue={subCategory?.name}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <p className="text-sm text-neutral-content">
+                    Sub Category EN
+                  </p>
+                  <input
+                    type="text"
+                    name="subCategoryEN"
+                    className="border px-2 py-1.5 rounded-md focus:outline-none"
+                    defaultValue={subCategory?.nameEN}
                   />
                 </div>
 

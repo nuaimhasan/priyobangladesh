@@ -5,7 +5,7 @@ export default function SecondaryNewsCard({ news }) {
     <>
       <Link
         key={news._id}
-        to={`/news/${news.slug}`}
+        to={`/news/details/${news.slug}`}
         className="group hover:scale-105 delay-150 duration-300 transition-all"
       >
         <div className="bg-white flex gap-x-4 rounded-md h-[84px] overflow-hidden group-hover:shadow-lg transition-all duration-300">

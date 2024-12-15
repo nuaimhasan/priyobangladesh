@@ -11,10 +11,18 @@ const subCategorySchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
+    },
+    nameEN: {
+      type: String,
+      required: true,
+      unique: true,
     },
     slug: {
       type: String,
       required: true,
+      lowercase: true,
+      unique: true,
     },
     order: {
       type: Number,

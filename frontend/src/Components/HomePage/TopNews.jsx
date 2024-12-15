@@ -31,7 +31,7 @@ export default function TopNews() {
 
   if (!isLoading && data?.data?.length > 0) {
     content = newses?.map((news) => (
-      <Link key={news?._id} to={`/news/${news?.slug}`}>
+      <Link key={news?._id} to={`/news/details/${news?.slug}`}>
         <div className="w-full h-40 rounded-md relative">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`}

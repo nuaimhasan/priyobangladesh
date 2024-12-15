@@ -4,11 +4,13 @@ const { pick } = require("../utils/pick");
 const fs = require("fs");
 const Categories = require("../models/categoriesModel");
 const SubCategories = require("../models/subCategoryModel");
+const slugify = require("slugify");
 
 exports.addNews = async (req, res) => {
   const image = req.file.filename;
   const data = req.body;
   const user = req.user;
+  const slug = slugify(data?.titleEN);
 
   const status = user?.role == "admin" ? "active" : "pending";
 
@@ -19,13 +21,11 @@ exports.addNews = async (req, res) => {
     });
   }
 
-  const slug = data.title.split(" ").join("-") + "-" + Date.now(); //for bangla language
-
   try {
     const news = {
       ...data,
       image,
-      slug: slug,
+      slug,
       status,
       subCategory: data?.subCategory ? data?.subCategory : undefined,
     };
@@ -55,6 +55,7 @@ exports.updateNews = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
   const image = req?.file?.filename;
+  const slug = slugify(data?.titleEN);
 
   try {
     const news = await News.findById(id);
@@ -66,14 +67,12 @@ exports.updateNews = async (req, res) => {
       });
     }
 
-    const slug = data.title.split(" ").join("-") + "-" + Date.now(); //for bangla language
-
     let updatedNews;
     if (image) {
       updatedNews = {
         ...data,
         image,
-        slug: slug,
+        slug,
         subCategory: data?.subCategory ? data?.subCategory : undefined,
       };
 
@@ -86,6 +85,7 @@ exports.updateNews = async (req, res) => {
       updatedNews = {
         ...data,
         slug,
+        subCategory: data?.subCategory ? data?.subCategory : undefined,
       };
     }
 

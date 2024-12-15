@@ -26,9 +26,14 @@ import {
   FaWhatsappSquare,
 } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
-
-import moment from "moment";
 import { Helmet } from "react-helmet-async";
+
+import dayjs from "dayjs";
+import "dayjs/locale/bn";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+dayjs.extend(localizedFormat);
+dayjs.locale("bn");
 
 export default function NewsDetails() {
   window.scroll(0, 0);
@@ -55,7 +60,9 @@ export default function NewsDetails() {
   const detailsAdd = detailsAddData?.data[0];
 
   const imageUrl = `${import.meta.env.VITE_BACKEND_URL}/news/${news?.image}`;
-  const url = `${import.meta.env.VITE_FRONT_END_URL}/news/${news?.slug}`;
+  const url = `${import.meta.env.VITE_FRONT_END_URL}/news/details/${
+    news?.slug
+  }`;
   const title = news?.title;
 
   if (isLoading || allLoading) return <Spinner />;
@@ -88,7 +95,7 @@ export default function NewsDetails() {
               />
               <div className="sm:flex items-center justify-between my-2">
                 <p className="text-neutral-content text-sm">
-                  প্রকাশ: {moment(news?.createdAt).format("DD MMMM YYYY")}
+                  প্রকাশ: {dayjs(news?.createdAt).format("DD MMMM YYYY")}
                 </p>
 
                 <div className="mt-2 sm:mt-0">

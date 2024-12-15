@@ -6,11 +6,18 @@ const CategoriesSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
+      unique: true,
+    },
+    categoryEN: {
+      type: String,
+      required: true,
+      unique: true,
     },
     slug: {
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
     },
     order: {
       type: Number,

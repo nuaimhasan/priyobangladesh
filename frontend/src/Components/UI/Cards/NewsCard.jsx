@@ -1,10 +1,15 @@
-import moment from "moment";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
+import "dayjs/locale/bn";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+dayjs.extend(localizedFormat);
+dayjs.locale("bn");
 
 export default function NewsCard({ news }) {
   return (
     <Link
-      to={`/news/${news?.slug}`}
+      to={`/news/details/${news?.slug}`}
       className="bg-white shadow rounded-md hover:scale-105 transition ease-in-out delay-75 duration-300"
     >
       <div className="w-full h-40 relative">
@@ -31,7 +36,7 @@ export default function NewsCard({ news }) {
             : news?.title}
         </h1>
         <p className="text-xs">
-          {moment(news?.createdAt).format("DD MMM YYYY")}
+          {dayjs(news?.createdAt).format("DD MMMM YYYY")}
         </p>
         <p className="text-[15px] text-neutral-content">
           {news?.shortDescription?.length > 100

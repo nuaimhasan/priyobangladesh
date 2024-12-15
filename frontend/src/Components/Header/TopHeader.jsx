@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 
 export default function TopHeader() {
   const date = new Date();
-  const today = date.toLocaleDateString("en-US", {
+  const today = date.toLocaleDateString("bn-BD", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-  const time = date.toLocaleTimeString("en-US", {
+  const time = date.toLocaleTimeString("bn-BD", {
     hour: "numeric",
     minute: "numeric",
     hour12: true,

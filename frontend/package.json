@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
+    "dayjs": "^1.11.13",
     "html-react-parser": "^5.1.1",
     "jodit-react": "^4.0.4",
     "moment": "^2.30.1",

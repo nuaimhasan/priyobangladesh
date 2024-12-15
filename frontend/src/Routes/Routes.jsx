@@ -118,10 +118,6 @@ export const routes = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/",
-        element: <News />,
-      },
-      {
         path: "/:category",
         element: <News />,
       },
@@ -130,7 +126,7 @@ export const routes = createBrowserRouter([
         element: <News />,
       },
       {
-        path: "/news/:slug",
+        path: "/news/details/:slug",
         element: <NewsDetails />,
       },
     ],

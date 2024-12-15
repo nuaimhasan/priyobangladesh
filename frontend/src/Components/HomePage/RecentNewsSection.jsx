@@ -17,7 +17,7 @@ export default function RecentNewsSection() {
       <div className=" w-full bg-white p-4 rounded-md">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-4">
           {newses?.map((news) => (
-            <Link key={news?._id} to={`/news/${news?.slug}`}>
+            <Link key={news?._id} to={`/news/details/${news?.slug}`}>
               <div className="flex items-center gap-3">
                 <img
                   src={`${import.meta.env.VITE_BACKEND_URL}/news/${
