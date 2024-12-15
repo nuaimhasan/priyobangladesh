@@ -87,6 +87,7 @@ export default function NewsDetails() {
         <meta name="twitter:image" content={imageUrl} />
         <meta name="twitter:url" content={url} />
       </Helmet>
+
       <section>
         <div className="container pt-2 pb-4">
           <div className="flex md:flex-row flex-col items-start gap-5">

@@ -33,7 +33,7 @@ export default function MobileMenuSidebar({ mobileMenu, setMobileMenu }) {
             </li>
             {categories?.map((category) => (
               <li key={category?._id}>
-                <Link to={`/news/${category?.slug}`}>{category?.category}</Link>
+                <Link to={`/${category?.slug}`}>{category?.category}</Link>
               </li>
             ))}
           </ul>

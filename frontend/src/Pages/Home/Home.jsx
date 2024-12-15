@@ -26,6 +26,21 @@ export default function Home() {
         <meta property="og:url" content="https://www.priyobangladesh.com" />
         <link rel="canonical" href="https://www.priyobangladesh.com" />
         <meta property="og:type" content="website" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="প্রিয় বাংলাদেশ | বিশ্বজুড়ে বাঙালির"
+        />
+        <meta
+          name="twitter:description"
+          content="প্রিয় বাংলাদেশ | বিশ্বজুড়ে বাঙালির"
+        />
+        <meta
+          name="twitter:image"
+          content="https://www.priyobangladesh.com/images/favicon.png"
+        />
+        <meta name="twitter:url" content="https://www.priyobangladesh.com" />
       </Helmet>
 
       <div className="container py-5 grid md:grid-cols-2 grid-cols-1 gap-3">
