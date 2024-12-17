@@ -6,7 +6,7 @@ import { useGetAllLogoQuery } from "../../redux/logo/logoApi";
 import HeaderAdd from "../Advertises/HeaderAdd";
 
 export default function Header() {
-  const { data } = useGetAllLogoQuery();
+  const { data, isLoading } = useGetAllLogoQuery();
 
   return (
     <>
@@ -18,11 +18,15 @@ export default function Header() {
           <div className="md:flex items-center justify-between py-1">
             <Link to="/">
               <img
-                src={`${import.meta.env.VITE_BACKEND_URL}/logo/${
-                  data?.data[0]?.logo
-                }`}
-                alt=""
-                className="w-52 sm:w-72 mx-auto"
+                src={
+                  isLoading
+                    ? "/images/logo.png"
+                    : `${import.meta.env.VITE_BACKEND_URL}/logo/${
+                        data?.data[0]?.logo
+                      }`
+                }
+                alt="logo"
+                className={`w-52 sm:w-72 mx-auto`}
               />
             </Link>
 

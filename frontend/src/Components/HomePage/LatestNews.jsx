@@ -29,12 +29,12 @@ export default function LatestNews() {
           spaceBetween={30}
           centeredSlides={true}
           loop={true}
-          autoplay={{
-            delay: 3500,
-            disableOnInteraction: false,
-          }}
+          // autoplay={{
+          //   delay: 3500,
+          //   disableOnInteraction: false,
+          // }}
           modules={[Autoplay]}
-          className="w-full sm:h-[334px]"
+          className="w-full h-60 sm:h-[332px]"
         >
           {newses?.map((news) => (
             <SwiperSlide key={news._id}>

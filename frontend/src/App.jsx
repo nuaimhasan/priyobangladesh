@@ -12,33 +12,62 @@ function App() {
   const { data: seo } = useGetSEOQuery();
   const seoData = seo?.data;
 
-  if (!authChecked) {
-    return <Spinner />;
-  }
+  console.log(seoData);
+
+  if (!authChecked) return <Spinner />;
 
   return (
     <>
       <Helmet>
-        <title>{seoData?.basic?.title || "Your Page Title"}</title>
+        <title>
+          {seoData?.basic?.title || "প্রিয় বাংলাদেশ | বিশ্বজুড়ে বাঙালির"}
+        </title>
         <meta
           name="description"
-          content={seoData?.basic?.description || "Your Page Description"}
+          content={
+            seoData?.basic?.description || "প্রিয় বাংলাদেশ | বিশ্বজুড়ে বাঙালির"
+          }
         />
         <meta
           name="keywords"
-          content={seoData?.basic?.keywords || "Your Page Keywords"}
+          content={seoData?.basic?.keywords || "প্রিয় বাংলাদেশ"}
         />
         <meta
           name="author"
-          content={seoData?.basic?.author || "Your Page Author"}
+          content={seoData?.basic?.author || "প্রিয় বাংলাদেশ"}
         />
         <meta
           name="designer"
-          content={seoData?.basic?.designer || "Your Page Designer"}
+          content={seoData?.basic?.designer || "Nasim Uddin"}
+        />
+        <meta name="subject" content={seoData?.basic?.subject || "article"} />
+
+        {/* og */}
+        <meta
+          property="og:title"
+          content={seoData?.og?.ogtitle || "প্রিয় বাংলাদেশ | বিশ্বজুড়ে বাঙালির"}
+        />
+        <meta property="og:type" content={seoData?.og?.ogtype || "website"} />
+        <meta
+          property="og:url"
+          content={seoData?.og?.ogurl || "https://priyobangladesh.com"}
         />
         <meta
-          name="subject"
-          content={seoData?.basic?.subject || "Your Page Subject"}
+          property="og:image"
+          content={
+            seoData?.og?.ogimage ||
+            "https://www.api.priyobangladesh.com/logo/1724320066592-priyo%20bangla%20final.png"
+          }
+        />
+        <meta
+          property="og:site_name"
+          content={seoData?.og?.ogsitename || "প্রিয় বাংলাদেশ"}
+        />
+        <meta
+          property="og:description"
+          content={
+            seoData?.og?.ogdescription || "প্রিয় বাংলাদেশ | বিশ্বজুড়ে বাঙালির"
+          }
         />
 
         {seoData?.basic?.copyright && (

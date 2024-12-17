@@ -43,7 +43,7 @@ export default function Home() {
         <meta name="twitter:url" content="https://www.priyobangladesh.com" />
       </Helmet>
 
-      <div className="container py-5 grid md:grid-cols-2 grid-cols-1 gap-3">
+      <div className="container py-2 sm:py-5 grid md:grid-cols-2 grid-cols-1 gap-3">
         <LatestNews />
         <TopNews />
       </div>
